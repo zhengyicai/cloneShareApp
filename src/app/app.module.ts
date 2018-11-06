@@ -1,6 +1,6 @@
 //引入核心依赖
-import {NgModule} from '@angular/core';
-import {IonicApp, IonicModule} from 'ionic-angular';
+import {NgModule,ErrorHandler} from '@angular/core';
+import {IonicApp, IonicModule,IonicErrorHandler} from 'ionic-angular';
 //引入双向绑定，http请求依赖
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
@@ -80,7 +80,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
         StatusBar,
         SplashScreen,
         Camera,
-        // {provide: ErrorHandler, useClass: IonicErrorHandler},
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpSerProvider,
         PopSerProvider,
         PhotoViewer,
