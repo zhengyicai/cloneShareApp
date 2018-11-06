@@ -1,0 +1,63 @@
+page-setting {
+
+.settingImg{
+        width: auto;
+        height: auto;
+        max-width: 30px;
+        max-height:30px;
+        text-align: center;
+        line-height: 30px;
+    }
+    .button-ios {
+        border-radius:0;
+       height:0;
+    }
+
+    .item-ios.item-block .item-inner {
+        padding-right: 8px;
+         border-bottom: 0; 
+    }
+    /*控制行高*/
+  .itemHeight {
+    min-height: 0.8rem;
+  }
+  .itemHeight {
+    span:nth-child(1) {
+      img,
+      span {
+        line-height: 28px;
+        float: left;
+        height: 28px;
+        color: #000 !important;
+      }
+      span {
+        font-size: 14px;
+        margin-left: 5px;
+        padding-top: 2px;
+      }
+    }
+    span:nth-child(2) {
+      font-size: 12px;
+      color:#c3c3c3;
+    }
+  }
+
+
+
+        .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+        border:0;
+        }
+        .list-ios > .item-block:first-child {
+        border:0;
+        }
+
+    .loginButton {
+        font-size: 16px;
+        line-height: 40px;
+        width: 100%;
+        height: 40px;
+        margin: 5% 2% 50px 0;
+        color:color($colors, primary);
+        background: #fff;
+        }    
+}

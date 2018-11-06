@@ -1,0 +1,94 @@
+<!--
+  Generated template for the SettingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>设置</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background-color: #F7F7F7" >
+ 
+    <div ion-row class="row1" style="background-color: white">
+        <ion-col col-2>
+           <div style="float: left; width: 60px;height: 60px;">
+              <img src="assets/img/avatar.png" >
+           </div>
+        </ion-col>
+        <ion-col col-7>
+            <div id="" style="font-size: 22px;text-align: left;padding-top: 8px;padding-left: 8px;">
+            Jeng<br/>
+            
+            </div>
+        </ion-col>
+        <ion-col (click)="presentActionSheet()" col-3>
+            <div  style="font-size: 15px;padding-top: 20px;color: grey">更换头像</div>
+        </ion-col>
+   
+    </div>
+  
+   
+    <ion-list class="person_info perfect"style="margin-top:5px;">
+        <button ion-item class="itemHeight"  (click)="gotoRevise()" >
+          <span>
+            <img style="height:28px;width:28px;" src="assets/img/set_niceng.png" />
+            <span>昵称</span>
+          </span>
+          <span item-right style="margin-right:30px">Jeng</span>
+        </button>
+
+
+
+    
+            
+          <button ion-item class="itemHeight" c style="margin-top: 3px">
+              <span>
+                <img style="height:28px;width:28px;" src="assets/img/set_denglumima.png" />
+                <span>登录密码</span>
+              </span>
+
+              <span item-right style="margin-right:30px">点击修改</span>
+            </button>
+      
+        <button ion-item (click)="gotoSuggest()" class="itemHeight" style="margin-top: 3px">
+            <span>
+              <img style="height:28px;width:28px;" src="assets/img/set_toushujianyi.png" />
+              <span>投诉建议</span>
+            </span>
+            <span item-right style="margin-right:30px"></span>
+          </button>
+  
+          <button ion-item class="itemHeight" style="margin-top: 1px">
+              <span>
+                <img style="height:28px;width:28px;" src="assets/img/set_guanyu.png" />
+                <span>关于</span>
+              </span>
+              <span item-right style="margin-right:30px"></span>
+            </button>
+
+
+            <ion-item class="itemHeight" style="margin-top: 1px;">
+              <ion-label><span>
+                <img style="height:28px;width:28px;" src="assets/img/set_yinghangka.png" />
+                <span>自动登录</span>
+              </span></ion-label>
+              <ion-toggle [(ngModel)]="auto"></ion-toggle>
+            </ion-item>
+    
+            
+
+    </ion-list>
+
+    <button class="loginButton" (click)="Exit()">
+      退出登录
+    </button>
+
+
+
+</ion-content>

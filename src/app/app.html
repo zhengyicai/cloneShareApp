@@ -1,0 +1,48 @@
+<!-- <ion-menu [content]="content" > -->
+        
+        
+        <!-- <ion-content style="background-color: white;background-image: url(assets/img/menuback.png);">
+                
+          <div id="menuLogo" style="background-image: url(assets/img/leftMenu.png); ">
+                <span style="font-size: 15px">Vpay后台管理</span><br/>
+                <span style="font-size: 10px">Vpay manage</span>
+
+          </div>
+          <br/>
+          <ion-list >
+
+            <div *ngFor="let p of pages">
+              <div *ngIf="p.resPath =='#' && p.state =='10' " style="border-bottom: 2px dotted gainsboro;padding-bottom: 10px;" >
+                
+                <div class="menuDiv ">{{p.resName}}</div>
+                <div menuClose class="spanDiv1" *ngFor="let t of getChilderMenu(p.id)" (click)="openPage(t.resPath)">
+                  <button class="menuButton" ion-button secondary>{{t.resName}}</button>
+                  
+                </div>
+               
+                <div style="clear: both;"></div>     
+                
+                      
+            
+              </div>
+            </div>
+          </ion-list>
+          
+        </ion-content>
+          
+        <ion-footer style="background-color: #f3f3f3" >
+            <ion-grid text-center>
+              <ion-row>
+                <ion-col no-padding col-3 (click)="loginOut()"  >
+                  <img src="assets/img/homeUser.png" style="width: 23px;height: 30px;vertical-align:middle;margin-bottom: 5px;padding:5px 0">
+                  <span id="zhuxiao" >注销</span>
+                </ion-col>
+                
+              </ion-row>
+            </ion-grid>
+          </ion-footer>
+       -->
+      <!-- </ion-menu> -->
+      
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

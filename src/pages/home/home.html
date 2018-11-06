@@ -1,0 +1,149 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons left>
+            <button style="float: left;"  ion-button icon-only (click)="openModal()">
+                <img src="assets/img/avatar.png"  style="width: 40px;height: 40px;">
+            </button>
+            <div style="float: left; color: white; margin-left:10px;font-size:12px" >
+                
+                    UID:2029608<br/>
+                   <span >信用&nbsp;&nbsp;<img style="width: 12px;margin-right: 3px;" src="assets/img/xin.png"><img style="width: 12px;margin-right: 3px;" src="assets/img/xin.png"><img style="width: 12px;margin-right: 3px;" src="assets/img/xin.png"></span>
+          
+            </div>
+          </ion-buttons>
+      
+      <ion-buttons end>
+          <button ion-button icon-only (click)="gotoSetting()">
+            <ion-icon name="settings"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content style="background-color: #f0f0f0">
+    
+
+    <div id="homeImg" style="background-image: url(assets/img/banner.png); position:absolute; z-index:-2;"></div>
+    <ion-refresher pullMax=60 (ionRefresh)="doRefresh($event)" style="background-image: url(assets/img/banner.png);" > 
+        <ion-refresher-content pullingText="下拉刷新"  > 
+        </ion-refresher-content>
+    </ion-refresher>
+    <div style="margin-top:0px;background-image: url(assets/img/top_bg.png);width:100%;height: 280px;">
+
+        <ion-row class="row2">
+            <ion-col col-12 style="text-align: center;margin-bottom: 20px">
+                <img src="assets/img/scan.png" style=" width:auto; height:auto;max-width:100%;max-height:100%;width:100px;margin-top: 20px">
+                <div >扫&nbsp;码&nbsp;支&nbsp;付</div>
+            </ion-col>
+           
+            <ion-col col-6 style="border-right: 2px white solid;">
+                <div >余&nbsp;额</div>
+                <div>60.29</div>
+            </ion-col>
+
+            <ion-col col-6>
+                <div>积&nbsp;分</div>
+                <div>1741.70</div>
+            </ion-col>
+
+           </ion-row>
+    </div>
+    <div>
+            <ion-slides #mySlider  style="width:100%;height:80px;"  >
+                <ion-slide *ngFor="let item of banners"><img src="{{imgUrl+item}}" ></ion-slide>
+            </ion-slides>
+
+             
+    </div>
+
+
+
+
+    <div>
+      
+      <ion-grid style="padding: 0px" >
+          <ion-row class="row1">
+            <ion-col col-4>
+                <img src="assets/img/transferAccounts.png" >
+<div>转出</div>
+            </ion-col>
+            <ion-col col-4>
+                <img src="assets/img/receivables.png">
+                <div>转入</div>
+            </ion-col>
+            <ion-col col-4>
+                <img src="assets/img/vbao.png">
+                <div>V宝</div>
+            </ion-col>
+            
+          </ion-row>
+          
+          <ion-row class="row1">
+              <ion-col col-4>
+                  <img src="assets/img/ico.png">
+                  <div>众筹</div>
+              </ion-col>
+              <ion-col col-4>
+                  <img src="assets/img/digitalAsset.png">
+                  <div>数字资产</div>
+              </ion-col>
+              <ion-col col-4>
+                  <img src="assets/img/main_shop.png">
+                  <div>V商城</div>
+              </ion-col>
+              
+            </ion-row>
+          
+            
+            <ion-row class="row1">
+                <ion-col col-4>
+                    <img src="assets/img/v_gongyi.png">
+                    <div>V公益</div>
+                </ion-col>
+                <ion-col col-4>
+                    <img src="assets/img/v_dai.png">
+                    <div>V贷</div>
+                </ion-col>
+                <ion-col col-4>
+                    <img src="assets/img/v_xinyong.png">
+                    <div>V信用</div>
+                </ion-col>
+                
+              </ion-row>
+              
+        </ion-grid> 
+      
+      
+    </div>
+      
+
+
+
+  </ion-content>
+
+  <ion-footer>
+      <div class="float" *ngIf="showUpdate">
+        <div class="promptUpdate">
+          <ion-row class="update_img">
+            <ion-col text-center>
+              <img src="assets/img/update.png" />
+            </ion-col>
+          </ion-row>
+          <ion-row class="update_title">
+            <ion-col text-center>{{systemPara.webAppVersions}}软件更新提示</ion-col>
+          </ion-row>
+          <ion-row class="update_cont">
+            <ion-col>{{systemPara.webAppUpdateContent}}</ion-col>
+          </ion-row>
+          <ion-row class="update_btn">
+            <ion-col>
+              <button (click)="cancellUpdate()">取消</button>
+            </ion-col>
+            <ion-col>
+              <a (click)="closeUpdate()" ion-button>下载更新</a>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>  
+
+    </ion-footer>

@@ -1,0 +1,61 @@
+<!--
+  Generated template for the GuardSettingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>门禁设置</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+      <ion-item class="settlist" (click)="playEquCode(00)">
+       播放设备序列号
+      </ion-item>
+      <ion-item class="settlist" (click)="playEquCode(01)">
+       播放项目代码
+      </ion-item>
+      <ion-item class="settlist" (click)="playEquCode(02)">
+       播放设备编码
+      </ion-item>
+      <ion-item class="settlist" (click)="playEquCode(03)">
+        播放用户识别码
+      </ion-item>
+      <ion-item class="settlist" (click)="playEquCode(04)">
+        播放门禁的时间
+      </ion-item>
+      <ion-item class="settlist" (click)="playEquCode(05)">
+          播放门禁版本号
+      </ion-item>
+      <ion-item class="settlist" (click)="adminUnlock()">
+        物业开锁
+      </ion-item>
+      <ion-item class="settlist" (click)="setArea()">
+        设置项目代码
+      </ion-item>
+     
+      <!-- <ion-item class="settlist"  (click)="setEqu()">
+        设置设备编码
+      </ion-item> -->
+      <ion-item class="settlist"  (click)="setEquAlert()">
+        设置设备编码
+      </ion-item>
+      <ion-item class="settlist" (click)="setUserMaskAlert()">
+        设置用户识别码
+      </ion-item>
+      <ion-item class="settlist" (click)="updateTime()">
+        设置设备时间
+      </ion-item>
+      <ion-item class="settlist">
+      添加门禁卡号
+      </ion-item>
+      <ion-item class="settlist" (click)="autoSet()">
+        一键设置（项目代码，设备编码，设备时间）
+      </ion-item>
+
+</ion-content>

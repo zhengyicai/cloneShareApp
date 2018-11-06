@@ -1,0 +1,29 @@
+page-home {
+    
+    ion-grid  ion-row ion-col{
+        text-align: center;
+        border: 1px #EEEEEE solid;
+        border-right: 0px;
+        background-color: white;
+  }
+
+
+
+  .row1  ion-col img{
+        width:auto;
+        height:auto;
+        max-width:100%;
+        max-height:100%;
+        width:32px;
+        margin-top:12px;
+  }
+  .row2 ion-col div{
+       
+        color: #f0f0f0;
+        font-size: 16px;
+        text-align: center;
+        margin-top: 5px;
+
+  }
+
+}

@@ -1,0 +1,50 @@
+<!--
+  Generated template for the SuggestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>suggest</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content >
+  <div style="width: 100%;height: 35px;line-height: 35px;padding-left: 10px;">请选择反馈问题类型</div>
+  <div >
+    <ion-list radio-group [(ngModel)]="relationship" style="margin-bottom:15px;">
+      <ion-item>
+        <ion-label  style="font-size: 15px;">产品建议：用得不爽，我有建议</ion-label>
+        <ion-radio value="friends" checked></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label style="font-size: 15px;">功能问题：功能故障或不可用</ion-label>
+        <ion-radio value="family"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label style="font-size: 15px;">投诉：有问题来投诉，我们帮你做主</ion-label>
+        <ion-radio value="enemies"></ion-radio>
+      </ion-item>
+      <ion-item>
+          <ion-label style="font-size: 15px;">其他问题</ion-label>
+          <ion-radio value="qustion" ></ion-radio>
+        </ion-item>
+    </ion-list>
+    </div>
+    <div style="background-color: #fff;width: 100%;height: 200px;color:#9f9f9f;">
+      <ion-textarea style="margin-left: 10px;padding-top: 5px;height: 170px;" placeholder="描述一下您的问题" maxlength="10"></ion-textarea>
+  
+      <div style="background-color: #fff;width: 100%;color:#9f9f9f;margin-left: 10px;font-size: 14px;"><span style="color: red">*</span>问题反馈至少输入五个字<span style="margin-left: 180px;">0/200</span></div>
+    </div>
+
+    <div style="background-color: #fff;height: 35px;width: 100%;color:#9f9f9f;margin-top: 10px;padding: 10px;margin-bottom: 2px;">请提供相关问题截图</div>
+    <div style="background-color: #fff;height: 100px;width: 100%;line-height: 135px;padding-left: 20px;">
+      <img   src="assets/img/add.png" />
+    </div>
+    <button class="loginButton" (click)="Exit()">
+      提交
+      </button>
+</ion-content>

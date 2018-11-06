@@ -1,0 +1,80 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+
+
+
+@import "ionic.globals";
+
+
+
+$colors: (
+  primary:    #47ac5e,
+  secondary:  #030303,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+  sutongbao:  #47ac5e,
+  noticeTitle:      #aad0ff,
+  lightTitle:      #C8C7cc,
+);
+
+
+//头部导航样式
+$toolbar-ios-title-text-color: white;
+//$background-color: color($colors, primary);
+$toolbar-background: #47ac5e;
+
+$toolbar-md-height:50px;
+
+
+//侧导航栏宽度
+$menu-width:300px;
+$menu-small-width:270px;
+//侧导航返回键
+$toolbar-md-button-color :white;
+$toolbar-ios-button-color :white;
+
+
+//弹出框颜色
+$loading-md-background:rgba(0, 0, 0, 0.8);
+$loading-md-text-color: #fff;
+$loading-md-spinner-color: #fff;
+$loading-ios-background:rgba(0, 0, 0, 0.8);
+$loading-ios-text-color: #fff;
+$loading-ios-spinner-color: #fff;
+
+//向下刷新的高度
+$refresher-height:61px;
+$refresher-icon-color:white;
+$refresher-border-color:color($colors, sutongbao);
+$refresher-text-color:white;
+$refresher-text-font-size:12px;
+
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";

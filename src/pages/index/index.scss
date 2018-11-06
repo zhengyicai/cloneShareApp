@@ -1,0 +1,64 @@
+page-index {
+    #LoginBG{
+       
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        height: 100%;
+        width: 100%;
+       
+    }   
+    #loginDiv{
+        text-align: center;
+        padding-top: 80px;
+        color:white;
+        font-weight: bold;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    #logo{
+        width: 120px;
+        height: 100%;
+    }
+    #loginButton{
+       width: 100%;
+       font-size: 18px;
+       line-height: 20px;
+       height: 40px;
+       
+       
+       
+
+    }
+
+    #loginBut{
+        padding-left: 30px;
+        padding-right: 35px;
+    }
+    .loginInput{
+        z-index: -1;
+        width: 100% !important;
+        background-color: white;
+        border: 0px;
+        height: 40px;
+        border-radius: 5px 5px 5px 5px;   
+        color: black;
+        margin-bottom: 20px;
+        padding-left: 20px;
+
+        
+        
+    }
+    #loginCode{
+        float: left;
+        height: 40px;
+        margin-left: 20px;
+
+    }
+    
+    #forget{
+        color:color($colors, primary);
+    }
+    .show-tabbar{
+        display: none;
+    }
+}
