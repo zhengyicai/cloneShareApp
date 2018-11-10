@@ -2,14 +2,14 @@
  * 请求地址头
  */
 // 本地环境
-//export const APP_SERVE_URL:string = 'http://192.168.2.179:8080/web';
-//export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
+export const APP_SERVE_URL:string = 'http://192.168.1.140:8080/app';
+export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
 // 生产环境
 //export const APP_SERVE_URL:string = 'http://192.168.2.202:8910/web';
 //export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
 // 测试环境
-export const APP_SERVE_URL:string = 'http://192.168.2.202:8920/web';
-export const APP_PIC_URL:string = 'http://test.sutongbao.file.yb.com/';
+//export const APP_SERVE_URL:string = 'http://123.207.121.118:8080/app';
+//export const APP_PIC_URL:string = 'http://test.sutongbao.file.yb.com/';
 // 正式环境
 //export const APP_SERVE_URL:string = 'http://vpay.luck8864.com/api/web';
 //export const APP_PIC_URL:string = 'http://file.luck8864.com/';
@@ -26,13 +26,13 @@ export class AppConfig {
     //static Appmodel:number=3;             //1首次启动  2.今日首次启动 3普通模式启动
     //分页参数
     static pageSize:number = 15;  //每页显示的行数 
-    
+    static requestTime:number = 5;  //禁止重复请求
     //设备信息
     static deviceId:string = '';          //设备id
-    static appVersion:string = '1.0.0';        //版本号 2.0.2
+    static appVersion:string = '1.0.1';        //版本号 2.0.2
     static userName:string = '';          //账号名
     static token:string = '';             //token
-    static AES_key:string ="sutongbaoVpay2018!@#$!@";
+    static AES_key:string ="";
     static userId:string  = 'test';  //登录用户id
     static paraSort:any = []; //参数类型
     static currencyType:any = []; //币种类型

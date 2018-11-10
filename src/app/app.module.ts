@@ -26,10 +26,13 @@ import {ComponentsModule} from '../components/components.module';
 
 //引入自定义过滤器pipe    （也可以不全局引入，在需要的页面引入需要的pipe）
 import { TabsPage } from '../pages/tabs/tabs';
-import { ComunityListPage } from '../pages/comunity-list/comunity-list';
-import { GuardListPage } from '../pages/guard-list/guard-list';
-import { SettingPage } from '../pages/setting/setting';
-import { GuardSettingPage } from '../pages/guard-setting/guard-setting';
+import { ContactPage } from '../pages/contact/contact';
+import { AboutPage } from '../pages/about/about';
+import { HomePage } from '../pages/home/home';
+// import { ComunityListPage } from '../pages/comunity-list/comunity-list';
+// import { GuardListPage } from '../pages/guard-list/guard-list';
+// import { SettingPage } from '../pages/setting/setting';
+// import { GuardSettingPage } from '../pages/guard-setting/guard-setting';
 
 
 import { Media, MediaObject } from '@ionic-native/media';
@@ -41,17 +44,20 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
     declarations: [
         MyApp,
         TabsPage,
-        ComunityListPage,
-        GuardListPage,
-        SettingPage,
-        GuardSettingPage
+        ContactPage,
+        AboutPage,
+        HomePage
+        // ComunityListPage,
+        // GuardListPage,
+        // SettingPage,
+        // GuardSettingPage
        
     ],
     imports: [
         BrowserModule,
         HttpModule,
         ComponentsModule,
-       
+        
         IonicModule.forRoot(MyApp,{
             backButtonText: '',
             iconMode: 'ios',
@@ -64,15 +70,19 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
                     
         
         })
+
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        TabsPage,
-        ComunityListPage,
-        GuardListPage,
-        SettingPage,
-        GuardSettingPage
+       TabsPage,
+       ContactPage,
+       AboutPage,
+       HomePage
+    //    ComunityListPage,
+    //     GuardListPage,
+    //     SettingPage,
+    //     GuardSettingPage
        
       
     ],

@@ -5,19 +5,12 @@ import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
 
-/**
- * Generated class for the GuardSettingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
-@IonicPage()
 @Component({
-  selector: 'page-guard-setting',
-  templateUrl: 'guard-setting.html',
+  selector: 'page-contact',
+  templateUrl: 'contact.html'
 })
-export class GuardSettingPage {
+export class ContactPage {
 
   constructor(private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
@@ -32,51 +25,76 @@ export class GuardSettingPage {
   equArray:any = new Array(5); //设备代码byte三位
   crc16:any = new Array(5);
 
+  icodeArray= new Array(6); //序列号
+
   areaCode:any="";
+
+  equCode:any= "";  //设备编码
   ionViewDidLoad() {
-      var csCode = 0;  //厂商代码
-      var areaCode= "1193046";  //项目代码
-      this.areaCode=areaCode;
-      var equCode= "000002010101";  //设备编码
-
-      //厂商byte
-      var cslist = this.intToBytes(csCode);
-      this.csArray[0] = cslist[0];
-      this.csArray[1] = cslist[1];
-
-     
-     //项目byte
-      var arealist =  this.intToBytes(parseInt(areaCode));
-      this.areaArray[0]=arealist[0];
-      this.areaArray[1]=arealist[1];
-      this.areaArray[2]=arealist[2];
-
-      //设备编号
       
-     
-     
-      this.equArray[0] = parseInt(equCode.substr(6,2));
-      this.equArray[1] = parseInt(equCode.substr(8,2));
-      this.equArray[2] = parseInt(equCode.substr(10,2));
-      this.equArray[3] = 0;
-      this.equArray[4] = 0;
+      this.loadData();
+    // setTimeout(() => {
+
+    //    alert("fuck");
+    // }, 4000);
+
+  }
+
+  public loadData(){
+
+    var csCode = 0;  //厂商代码
+    var areaCode= "1193046";  //项目代码
+    this.areaCode=areaCode;
+    var equCode= "000002010101";  //设备编码
+    this.equCode = equCode;
+    var  icode= "00005B7B426F"  //系列序列号 8位字符串   000032A6D274
+
+    //厂商byte
+    var cslist = this.intToBytes(csCode);
+    this.csArray[0] = cslist[0];
+    this.csArray[1] = cslist[1];
+
+   
+   //项目byte
+    var arealist =  this.intToBytes(parseInt(areaCode));
+    this.areaArray[0]=arealist[0];
+    this.areaArray[1]=arealist[1];
+    this.areaArray[2]=arealist[2];
+
+    //设备编号
+    
+   
+   
+    this.equArray[0] = parseInt(equCode.substr(6,2));
+    this.equArray[1] = parseInt(equCode.substr(8,2));
+    this.equArray[2] = parseInt(equCode.substr(10,2));
+    this.equArray[3] = 0;
+    this.equArray[4] = 0;
+
+  
+
+    console.log("csArray"+ this.csArray);  
+    console.log("areaArray"+ this.areaArray);  
+
+    //小区不进行转换，直接获取两位的数据,不够补零
+    console.log("equArray"+  this.equArray);  
+
+   
+    this.crc16[0] =  this.csArray[1];
+    this.crc16[1] =  this.csArray[0];
+    this.crc16[2] =  this.areaArray[2];
+    this.crc16[3] =  this.areaArray[1];
+    this.crc16[4] =  this.areaArray[0];
+
 
     
-
-      console.log("csArray"+ this.csArray);  
-      console.log("areaArray"+ this.areaArray);  
-
-      //小区不进行转换，直接获取两位的数据,不够补零
-      console.log("equArray"+  this.equArray);  
-
-     
-      this.crc16[0] =  this.csArray[1];
-      this.crc16[1] =  this.csArray[0];
-      this.crc16[2] =  this.areaArray[2];
-      this.crc16[3] =  this.areaArray[1];
-      this.crc16[4] =  this.areaArray[0];
-
-
+    //序列号
+    this.icodeArray[0] ="0x"+icode.substr(0,2);
+    this.icodeArray[1] ="0x"+icode.substr(2,2);
+    this.icodeArray[2] ="0x"+icode.substr(4,2);
+    this.icodeArray[3] ="0x"+icode.substr(6,2);
+    this.icodeArray[4] ="0x"+icode.substr(8,2);
+    this.icodeArray[5] ="0x"+icode.substr(10,2);
   }
 
   public  intToBytes(value:any){ 
@@ -146,7 +164,7 @@ export class GuardSettingPage {
 		//var str = [0x56,0x00,0x00,0xFF,0xFF,0xFF];
 		var str = [0xB5,crc[1],crc[0],this.equArray[0],this.equArray[1],this.equArray[2],this.equArray[3],this.equArray[4],data[3],data[2],data[1],data[0]];
 		
-		var fileName='str6.wav';
+		var fileName='lock.wav';
        
 	   var str1  = this.appconfig.sound(str); 
 	   //alert(str);
@@ -172,7 +190,7 @@ export class GuardSettingPage {
     //设置项目代码
     var setCode =this.areaCode;
     var arealist =  this.intToBytes(parseInt(setCode));
-    var icode = [0x00,0x00,0x32,0xA6,0xD2,0x74];
+    var icode = this.icodeArray;
 
     //设备
     var str = [0xA7,0x00,icode[0],icode[1],icode[2],icode[3],icode[4],icode[5],arealist[2],arealist[1],arealist[0]];
@@ -223,7 +241,9 @@ export class GuardSettingPage {
         text: '确定',
         handler: (data: any) => {
             console.log('Radio data:', data);
+            this.equCode = data;
             this.setEqu(data);
+            this.loadData();
         }
         });
 
@@ -301,6 +321,7 @@ export class GuardSettingPage {
         handler: (data: any) => {
             console.log('Radio data:', data);
             this.setUserMask(data);
+            this.loadData();
         }
         });
 
@@ -418,14 +439,4 @@ export class GuardSettingPage {
 
         alert.present();  
   }  
-
-
-
-  
-
-
-
-
-
-
 }

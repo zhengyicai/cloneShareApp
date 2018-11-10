@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { ComunityListPage } from '../comunity-list/comunity-list';
-import { GuardSettingPage } from '../guard-setting/guard-setting';
-import { SettingPage } from '../setting/setting';
+import { AboutPage } from '../about/about';
+import { ContactPage } from '../contact/contact';
+
+
 
 @Component({
   templateUrl: 'tabs.html'
@@ -11,9 +12,9 @@ import { SettingPage } from '../setting/setting';
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
-  tab1Root: any = ComunityListPage;
-  tab2Root: any = GuardSettingPage;
-  tab3Root: any = SettingPage;
+  tab1Root: any = HomePage;
+  tab2Root: any = ContactPage;
+  tab3Root: any = AboutPage;
 
   constructor(private events: Events,public navCtrl: NavController, public navParams: NavParams) {
 

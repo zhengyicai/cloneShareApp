@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>注册</ion-title>
+    <ion-title>忘记密码</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,10 +15,7 @@
 
 <ion-content>
    
-      <ion-item>
-        <ion-label class="loginLabel">昵称</ion-label>
-        <ion-input type="text" class="place" [(ngModel)]="subData.name"  placeholder="请输入昵称"></ion-input>
-      </ion-item>
+      
       <ion-item>
         <ion-label class="loginLabel">手机号码</ion-label>
         <ion-input type="number" class="place"  placeholder="请输入手机号码" [(ngModel)]="subData.mobile" style=" margin-left: -10px"></ion-input>
@@ -30,8 +27,8 @@
         
     </ion-item>
       <ion-item>
-        <ion-label class="loginLabel">登录密码</ion-label>
-        <ion-input type="password"  class="place"  [(ngModel)]="subData.password"  placeholder="请输入登录密码"></ion-input>
+        <ion-label class="loginLabel">新登录密码</ion-label>
+        <ion-input type="password"  class="place"  [(ngModel)]="subData.password"  placeholder="请输入新登录密码"></ion-input>
        
       </ion-item>
       
@@ -40,7 +37,7 @@
       <ion-buttons id="loginBut">
         
         <button ion-button icon-only  [disabled]="!verifyCode1.disable" (click)="gotoRegister()"  id="RegisterButton">
-           注册
+           确认修改
         </button>
       </ion-buttons>
 

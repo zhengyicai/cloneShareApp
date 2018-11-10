@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { TabsPage } from '../tabs/tabs';
+import { IndexPage } from '../index/index';
 import { AppConfig } from '../../app/app.config';
-
 /**
  * Generated class for the RegisterPage page.
  *
@@ -14,10 +14,10 @@ import { AppConfig } from '../../app/app.config';
 
 @IonicPage()
 @Component({
-  selector: 'page-register',
-  templateUrl: 'register.html',
+  selector: 'page-forget-pwd',
+  templateUrl: 'forget-pwd.html',
 })
-export class RegisterPage {
+export class ForgetPwdPage {
 
 
   subData:any = {
@@ -88,50 +88,52 @@ getCode() {
   }
 
 
-  //重复提交倒计时
-verifyCode1: any = {
-   countdown: AppConfig.requestTime,
-   disable: true
+
+   //重复提交倒计时
+ verifyCode1: any = {
+     countdown: AppConfig.requestTime,
+    disable: true
 }
 
 // 倒计时
 settime1() {
 
-   if (this.verifyCode1.countdown == 1) {
-   this.verifyCode1.countdown = AppConfig.requestTime;
-   this.verifyCode1.disable = true;
-   return;
-   } else {
-   this.verifyCode1.countdown--;
-   }
+      if (this.verifyCode1.countdown == 1) {
+      this.verifyCode1.countdown = AppConfig.requestTime;
+      this.verifyCode1.disable = true;
+      return;
+      } else {
+      this.verifyCode1.countdown--;
+      }
 
 
-   setTimeout(() => {
+      setTimeout(() => {
 
-     this.settime1();
-   }, 1000);
+        this.settime1();
+      }, 1000);
 }
-
-
 
   //提交注册
   public  gotoRegister (){  
       if(this.validator()){
         this.verifyCode1.disable = false;
         this.settime1();
-        this.httpSerProvider.post('/register/appRegister',this.subData).then((data:any)=>{
+        this.httpSerProvider.post('/login/findPwd',this.subData).then((data:any)=>{
                 if(data.code==='0000'){
                   this.popSerProvider.toast(data.message);
                   this.popSerProvider.showImgLoading("注册成功",1);
-                  this.navCtrl.setRoot(TabsPage);
+                  this.navCtrl.setRoot(IndexPage);
                 }else if(data.code==='9999'){
                   this.popSerProvider.toast(data.message);
                 }else{
                   this.popSerProvider.toast(data.message);
                   
                 }
+
                 this.verifyCode1.countdown  = 1;
                 this.verifyCode1.disable = true;
+
+
           });
       }
 
@@ -139,10 +141,7 @@ settime1() {
 
   //验证
   validator() {
-    if (this.subData.name.trim() == null || this.subData.name.trim() == '') {
-      this.popSerProvider.toast("昵称不能为空");
-      return false;
-    }
+   
     if (this.subData.mobile.trim() == null || this.subData.mobile.trim() == '') {
       this.popSerProvider.toast("手机号不能为空");
       return false;
@@ -157,12 +156,7 @@ settime1() {
       return false;
     }
     
-    
-    if (this.subData.name.trim().length > 12  || this.subData.name.trim().length < 1) {
-      this.popSerProvider.toast("昵称长度有误");
-      return false;
-    }
-
+  
     if (this.subData.mobile.trim().length > 12  || this.subData.mobile.trim().length < 8) {
       this.popSerProvider.toast("手机号长度有误");
       return false;

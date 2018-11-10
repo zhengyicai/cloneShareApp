@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { GuardListPage } from './guard-list';
+import { UpdatePwdPage } from './update-pwd';
 
 @NgModule({
   declarations: [
-    GuardListPage,
+    UpdatePwdPage,
   ],
   imports: [
-    IonicPageModule.forChild(GuardListPage),
+    IonicPageModule.forChild(UpdatePwdPage),
   ],
 })
-export class GuardListPageModule {}
+export class UpdatePwdPageModule {}

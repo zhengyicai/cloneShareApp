@@ -4,6 +4,7 @@ import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
 import { TabsPage } from '../tabs/tabs';
+
 //import { AppConfig } from '../../app/app.config';
 
 /**
@@ -21,8 +22,8 @@ import { TabsPage } from '../tabs/tabs';
 export class IndexPage {
   imgStr:string;//图片验证码
   imgKey:string;//验证码对应的key
-  userName:string = ""; //用户名
-  password:string = ""; //密码
+  userName:string = "18676487058"; //用户名
+  password:string = "111111"; //密码
   code:string = "";//验证码
   deviceId:string = "";
   appVersion:string = "";
@@ -32,7 +33,7 @@ export class IndexPage {
               public popSerProvider:PopSerProvider,
               ) {
 
-                this.deviceId = AppConfig.deviceId;
+                //this.deviceId = AppConfig.deviceId;
                 this.appVersion = AppConfig.appVersion;
   }
 
@@ -62,41 +63,68 @@ export class IndexPage {
   }
 
   gotoLogin(){
-    this.navCtrl.setRoot(TabsPage);
-    // if(this.validator()){
-    //   this.httpSerProvider.post('/app/manage/loginIn',{
-    //           loginName:this.userName,
-    //           password:this.password,
-    //           imgKey:this.imgKey,
-    //           picCode:this.code,
-    //           deviceId:AppConfig.deviceId
-    //       }).then((data:any)=>{
-    //       if(data.code==='0000'){
-    //           localStorage.setItem('token',data.data);
-    //           //缺少刷新token 以及用户安全  userinfo+key
-    //           this.popSerProvider.showImgLoading("登录成功",1);
-    //           this.navCtrl.setRoot('HomePage');
-    //           localStorage.setItem("autoLogin","1");
-    //           //自动登录获取到userId
-    //           localStorage.setItem("autoKey",data.message);
-    //       }else if(data.code==='9999'){
-    //         this.popSerProvider.showImgLoading(data.message,0);
-    //       }else{
-    //         // Utils.show("登录失败，请联系管理员");
+    //this.navCtrl.setRoot(TabsPage);
+    if(this.validator()){
+      this.verifyCode.disable = false;
+      this.settime();
+      
+      this.httpSerProvider.post('/login/loginIn',{
+              loginName:this.userName,
+              password:this.password
+          }).then((data:any)=>{
+          if(data.code==='0000'){
+              localStorage.setItem('token',data.data);
+
+              this.popSerProvider.showImgLoading("登录成功",1);
+              this.navCtrl.setRoot(TabsPage);  
+          }else if(data.code==='9999'){
+            this.popSerProvider.showImgLoading(data.message,0);
+          }else{
+            // Utils.show("登录失败，请联系管理员");
             
-    //       }
-    //   });
-    // }
+          }
+          this.verifyCode.countdown  = 1;
+          this.verifyCode.disable = true;
+      });
+    }
     
 
    
 
 
   }
-  gotoRegister(){
+  gotoRegister(){    
       this.navCtrl.push("RegisterPage");
   }
+
+  gotoforgetPwd(){
+    this.navCtrl.push("ForgetPwdPage");
+  }
+
+ // 验证码倒计时
+ verifyCode: any = {
+      countdown: AppConfig.requestTime,
+      disable: true
+  }
+
+  // 倒计时
+settime() {
  
+  if (this.verifyCode.countdown == 1) {
+  this.verifyCode.countdown = AppConfig.requestTime;
+  this.verifyCode.disable = true;
+  return;
+  } else {
+  this.verifyCode.countdown--;
+  }
+
+
+  setTimeout(() => {
+
+      this.settime();
+  }, 1000);
+}
+
 
   //验证
   validator() {
@@ -109,11 +137,7 @@ export class IndexPage {
       return false;
     }
 
-    if (this.code.trim() == null || this.code.trim() == '') {
-      this.popSerProvider.toast("验证码不能为空");
-      return false;
-    }
-   
+  
     if (this.password.trim().length > 32  || this.password.trim().length < 3) {
       this.popSerProvider.toast("密码长度有误");
       return false;
@@ -123,15 +147,7 @@ export class IndexPage {
       this.popSerProvider.toast("用户名长度有误");
       return false;
     }
-
-    if (this.code.trim().length > 6  || this.code.trim().length < 4) {
-      this.popSerProvider.toast("验证码长度有误");
-      return false;
-    }
-
-
-
-    
+  
     return true;
   }
 
