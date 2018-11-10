@@ -126,7 +126,23 @@ export class MyApp {
         this.showExit();
         return;
       }
-      this.appCtrl.getActiveNav().pop();//剩余的情况全部使用全局路由进行操作   
+
+      //处理tabs退出 子页面返回上一页  
+      const nav = this.appCtrl.getActiveNav();
+
+      if (overlay && overlay.dismiss) {
+        this.showExit();
+       
+        return;
+      } else if (nav.canGoBack()) {  //tabs子页面和其他页面
+        this.appCtrl.getActiveNav().pop();
+       
+        return;
+      } else {  //tabs
+        this.showExit();
+        return; 
+      }
+      
     });
   }
 
