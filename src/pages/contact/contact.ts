@@ -39,7 +39,8 @@ export class ContactPage {
     //    alert("fuck");
     // }, 4000);
     if (this.platform.is('ios')) {
-      this.fileUrl = this.file.documentsDirectory;
+      this.fileUrl = this.file.tempDirectory;
+    //alert(this.fileUrl);
     } else if (!this.platform.is('ios')) {
       this.fileUrl = this.file.externalDataDirectory;  
     }      
@@ -139,12 +140,16 @@ export class ContactPage {
       
       //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
       this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
-        this.recordData = this.media.create(this.fileUrl+fileName);
+
+        if (this.platform.is('ios')) {
+          this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+        } else if (!this.platform.is('ios')) {
+          this.recordData = this.media.create(this.fileUrl+fileName);  
+        }
         //控制声音大小 0-1
-        this.recordData.setVolume(0.1);
+        this.recordData.setVolume(1);
               this.recordData.play();
       }).catch(error => {
-
       })
   }
   
@@ -180,9 +185,13 @@ export class ContactPage {
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
 	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.fileUrl+fileName);
+			if (this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+      } else if (!this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl+fileName);  
+      }
 			//控制声音大小 0-1
-			this.recordData.setVolume(0.1);
+			this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
@@ -208,9 +217,13 @@ export class ContactPage {
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
 	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.fileUrl+fileName);
+			if (this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+      } else if (!this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl+fileName);  
+      }
 			//控制声音大小 0-1
-			this.recordData.setVolume(0.1);
+			this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
@@ -280,9 +293,13 @@ export class ContactPage {
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
 	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.fileUrl+fileName);
+			if (this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+      } else if (!this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl+fileName);  
+      }
 			//控制声音大小 0-1
-			this.recordData.setVolume(0.1);
+			this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
@@ -357,9 +374,13 @@ export class ContactPage {
     
     //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
     this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
-        this.recordData = this.media.create(this.fileUrl+fileName);
+      if (this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+      } else if (!this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl+fileName);  
+      }
         //控制声音大小 0-1
-        this.recordData.setVolume(0.1);
+        this.recordData.setVolume(1);
               this.recordData.play();
       }).catch(error => {
 
@@ -386,9 +407,13 @@ export class ContactPage {
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
 	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.fileUrl+fileName);
+			if (this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+      } else if (!this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl+fileName);  
+      }
 			//控制声音大小 0-1
-			this.recordData.setVolume(0.1);
+			this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
