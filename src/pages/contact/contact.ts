@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController,NavController, NavParams } from 'ionic-angular';
+import { IonicPage, AlertController,NavController, NavParams,Platform } from 'ionic-angular';
 import { Media,MediaObject } from '@ionic-native/media';
 import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
@@ -12,7 +12,7 @@ import { AppConfig } from '../../app/app.config';
 })
 export class ContactPage {
 
-  constructor(private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
   }
 
@@ -30,6 +30,7 @@ export class ContactPage {
   areaCode:any="";
 
   equCode:any= "";  //设备编码
+  fileUrl:any;  //文件存放地址 
   ionViewDidLoad() {
       
       this.loadData();
@@ -37,6 +38,12 @@ export class ContactPage {
 
     //    alert("fuck");
     // }, 4000);
+    if (this.platform.is('ios')) {
+      this.fileUrl = this.file.documentsDirectory;
+    } else if (!this.platform.is('ios')) {
+      this.fileUrl = this.file.externalDataDirectory;  
+    }      
+
 
   }
 
@@ -128,11 +135,11 @@ export class ContactPage {
      
       var str1  = this.appconfig.sound(str); 
 
-      this.file.createFile( this.file.externalDataDirectory,fileName,true);
+      this.file.createFile( this.fileUrl,fileName,true);
       
       //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
-      this.file.writeExistingFile(this.file.externalDataDirectory,fileName,str1).then(response => {
-        this.recordData = this.media.create(this.file.externalDataDirectory+fileName);
+      this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+        this.recordData = this.media.create(this.fileUrl+fileName);
         //控制声音大小 0-1
         this.recordData.setVolume(0.1);
               this.recordData.play();
@@ -169,11 +176,11 @@ export class ContactPage {
 	   var str1  = this.appconfig.sound(str); 
 	   //alert(str);
 	   //console.log(str1);
-	   this.file.createFile( this.file.externalDataDirectory,fileName,true);
+	   this.file.createFile( this.fileUrl,fileName,true);
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
-	   this.file.writeExistingFile(this.file.externalDataDirectory,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.file.externalDataDirectory+fileName);
+	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+			this.recordData = this.media.create(this.fileUrl+fileName);
 			//控制声音大小 0-1
 			this.recordData.setVolume(0.1);
             this.recordData.play();
@@ -197,11 +204,11 @@ export class ContactPage {
     var fileName='area.wav';
        
 	   var str1  = this.appconfig.sound(str); 
-	   this.file.createFile( this.file.externalDataDirectory,fileName,true);
+	   this.file.createFile( this.fileUrl,fileName,true);
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
-	   this.file.writeExistingFile(this.file.externalDataDirectory,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.file.externalDataDirectory+fileName);
+	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+			this.recordData = this.media.create(this.fileUrl+fileName);
 			//控制声音大小 0-1
 			this.recordData.setVolume(0.1);
             this.recordData.play();
@@ -269,11 +276,11 @@ export class ContactPage {
     var fileName='equ.wav';
        
 	   var str1  = this.appconfig.sound(str); 
-	   this.file.createFile( this.file.externalDataDirectory,fileName,true);
+	   this.file.createFile( this.fileUrl,fileName,true);
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
-	   this.file.writeExistingFile(this.file.externalDataDirectory,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.file.externalDataDirectory+fileName);
+	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+			this.recordData = this.media.create(this.fileUrl+fileName);
 			//控制声音大小 0-1
 			this.recordData.setVolume(0.1);
             this.recordData.play();
@@ -346,11 +353,11 @@ export class ContactPage {
     var fileName='user.wav';
        
     var str1  = this.appconfig.sound(str); 
-    this.file.createFile( this.file.externalDataDirectory,fileName,true);
+    this.file.createFile( this.fileUrl,fileName,true);
     
     //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
-    this.file.writeExistingFile(this.file.externalDataDirectory,fileName,str1).then(response => {
-        this.recordData = this.media.create(this.file.externalDataDirectory+fileName);
+    this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+        this.recordData = this.media.create(this.fileUrl+fileName);
         //控制声音大小 0-1
         this.recordData.setVolume(0.1);
               this.recordData.play();
@@ -375,11 +382,11 @@ export class ContactPage {
 		var fileName='time.wav';
        
 	   var str1  = this.appconfig.sound(str); 
-	   this.file.createFile( this.file.externalDataDirectory,fileName,true);
+	   this.file.createFile( this.fileUrl,fileName,true);
 	   
 	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
-	   this.file.writeExistingFile(this.file.externalDataDirectory,fileName,str1).then(response => {
-			this.recordData = this.media.create(this.file.externalDataDirectory+fileName);
+	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+			this.recordData = this.media.create(this.fileUrl+fileName);
 			//控制声音大小 0-1
 			this.recordData.setVolume(0.1);
             this.recordData.play();
