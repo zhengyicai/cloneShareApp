@@ -191,7 +191,7 @@ export class ContactPage {
         this.recordData = this.media.create(this.fileUrl+fileName);  
       }
 			//控制声音大小 0-1
-			this.recordData.setVolume(1);
+		//this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
@@ -223,7 +223,7 @@ export class ContactPage {
         this.recordData = this.media.create(this.fileUrl+fileName);  
       }
 			//控制声音大小 0-1
-			this.recordData.setVolume(1);
+		//this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
@@ -299,7 +299,7 @@ export class ContactPage {
         this.recordData = this.media.create(this.fileUrl+fileName);  
       }
 			//控制声音大小 0-1
-			this.recordData.setVolume(1);
+		//this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
@@ -413,7 +413,7 @@ export class ContactPage {
         this.recordData = this.media.create(this.fileUrl+fileName);  
       }
 			//控制声音大小 0-1
-			this.recordData.setVolume(1);
+		//this.recordData.setVolume(1);
             this.recordData.play();
 		}).catch(error => {
 
