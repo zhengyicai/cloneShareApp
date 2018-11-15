@@ -1,25 +1,45 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { NavController,AlertController, NavParams,Platform } from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
-
+import { Slides } from 'ionic-angular';//注入轮播
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  @ViewChild('slides ') slides: Slides;
   constructor(private platform:Platform,  private alertCtrl:AlertController,public navCtrl: NavController, public navParams: NavParams,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider,) {
     // this.alertUpate();
     // this.alertServerUpate();
   }
+  //页面进入时启动自动播放
+  // ionViewDidEnter(){
+  //     this.slides.startAutoplay();
+  // }
 
+  goToSlide() {
+    this.slides.slideTo(2, 500);
+  }
+
+
+  //页面离开时停止自动播放
+
+
+  // ionViewDidLeave(){ 
+  // this.slides.stopAutoplay();
+  // }
+
+
+ 
+   
   showUpdate:any = true;
   banners:any;  
   param:any;
   appVersion:any;
+ 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComunityListPage');
     this.loadData();
@@ -80,6 +100,29 @@ export class HomePage {
 
   }
 
+
+  public  unlock(){
+    this.navCtrl.push("UnlockPage");
+  }
+
+  public alertPage(){
+    let alert = this.alertCtrl.create({
+      title: '',
+      message: '新功能正在上线中，尽请期待~',
+      buttons: [
+       
+        {
+          text: '确定',
+          handler: (data: any) => {
+            console.log('Radio data:', data);
+           
+            
+        }
+        }
+      ]
+    });
+    alert.present();
+  }
 
   public cancellUpdate(){
     this.showUpdate =false;

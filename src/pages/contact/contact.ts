@@ -53,7 +53,7 @@ export class ContactPage {
     var csCode = 0;  //厂商代码
     var areaCode= "1193046";  //项目代码
     this.areaCode=areaCode;
-    var equCode= "000002010101";  //设备编码
+    var equCode= "000002040303";  //设备编码
     this.equCode = equCode;
     var  icode= "00005B7B426F"  //系列序列号 8位字符串   000032A6D274
 
@@ -174,8 +174,9 @@ export class ContactPage {
 		
 		
 		//var str = [0x56,0x00,0x00,0xFF,0xFF,0xFF];
-		var str = [0xB5,crc[1],crc[0],this.equArray[0],this.equArray[1],this.equArray[2],this.equArray[3],this.equArray[4],data[3],data[2],data[1],data[0]];
-		
+    //var str = [0xB5,crc[1],crc[0],this.equArray[0],this.equArray[1],this.equArray[2],this.equArray[3],this.equArray[4],data[3],data[2],data[1],data[0]];
+    
+		var str = [0xB5,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];
 		var fileName='lock.wav';
        
 	   var str1  = this.appconfig.sound(str); 

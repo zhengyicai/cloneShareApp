@@ -22,11 +22,15 @@
       
    
       <br/><br/>
-      <ion-buttons id="loginBut">
+      <!-- <ion-buttons id="loginBut">
         
         <button ion-button icon-only [disabled]="!verifyCode1.disable" (click)="gotoupdatePwd()"  id="RegisterButton">
            确认修改
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
+      
+    <button class="loginButton" icon-only [disabled]="!verifyCode1.disable" (click)="gotoupdatePwd()"  id="RegisterButton">
+        确认修改
+      </button>
 
 </ion-content>

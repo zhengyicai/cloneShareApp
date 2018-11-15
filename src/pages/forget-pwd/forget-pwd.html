@@ -34,12 +34,17 @@
       
    
       <br/><br/>
-      <ion-buttons id="loginBut">
+      <!-- <ion-buttons id="loginBut">
         
         <button ion-button icon-only  [disabled]="!verifyCode1.disable" (click)="gotoRegister()"  id="RegisterButton">
            确认修改
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
+
+
+      <button class="loginButton" [disabled]="!verifyCode1.disable" (click)="gotoRegister()"  id="RegisterButton">
+          确认修改
+        </button>
 
       
 </ion-content>

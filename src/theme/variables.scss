@@ -30,9 +30,9 @@ $colors: (
 
 $alert-button-font-size:10px;
 //头部导航样式
-$toolbar-ios-title-text-color: white;
+$toolbar-ios-title-text-color: #222;
 //$background-color: color($colors, primary);
-$toolbar-background: #47ac5e;
+$toolbar-background: white;
 
 $toolbar-md-height:50px;
 
@@ -41,8 +41,8 @@ $toolbar-md-height:50px;
 $menu-width:300px;
 $menu-small-width:270px;
 //侧导航返回键
-$toolbar-md-button-color :white;
-$toolbar-ios-button-color :white;
+$toolbar-md-button-color :#222;
+$toolbar-ios-button-color :#222;
 
 
 //弹出框颜色

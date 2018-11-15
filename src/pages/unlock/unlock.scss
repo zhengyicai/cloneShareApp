@@ -1,0 +1,30 @@
+page-unlock {
+    .div{
+        
+      
+       margin: auto;
+       margin-top: 40px;
+        width: 220px;
+        height: 220px;
+        border-radius: 110px 110px ; 
+        background-color:color($colors, primary);
+        opacity: 0.8;
+        padding:70px 70px;
+    }
+    #RegisterButton{
+        width: 100%;
+        font-size: 18px;
+        line-height: 20px;
+        height: 40px;
+        
+        
+        
+ 
+     }
+     #loginBut{
+        padding-left: 30px;
+        padding-right: 35px;
+    }
+  
+ 
+}

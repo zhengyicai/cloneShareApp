@@ -1,0 +1,29 @@
+<!--
+  Generated template for the UnlockPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>手机开门</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding style="background-color:white">
+    
+      <div class="div" [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  >
+              <img src="assets/img/icon/menjin_off.png" ><br/>
+              <div style="color:white;margin:10px 5px">正在开门···</div>
+      </div>
+      <div class="div" [ngStyle]="{'display': isCheck===true ? 'block' : 'none'}" (click)="adminUnlock()">
+          <img src="assets/img/icon/menjin_on.png" ><br/>
+          <div style="color:white;margin:10px 5px">开门成功!</div>
+      </div>
+
+   
+    
+</ion-content>

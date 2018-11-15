@@ -2,14 +2,14 @@
  * 请求地址头
  */
 // 本地环境
-export const APP_SERVE_URL:string = 'http://192.168.1.140:8080/app';
-export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
+//export const APP_SERVE_URL:string = 'http://192.168.1.140:8080/app';
+//export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
 // 生产环境
 //export const APP_SERVE_URL:string = 'http://192.168.2.202:8910/web';
 //export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
 // 测试环境
-//export const APP_SERVE_URL:string = 'http://123.207.121.118:8080/app';
-//export const APP_PIC_URL:string = 'http://test.sutongbao.file.yb.com/';
+export const APP_SERVE_URL:string = 'http://123.207.121.118:8080/app';
+export const APP_PIC_URL:string = 'http://test.sutongbao.file.yb.com/';
 // 正式环境
 //export const APP_SERVE_URL:string = 'http://vpay.luck8864.com/api/web';
 //export const APP_PIC_URL:string = 'http://file.luck8864.com/';

@@ -1,17 +1,125 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>小区列表</ion-title>
+    <ion-title>首页</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+    <ion-slides #slides  class="focus" pager  loop="true" autoplay="3000">    
+        <ion-slide >
+            <img class="slide-image" src="assets/img/1.png">
+        </ion-slide>
+        <ion-slide >
+            <img class="slide-image" src="assets/img/1.png">
+        </ion-slide>         
+     </ion-slides>
+
+     <ion-grid no-padding class="functionList" >
+        <ion-row class="listPart1">
+            <ion-col class="recharge" text-center (click)="alertPage()">
+                <span>
+                  <img src="assets/img/icon/community_cinema.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                <span>找管家</span>
+            </ion-col>
+            <ion-col class="recharge" text-center (click)="unlock()">
+                  <span>
+                    <img src="assets/img/icon/com_b_a.png">
+                    <!-- <mark >1</mark> -->
+                  </span>
+                  
+                  <span>手机开门</span>
+            </ion-col>
+            <ion-col class="recharge" text-center (click)="alertPage()"  >
+                <span>
+                  <img src="assets/img/icon/community_books.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                  <span>物业缴费</span>
+            </ion-col>
+            <ion-col class="recharge" text-center (click)="alertPage()" >
+                <span>
+                  <img src="assets/img/icon/community_fix.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+            
+                <span>物业保修</span>
+            </ion-col>
+        </ion-row>
+        <ion-row class="listPart1">
+            <ion-col class="recharge" text-center (click)="alertPage()">
+                <span>
+                  <img src="assets/img/icon/community_register.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                <span>证券开户</span>
+            </ion-col>
+            <ion-col class="recharge" text-center (click)="alertPage()">
+                <span>
+                  <img src="assets/img/icon/community_build.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+              
+               <span>小区置业</span>
+            </ion-col>
+            <ion-col class="recharge" text-center (click)="alertPage()">
+                <span>
+                  <img src="assets/img/icon/community_road.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                <span>小区停车</span>
+            </ion-col>
+            <ion-col class="recharge" text-center (click)="alertPage()">
+                <span>
+                  <img src="assets/img/icon/community_notice.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                <span>社区公告</span>
+            </ion-col>
+        </ion-row>
+      </ion-grid>  
+      
+      
+      <ion-card style="border-radius:5px 5px 5px 5px ">
+
+          <ion-item>
+              <ion-avatar item-start style="margin-right:0px;">
+                <img src="assets/img/icon/community_notice.png" style="width:25px;height:25px; border-radius: 0px">
+              </ion-avatar>
+              <h3>最新项目上线啦~</h3>
+              <p>2018-11-15 14:00</p>
+            </ion-item>
+          
+          
+            <ion-card-content>
+              <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
+            </ion-card-content>
+          
+            <ion-row>
+              <ion-col>
+                <button ion-button icon-start clear small>
+                  <ion-icon name="thumbs-up"></ion-icon>
+                  <div>12 Likes</div>
+                </button>
+              </ion-col>
+              <ion-col>
+                <button ion-button icon-start clear small>
+                  <ion-icon name="text"></ion-icon>
+                  <div>4 Comments</div>
+                </button>
+              </ion-col>
+              <ion-col center text-center>
+               
+              </ion-col>
+            </ion-row>
+        
+      </ion-card>
+      
+ 
 </ion-content>

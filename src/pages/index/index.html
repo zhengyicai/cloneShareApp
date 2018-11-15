@@ -1,10 +1,10 @@
 <ion-content  id="LoginBG"  style="background-image: url(assets/img/login1.jpg);" hide-tabs>
     <div id="loginDiv">
           <!-- <img src="assets/img/logo.png" id="logo"> -->
-          <div style="height: 60px;"></div>
+          <div style="height: 30px;"></div>
           <div style="font-size: 24px; margin-bottom: 10px">声波门禁</div>
           <div style="font-size: 18px;color: aliceblue">cloud share</div>
-          <div style="height: 120px;"></div>
+          <div style="height: 60px;"></div>
           <div>
             <div class="loginInput" >
               <ion-input  type="text" [(ngModel)]="userName"   placeholder="手 机 号:"></ion-input>
@@ -22,7 +22,7 @@
               <br/> 
           </div>
     </div>
-    <ion-buttons id="loginBut"  >
+    <ion-buttons id="loginBut">
         
         <button ion-button icon-only [disabled]="!verifyCode.disable" (click)="gotoLogin()"  id="loginButton">
            登录
