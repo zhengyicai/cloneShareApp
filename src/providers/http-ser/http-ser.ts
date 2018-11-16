@@ -3,7 +3,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {APP_SERVE_URL} from '../../app/app.config';
 // import {AppConfig} from '../../app/app.config';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
-import {NavController,App} from 'ionic-angular';
+import {NavController,App,Events} from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -18,7 +18,7 @@ export class HttpSerProvider {
     //@ViewChild('myNav') navCtrl: NavController; //
   
     showCount:boolean = false; //显示一次报错信息
-    constructor(public http: Http,public app:App,public popSerProvider: PopSerProvider) {
+    constructor(public http: Http,public app:App,public events:Events,public popSerProvider: PopSerProvider) {
         // console.log('Hello HttpSerProvider Provider');
         //this.navCtrl.setRoot('IndexPage');
         ShowPage = this;
@@ -169,7 +169,10 @@ export class HttpSerProvider {
         // }else{
         
         // }
-        
+        // alert(error.status);
+        // this.show();
+        // localStorage.removeItem("token");
+        // this.events.publish('toLogin');
         
         // return Promise.reject(message);
         
@@ -180,9 +183,12 @@ export class HttpSerProvider {
             const err = body.error || JSON.stringify(body);
             errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
             ShowPage.show(body);
+            
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
+
+        
         
         
         //console.error(errMsg);

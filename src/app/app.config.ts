@@ -29,7 +29,7 @@ export class AppConfig {
     static requestTime:number = 5;  //禁止重复请求
     //设备信息
     static deviceId:string = '';          //设备id
-    static appVersion:string = '1.0.1';        //版本号 2.0.2
+    static appVersion:string = '1.0.2';        //版本号 2.0.2
     static userName:string = '';          //账号名
     static token:string = '';             //token
     static AES_key:string ="";

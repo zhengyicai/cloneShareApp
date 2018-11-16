@@ -220,4 +220,8 @@ export class AboutPage {
     
   }
 
+  public addCom(){
+    this.navCtrl.push("BankPage");
+  }
+
 }

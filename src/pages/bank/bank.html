@@ -1,0 +1,49 @@
+<!--
+  Generated template for the BankPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>我的小区</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div >
+      <div class="div" style="background-color: #5e9ff3;border-radius:5px 5px 0 0;">
+          <ion-grid style="padding: 0px;color: white">
+              <ion-row class="row1">
+                <ion-col col-10>
+                  <div>阳光小区</div>
+                </ion-col>
+                <ion-col col-2>
+                  <div  style="border: 1px solid white;text-align: center;border-radius: 5px 5px 5px 5px;">默认</div>
+                </ion-col>
+              </ion-row>
+          </ion-grid>
+      </div>
+
+      <div style="background-color: white">
+        <ion-grid style="padding: 0px;border:1px solid #47ac5e">
+            <ion-row class="row1" style="height:60px;line-height:30px;padding:10px 0px">
+              <ion-col col-10>
+                <div>楼栋1 单元1 房间号1001</div>
+              </ion-col>
+              <ion-col col-2>
+                <div (click)="presentConfirm()"  style="border: 1px solid white;text-align: center;color: red;background-color: #F3F3F3;border-radius: 5px 5px 5px 5px;">删除</div>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+      </div>
+  </div>
+  <button class="loginButton" (click)="addBank()" style="border-radius: 5px 5px 5px 5px;font-size: 14px;border:1px solid #47ac5e">
+      添加小区
+    </button>
+
+
+</ion-content>

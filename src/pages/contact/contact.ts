@@ -1,21 +1,27 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController,NavController, NavParams,Platform } from 'ionic-angular';
+import { IonicPage, AlertController,NavController, NavParams,Platform,Events } from 'ionic-angular';
 import { Media,MediaObject } from '@ionic-native/media';
 import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 
 
+
+declare var _this:any;
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
 })
 export class ContactPage {
 
-  constructor(private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor( public popSerProvider:PopSerProvider,private events: Events,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
+    
   }
 
+  static play1:any;
   public appconfig:any;
   public filePath : any; //录音文件的名字
   public recordData : any; //录音对象
@@ -26,13 +32,14 @@ export class ContactPage {
   crc16:any = new Array(5);
 
   icodeArray= new Array(6); //序列号
+  playDisable:boolean = true; //是否禁用  true:开启，false:禁用
 
   areaCode:any="";
 
   equCode:any= "";  //设备编码
   fileUrl:any;  //文件存放地址 
   ionViewDidLoad() {
-      
+      this.playDisable = true;
       this.loadData();
     // setTimeout(() => {
 
@@ -45,8 +52,14 @@ export class ContactPage {
       this.fileUrl = this.file.externalDataDirectory;  
     }      
 
+    this.events.subscribe('test1', () => {
+      this.playDisable = true;
+    });
+
 
   }
+
+
 
   public loadData(){
 
@@ -127,12 +140,21 @@ export class ContactPage {
     return nValue; 
 
   }
+  public test(){
+    alert(_this);
+    
+    
+   
+   
+   }
 
   //播放序列号
   public playEquCode(code){
+    let that=this; 
+    this.playDisable = false;
       var str = [0x18,parseInt("0x"+code)];
       console.log(str);
-      var fileName='playequ.wav';
+      var fileName='playequ'+code+'.wav';
      
       var str1  = this.appconfig.sound(str); 
 
@@ -149,16 +171,30 @@ export class ContactPage {
         //控制声音大小 0-1
         this.recordData.setVolume(1);
               this.recordData.play();
+              //完成回调功能
+              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",1)); 
+              //this.recordData.onStatusUpdate.subscribe(status => this.playDisable = true,this.playDisable = true
+              // fires when file status changes  
+              //that.playDisable = true,    
+             // this.events.publish('test1')
+             
+              
+               
+                
+              // ); 
       }).catch(error => {
+            this.playDisable = true;
       })
   }
+
+
   
 
   //物业开锁
   public  adminUnlock(){
       //机子返回的是16进制	
    
-    
+      this.playDisable = false;
     // console.log(crc16[0]+"a"+crc16[1]+"a"+crc16[2]+"a"+crc16[3]+"a"+crc16[4]);
 		//var crc16 = [0x00,0x00,0x12,0x34,0x56];
 		//厂商+项目代码 转字节
@@ -194,7 +230,9 @@ export class ContactPage {
 			//控制声音大小 0-1
 		//this.recordData.setVolume(1);
             this.recordData.play();
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
 		}).catch(error => {
+      this.playDisable = true;
 
 		})
 
@@ -203,6 +241,8 @@ export class ContactPage {
 
   //设置项目
   public setArea(){
+
+    this.playDisable = false;
    
     //设置项目代码
     var setCode =this.areaCode;
@@ -224,10 +264,13 @@ export class ContactPage {
         this.recordData = this.media.create(this.fileUrl+fileName);  
       }
 			//控制声音大小 0-1
-		//this.recordData.setVolume(1);
+    //this.recordData.setVolume(1);
+           
             this.recordData.play();
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+            
 		}).catch(error => {
-
+      this.playDisable = true;
 		})
   }
 
@@ -273,7 +316,7 @@ export class ContactPage {
 
   //设置设备
   public setEqu(data){
-   
+    this.playDisable = false;
     var setequ = data;
     var setEqu  = new Array(5);
     setEqu[0] = parseInt(setequ.substr(6,2));
@@ -302,8 +345,9 @@ export class ContactPage {
 			//控制声音大小 0-1
 		//this.recordData.setVolume(1);
             this.recordData.play();
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
 		}).catch(error => {
-
+      this.playDisable = true;
 		})
   }
 
@@ -356,6 +400,7 @@ export class ContactPage {
 
   //设置用户识别码
   public  setUserMask(data){
+    this.playDisable = false;
     var setUserCode = data;  
     //var setUserCode = "FFFFFF0000";
       var setUser  = new Array(5);
@@ -383,8 +428,9 @@ export class ContactPage {
         //控制声音大小 0-1
         this.recordData.setVolume(1);
               this.recordData.play();
+              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
       }).catch(error => {
-
+        this.playDisable = true;
       })
 
 
@@ -393,7 +439,7 @@ export class ContactPage {
 
   //设置时间
   public  updateTime(){ 
-    
+    this.playDisable = false;
 		var time = Math.round(new Date().getTime()/1000)-946656000;
 		var data =  this.intToBytes(time);
 		
@@ -416,8 +462,9 @@ export class ContactPage {
 			//控制声音大小 0-1
 		//this.recordData.setVolume(1);
             this.recordData.play();
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
 		}).catch(error => {
-
+      this.playDisable = true;
 		})
     }
     

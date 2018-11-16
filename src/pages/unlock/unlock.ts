@@ -4,6 +4,7 @@ import { Media,MediaObject } from '@ionic-native/media';
 import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
+import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 /**
  * Generated class for the UnlockPage page.
  *
@@ -17,7 +18,7 @@ import { AppConfig } from '../../app/app.config';
 })
 export class UnlockPage {
 
-  constructor(private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
   }
 
@@ -163,10 +164,15 @@ export class UnlockPage {
         //控制声音大小 0-1
       //this.recordData.setVolume(1);
               this.recordData.play();
-              this.isCheck = true;
+
+              //完成回调功能
+              this.recordData.onSuccess.subscribe(() => this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+              
+              
       }).catch(error => {
         this.isCheck = false;
       })
+     
 
     }
 

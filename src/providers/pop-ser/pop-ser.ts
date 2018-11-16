@@ -294,6 +294,17 @@ export class PopSerProvider {
     }
 
 
+    showSoundLoading(content: string = '播放中', status: any = '1'): void {
+        this.loadingShow = this.loadingCtrl.create({
+        spinner: 'hide',
+        content:'<div><center style="background-color:green"><img src="assets/img/left_sound3.png"><br/><ion-label>' + content + '</ion-label></center></div>', 
+        duration: status*1000,
+          
+        });
+        this.loadingShow.present();
+    }
+
+
     /**
      * toast短暂提示   (支持自定义)
      * http://ionicframework.com/docs/api/components/toast/ToastController/

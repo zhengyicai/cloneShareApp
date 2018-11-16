@@ -1,18 +1,32 @@
-<ion-content  id="LoginBG"  style="background-image: url(assets/img/login1.jpg);" hide-tabs>
+<ion-content  id="LoginBG"  style="background-color: white;" hide-tabs>
     <div id="loginDiv">
           <!-- <img src="assets/img/logo.png" id="logo"> -->
+          
+          <!-- <div style="font-size: 24px; margin-bottom: 10px;color: #708090">声波门禁</div>
+          <div style="font-size: 18px;color: #708090">SoundDoor</div> -->
+          <img src="assets/img/logo.png" id="logo">
+          <div style="font-size: 24px; margin-bottom: 10px;color: #708090">声波门禁</div>
           <div style="height: 30px;"></div>
-          <div style="font-size: 24px; margin-bottom: 10px">声波门禁</div>
-          <div style="font-size: 18px;color: aliceblue">cloud share</div>
-          <div style="height: 60px;"></div>
-          <div>
-            <div class="loginInput" >
+          
+          
+            <ion-item style="font-size:16px;">
+              <ion-label style="color:#000000;">用 户 名</ion-label>
+              <ion-input type="text" [(ngModel)]="userName"  placeholder="请输入手机号"></ion-input>
+            </ion-item>
+          
+            <ion-item style="font-size:16px;">
+              <ion-label style="color:#000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密 码</ion-label>
+              <ion-input type="password" [(ngModel)]="password" placeholder="请输入密码"></ion-input>
+            </ion-item>
+        
+          <div style="margin-top:10px">
+            <!-- <div class="loginInput" >
               <ion-input  type="text" [(ngModel)]="userName"   placeholder="手 机 号:"></ion-input>
             </div>
             
             <div class="loginInput" style="margin-bottom: 5px;" >
                 <ion-input  type="password" [(ngModel)]="password"  placeholder="密 码:"></ion-input>
-            </div>
+            </div> -->
             
               <ion-row style="text-align: left;font-weight:normal" >
                 <ion-col col-4 id="forget" (click)="gotoforgetPwd()">忘记密码?</ion-col>

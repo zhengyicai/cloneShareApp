@@ -35,12 +35,18 @@ export class IndexPage {
 
                 //this.deviceId = AppConfig.deviceId;
                 this.appVersion = AppConfig.appVersion;
+                
   }
 
   ionViewDidLoad() {
     
     // this.loadData();
-    
+      if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
+        //alert("fuck");
+        this.navCtrl.setRoot(TabsPage);
+      }else{
+        this.navCtrl.setRoot(IndexPage);
+      }
 
   }
 

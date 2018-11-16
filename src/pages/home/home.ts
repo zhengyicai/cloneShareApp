@@ -12,7 +12,7 @@ export class HomePage {
   @ViewChild('slides ') slides: Slides;
   constructor(private platform:Platform,  private alertCtrl:AlertController,public navCtrl: NavController, public navParams: NavParams,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider,) {
-    // this.alertUpate();
+    //this.alertUpate();
     // this.alertServerUpate();
   }
   //页面进入时启动自动播放
@@ -74,14 +74,16 @@ export class HomePage {
                         }
                     
                   } else if (!this.platform.is('ios')) {
+                     
                         //版本是否强制更新
                         if(this.param.androidForceUpdate == '1' && this.appVersion !=this.param.androidAppVersion ){
                               this.alertForceUpate();    
                         }else{
                               //更新提醒
-                              if(this.appVersion != this.param.iosAppVersion){
+                              
+                              if(this.appVersion != this.param.androidAppVersion){
                                 this.alertUpate();
-                              }  
+                                }
                         }
                   }      
                 }

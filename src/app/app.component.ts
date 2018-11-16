@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 //import { HttpSerProvider } from '../providers/http-ser/http-ser';
 import { HomePage } from '../pages/home/home';
+import { TabsPage } from '../pages/tabs/tabs';
 import { IndexPage } from '../pages/index/index';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppConfig } from './app.config';
@@ -18,7 +19,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   
   @ViewChild('content')navCtrl:NavController;
-  rootPage: any = "";
+  rootPage: any = TabsPage;
   //pages: Array<{title: string, component: any}>;
   pages: any;
   public backButtonPressed: boolean = false;
@@ -53,11 +54,13 @@ export class MyApp {
 
       //设置启动的首页
       
-      if(localStorage.getItem("autoLogin") == '1'){
-        this.rootPage = "HomePage";
-      }else{
-        this.rootPage = "IndexPage";
-      }
+      // if(localStorage.getItem("token") != '' && localStorage.getItem("token") != undefined ){
+      //   this.rootPage = TabsPage;
+        
+      // }else{
+        // /this.rootPage = IndexPage;
+        
+      //}
       
 
       

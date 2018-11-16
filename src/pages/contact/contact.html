@@ -14,48 +14,127 @@
 
 
 <ion-content>
-      <ion-item class="settlist" (click)="playEquCode(00)">
-       播放设备序列号
-      </ion-item>
-      <ion-item class="settlist" (click)="playEquCode(01)">
-       播放项目代码
-      </ion-item>
-      <ion-item class="settlist" (click)="playEquCode(02)">
-       播放设备编码
-      </ion-item>
-      <ion-item class="settlist" (click)="playEquCode(03)">
-        播放用户识别码
-      </ion-item>
-      <ion-item class="settlist" (click)="playEquCode(04)">
-        播放门禁的时间
-      </ion-item>
-      <ion-item class="settlist" (click)="playEquCode(05)">
-          播放门禁版本号
-      </ion-item>
-      <ion-item class="settlist" (click)="adminUnlock()">
-        物业开锁
-      </ion-item>
-      <ion-item class="settlist" (click)="setArea()">
-        设置项目代码
-      </ion-item>
-     
-      <!-- <ion-item class="settlist"  (click)="setEqu()">
-        设置设备编码
-      </ion-item> -->
-      <ion-item class="settlist"  (click)="setEquAlert()">
-        设置设备编码
-      </ion-item>
-      <ion-item class="settlist" (click)="setUserMaskAlert()">
-        设置用户识别码
-      </ion-item>
-      <ion-item class="settlist" (click)="updateTime()">
-        设置设备时间
-      </ion-item>
-      <ion-item class="settlist">
-      添加门禁卡号
-      </ion-item>
-      <ion-item class="settlist" (click)="autoSet()">
-        一键设置（项目代码，设备编码，设备时间）
-      </ion-item>
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+        <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="playEquCode(00)">
+            <ion-avatar item-start style="margin-right:0px;">  
+                 <img src="assets/img/set_gonggao.png" class="img">
+            </ion-avatar>
+          <h3>播放设备序列号</h3>
+          </button>
+      </ion-card>
 
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="playEquCode(01)">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_gonggao.png" class="img">
+              </ion-avatar>
+            <h3>播放项目代码</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="playEquCode(02)">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_gonggao.png" class="img">
+              </ion-avatar>
+            <h3>播放设备编码</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="playEquCode(03)">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_gonggao.png" class="img">
+              </ion-avatar>
+            <h3>播放用户识别码</h3>
+            </button>
+      </ion-card>
+      
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="playEquCode(04)">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_gonggao.png" class="img">
+              </ion-avatar>
+            <h3>播放门禁的时间</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="playEquCode(05)">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_gonggao.png" class="img">
+              </ion-avatar>
+            <h3>播放门禁版本号</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="adminUnlock()">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_zhifumima.png" class="img">
+              </ion-avatar>
+            <h3>物业开锁</h3>
+            </button>
+      </ion-card>
+      
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="setArea()">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_toushujianyi.png" class="img">
+              </ion-avatar>
+            <h3>设置项目代码</h3>
+            </button>
+      </ion-card>
+
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="setEquAlert()">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_toushujianyi.png" class="img">
+              </ion-avatar>
+            <h3>设置设备编码</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="setUserMaskAlert()">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_toushujianyi.png" class="img">
+              </ion-avatar>
+            <h3>设置用户识别码</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="updateTime()">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/pre.png" class="img">
+              </ion-avatar>
+            <h3> 设置设备时间</h3>
+            </button>
+      </ion-card>
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/tianjia.png" class="img">
+              </ion-avatar>
+            <h3> 添加门禁卡号</h3>
+            </button>
+      </ion-card>
+
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="autoSet()">
+              <ion-avatar item-start style="margin-right:0px;">  
+                   <img src="assets/img/set_toushujianyi.png" class="img">
+              </ion-avatar>
+            <h3>  一键设置（项目代码，设备编码，设备时间）</h3>
+            </button>
+      </ion-card>
+
+
+    
+
+   
 </ion-content>
