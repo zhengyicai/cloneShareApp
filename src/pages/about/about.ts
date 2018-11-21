@@ -53,10 +53,6 @@ export class AboutPage {
                 }else{
                   this.isCheck =true;
                 }
-                
-                this.alertUpate();
-                   
-                
               } else if (!this.platform.is('ios')) {
                 this.highVersion= this.param.androidAppVersion;
                 if(this.highVersion == this.appVersion){
@@ -91,6 +87,7 @@ export class AboutPage {
   }
   Exit(){
     localStorage.removeItem("token");
+    localStorage.removeItem('nav');
     this.events.publish('toLogin');
     
   }

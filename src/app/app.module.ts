@@ -39,6 +39,8 @@ import { Media, MediaObject } from '@ionic-native/media';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { PhotoLibrary } from '@ionic-native/photo-library';
+import {MultiPickerModule} from 'ion-multi-picker'
+import { ReviceServeProvider } from '../providers/revice-serve/revice-serve';
 
 @NgModule({
     declarations: [
@@ -57,7 +59,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
         BrowserModule,
         HttpModule,
         ComponentsModule,
-        
+        MultiPickerModule,
         IonicModule.forRoot(MyApp,{
             backButtonText: '',
             iconMode: 'ios',
@@ -99,6 +101,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
         File,
         PhotoLibrary,
         FileTransfer,
+    ReviceServeProvider,
     ]
 })
 export class AppModule {

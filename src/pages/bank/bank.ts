@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import {HttpSerProvider} from '../../providers/http-ser/http-ser';
+import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
+import { AppConfig } from '../../app/app.config';
 /**
  * Generated class for the BankPage page.
  *
@@ -15,14 +18,33 @@ import { AlertController } from 'ionic-angular';
 })
 export class BankPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
+  constructor(public httpSerProvider:HttpSerProvider,
+    public popSerProvider:PopSerProvider,public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
   }
+
+  list:any = [];
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BankPage');
+    this.loadData();
   }
 
-  presentConfirm() {
+  loadData(){
+    this.httpSerProvider.get('/register/communityList').then((data:any)=>{
+      if(data.code==='0000'){
+        //this.popSerProvider.toast(data.message);   
+        this.list = data.data;
+      
+      }else if(data.code==='9999'){
+        this.popSerProvider.toast(data.message);
+      }else{
+        this.popSerProvider.toast(data.message);
+      }
+     
+    });
+  }
+
+  presentConfirm(opt:any) {
     let alert = this.alertCtrl.create({
       title: '是否确认删除？',
       message: '',
@@ -37,7 +59,17 @@ export class BankPage {
         {
           text: '确认',
           handler: () => {
-            console.log('Buy clicked');
+            this.httpSerProvider.post('/register/communityDelete',opt).then((data:any)=>{
+              if(data.code==='0000'){
+                this.popSerProvider.toast(data.message);
+                this.loadData();   
+              }else if(data.code==='9999'){
+                this.popSerProvider.toast(data.message);
+              }else{
+                this.popSerProvider.toast(data.message);
+              }
+             
+            });
           }
         }
       ]
@@ -47,7 +79,7 @@ export class BankPage {
 
 
   addBank(){
-    //this.navCtrl.push("AddbankPage");
+    this.navCtrl.push("AddbankPage");
   }
 
 }

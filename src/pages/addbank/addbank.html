@@ -1,0 +1,79 @@
+<!--
+  Generated template for the UpdatePwdPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>添加小区</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+      <ion-item>
+          <ion-label class="loginLabel">所在城市</ion-label>
+          <ion-multi-picker placeholder="请选择所在城市"   class="loginLabel" item-content  [(ngModel)]="area" [multiPickerColumns]="listData" [cancelText]="'取消'" [doneText]="'完成'" (ngModelChange)="findArea($event)" ></ion-multi-picker>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="loginLabel">小区</ion-label>
+        
+        <ion-select  id="test1"   class="place"   [(ngModel)]="subData.communityId"  (ngModelChange)="findBuild($event)" placeholder="请选择小区">
+            <ion-option *ngFor="let index of citylist" value={{index.id}}>{{index.communityName}}</ion-option>
+         
+        </ion-select>
+      </ion-item>  
+
+      <ion-item>
+        <ion-label class="loginLabel">楼栋</ion-label>
+        <ion-select [(ngModel)]="subData.buildingId" (ngModelChange)="findUnit($event)"  class="place"  placeholder="请选择楼栋">
+            <ion-option *ngFor="let index of buildList" value={{index.id}}>{{index.buildingName}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label class="loginLabel">单元</ion-label>
+          <ion-select [(ngModel)]="subData.unitId" (ngModelChange)="findRoom($event)" class="place"  placeholder="请选择单元">
+              <ion-option *ngFor="let index of unitList" value={{index.id}}>{{index.unitName}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="loginLabel">房间</ion-label>
+          <ion-select [(ngModel)]="subData.roomName"  class="place"  placeholder="请选择房间">
+              <ion-option *ngFor="let index of roomList" value={{index}}>{{index}}</ion-option>
+          </ion-select>
+        </ion-item>    
+
+        <ion-item>
+            <ion-label   class="loginLabel">备注</ion-label>
+            <ion-input  [(ngModel)]="subData.remark"   type="text"  class="place"   placeholder="请输入备注信息，加快管理员审核流程"></ion-input>    
+        </ion-item>
+
+      
+            
+      <ion-label style="margin-top: 5px;margin-left: 10px">
+        <ion-checkbox [(ngModel)]="addBankDefaultState" style="argin-bottom: 2px;vertical-align: text-bottom; background-color: #f0f0f0">
+        </ion-checkbox>
+        <span style="color:#C0C0C0;font-size:1.35rem; text-align: center;">设为默认小区</span>
+    </ion-label> 
+        
+      <br/><br/>
+
+
+      <!-- <ion-buttons id="loginBut">
+        
+          <button ion-button icon-only [disabled]="!verifyCode1.disable" (click)="gotoupdatePwd()"  id="RegisterButton">
+             确认修改
+          </button>
+        </ion-buttons> -->
+    
+
+      <button class="loginButton" icon-only [disabled]="!verifyCode1.disable" (click)="gotoupdatePwd()"  id="RegisterButton">
+          确认添加
+        </button>
+
+</ion-content>

@@ -14,15 +14,15 @@
 
 
 <ion-content padding>
-  <div >
+  <div *ngFor="let opt of list" >
       <div class="div" style="background-color: #5e9ff3;border-radius:5px 5px 0 0;">
           <ion-grid style="padding: 0px;color: white">
               <ion-row class="row1">
                 <ion-col col-10>
-                  <div>阳光小区</div>
+                  <div>{{opt.communityName}}</div>
                 </ion-col>
                 <ion-col col-2>
-                  <div  style="border: 1px solid white;text-align: center;border-radius: 5px 5px 5px 5px;">默认</div>
+                  <div *ngIf="opt.isTrue =='10'"  style="border: 1px solid white;text-align: center;border-radius: 5px 5px 5px 5px;">默认</div>
                 </ion-col>
               </ion-row>
           </ion-grid>
@@ -32,14 +32,15 @@
         <ion-grid style="padding: 0px;border:1px solid #47ac5e">
             <ion-row class="row1" style="height:60px;line-height:30px;padding:10px 0px">
               <ion-col col-10>
-                <div>楼栋1 单元1 房间号1001</div>
+                <div>{{opt.buildingName}}&nbsp;&nbsp;{{opt.unitName}} &nbsp; &nbsp;房间号{{opt.roomName}}</div>
               </ion-col>
               <ion-col col-2>
-                <div (click)="presentConfirm()"  style="border: 1px solid white;text-align: center;color: red;background-color: #F3F3F3;border-radius: 5px 5px 5px 5px;">删除</div>
+                <div (click)="presentConfirm(opt)"  style="border: 1px solid white;text-align: center;color: red;background-color: #F3F3F3;border-radius: 5px 5px 5px 5px;">删除</div>
               </ion-col>
             </ion-row>
         </ion-grid>
       </div>
+      <br/>
   </div>
   <button class="loginButton" (click)="addBank()" style="border-radius: 5px 5px 5px 5px;font-size: 14px;border:1px solid #47ac5e">
       添加小区

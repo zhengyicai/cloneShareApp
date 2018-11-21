@@ -16,11 +16,35 @@ export class TabsPage {
   tab2Root: any = ContactPage;
   tab3Root: any = AboutPage;
 
+
+  tabs2Text:any = '门禁设置';
+  tabs2Icon:any = 'information-circle';
+  tabs3Text:any = '我的';
+  tabs3Icon:any = 'contacts';
+
+
+  isTrue:any = false;
   constructor(private events: Events,public navCtrl: NavController, public navParams: NavParams) {
 
   }
   ionViewDidLoad() {
+    this.isTrue = false;
+    if(localStorage.getItem("nav")!=undefined && localStorage.getItem("nav")!=null && localStorage.getItem("nav")!="" ){
+     
+      this.isTrue = true;
+      this.tab2Root= AboutPage;
+      this.tab3Root= ContactPage;
+      this.tabs2Text = '我的';
+      this.tabs2Icon = 'contacts';
+      this.tabs3Text  = '门禁设置';
+      this.tabs3Icon  = 'information-circle';
+    
+    }else{
+     
+      this.isTrue = false;
+    }
     this.listenEvents();
+    
     // console.log('界面创建');
   }
   ionViewWillUnload() {

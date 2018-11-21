@@ -219,6 +219,7 @@ export class MyApp {
             this.navCtrl.setRoot('IndexPage');
             localStorage.setItem("autoLogin","0");
             localStorage.setItem('token','');
+            localStorage.setItem('nav','');
             localStorage.setItem('autoKey','');
             
           },

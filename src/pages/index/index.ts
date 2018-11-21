@@ -35,18 +35,19 @@ export class IndexPage {
 
                 //this.deviceId = AppConfig.deviceId;
                 this.appVersion = AppConfig.appVersion;
+                if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
+                  //alert("fuck");
+                  this.navCtrl.setRoot(TabsPage);
+                }else{
+                  //this.navCtrl.setRoot(IndexPage);
+                }
                 
   }
 
   ionViewDidLoad() {
     
     // this.loadData();
-      if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
-        //alert("fuck");
-        this.navCtrl.setRoot(TabsPage);
-      }else{
-        this.navCtrl.setRoot(IndexPage);
-      }
+     
 
   }
 
@@ -81,6 +82,11 @@ export class IndexPage {
           if(data.code==='0000'){
               localStorage.setItem('token',data.data);
 
+              this.popSerProvider.showImgLoading("登录成功",1);
+              this.navCtrl.setRoot(TabsPage);  
+          }else if(data.code==='1000'){
+              localStorage.setItem('token',data.data);
+              localStorage.setItem('nav',"true");
               this.popSerProvider.showImgLoading("登录成功",1);
               this.navCtrl.setRoot(TabsPage);  
           }else if(data.code==='9999'){

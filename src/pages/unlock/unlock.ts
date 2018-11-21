@@ -166,7 +166,7 @@ export class UnlockPage {
               this.recordData.play();
 
               //完成回调功能
-              this.recordData.onSuccess.subscribe(() => this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+              this.recordData.onSuccess.subscribe(() => this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",3)); 
               
               
       }).catch(error => {
