@@ -9,17 +9,27 @@ import { Slides } from 'ionic-angular';//注入轮播
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild('slides ') slides: Slides;
+  @ViewChild('slides') slides: Slides;
   constructor(private platform:Platform,  private alertCtrl:AlertController,public navCtrl: NavController, public navParams: NavParams,public httpSerProvider:HttpSerProvider,
-    public popSerProvider:PopSerProvider,) {
+    public popSerProvider:PopSerProvider) {
+
+      // this.httpSerProvider.getStatus('/home/testStatus',{    
+      // }).then((data:any)=>{
+      //   //this.loadData();
+      // }); 
+      if(localStorage.getItem("status")=='true'){
+        this.loadData();
+      }else{
+        
+      }
+      
+    
+
+      
     //this.alertUpate();
     // this.alertServerUpate();
   }
-  //页面进入时启动自动播放
-  // ionViewDidEnter(){
-  //     this.slides.startAutoplay();
-  // }
-
+ 
   goToSlide() {
     this.slides.slideTo(2, 500);
   }
@@ -28,9 +38,9 @@ export class HomePage {
   //页面离开时停止自动播放
 
 
-  // ionViewDidLeave(){ 
-  // this.slides.stopAutoplay();
-  // }
+  ionViewDidLeave(){ 
+  this.slides.stopAutoplay();
+  }
 
 
  
@@ -39,14 +49,56 @@ export class HomePage {
   banners:any;  
   param:any;
   appVersion:any;
- 
+  communityName:any = "首页";
+  
+
+  ionViewDidEnter(){
+    this.slides.startAutoplay();
+    if(localStorage.getItem("status")=='true'){
+      this.httpSerProvider.get('/home/findCommunityData',{
+                
+        }).then((data:any)=>{
+          if(data.code==='0000'){
+          this.communityName = data.data.communityName==null?'首页':data.data.communityName;   
+          localStorage.setItem("communityData",JSON.stringify(data.data));
+        
+        }else if(data.code==='9999'){
+          this.popSerProvider.showImgLoading(data.message,0);
+        }else{
+        
+        }
+      });
+    }else{
+      
+    }
+  }
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComunityListPage');
-    this.loadData();
+   
     this.appVersion = AppConfig.appVersion;
   }
 
   public loadData(){
+
+
+          this.httpSerProvider.get('/home/findCommunityData',{
+                
+          }).then((data:any)=>{
+            if(data.code==='0000'){
+            this.communityName = data.data.communityName==null?'首页':data.data.communityName;   
+            localStorage.setItem("communityData",JSON.stringify(data.data));
+          
+          }else if(data.code==='9999'){
+            this.popSerProvider.showImgLoading(data.message,0);
+          }else{
+          
+          }
+        });
+    
+
+
         this.httpSerProvider.get('/home/findSysParam',{
           
         }).then((data:any)=>{

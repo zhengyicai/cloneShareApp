@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController,NavController, NavParams,Platform, Thumbnail } from 'ionic-angular';
+import { IonicPage, AlertController,NavController, NavParams,Platform, Thumbnail,App } from 'ionic-angular';
 import { Media,MediaObject } from '@ionic-native/media';
 import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
@@ -18,7 +18,7 @@ import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 })
 export class UnlockPage {
 
-  constructor(public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor( private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
   }
 
@@ -36,7 +36,7 @@ export class UnlockPage {
   icodeArray= new Array(6); //序列号
 
   areaCode:any="";
-
+  userCode:any = "";
   equCode:any= "";  //设备编码
   fileUrl:any;  //文件存放地址 
   ionViewDidLoad() {
@@ -61,14 +61,32 @@ export class UnlockPage {
   }
 
   public loadData(){
-
-    var csCode = 0;  //厂商代码
-    var areaCode= "1193046";  //项目代码
+    var option = JSON.parse(localStorage.getItem("communityData"));   
+    var csCode = option.csCode;  //厂商代码   10进制
+    var areaCode= option.areaCode;  //项目代码   10进制
     this.areaCode=areaCode;
-    var equCode= "000002040303";  //设备编码
-    this.equCode = equCode;
-    var  icode= "00005B7B426F"  //系列序列号 8位字符串   000032A6D274
+    this.userCode = option.roomId; //
 
+
+    //判断用户是否有绑定小区
+    if(this.areaCode =="" || this.areaCode ==null){
+      let alert = this.alertCtrl.create({
+        title: "请先绑定默认小区并等待管理员审核通过",
+        message: '',
+        buttons: [
+          
+          {
+            text: "确认",
+            handler: () => {
+              this.appCtrl.getActiveNav().pop();
+            },
+          },
+        ],
+      });
+      alert.present();
+  
+
+    }
     //厂商byte
     var cslist = this.intToBytes(csCode);
     this.csArray[0] = cslist[0];
@@ -81,20 +99,6 @@ export class UnlockPage {
     this.areaArray[1]=arealist[1];
     this.areaArray[2]=arealist[2];
 
-    //设备编号
-    
-   
-   
-    this.equArray[0] = parseInt(equCode.substr(6,2));
-    this.equArray[1] = parseInt(equCode.substr(8,2));
-    this.equArray[2] = parseInt(equCode.substr(10,2));
-    this.equArray[3] = 0;
-    this.equArray[4] = 0;
-
-  
-
-    console.log("csArray"+ this.csArray);  
-    console.log("areaArray"+ this.areaArray);  
 
     //小区不进行转换，直接获取两位的数据,不够补零
     console.log("equArray"+  this.equArray);  
@@ -108,13 +112,6 @@ export class UnlockPage {
 
 
     
-    //序列号
-    this.icodeArray[0] ="0x"+icode.substr(0,2);
-    this.icodeArray[1] ="0x"+icode.substr(2,2);
-    this.icodeArray[2] ="0x"+icode.substr(4,2);
-    this.icodeArray[3] ="0x"+icode.substr(6,2);
-    this.icodeArray[4] ="0x"+icode.substr(8,2);
-    this.icodeArray[5] ="0x"+icode.substr(10,2);
   }
 
   public  intToBytes(value:any){ 
@@ -143,10 +140,34 @@ export class UnlockPage {
 
       var data =  this.intToBytes(time);
       
+     
+
+      var  str = [];
+      if(localStorage.getItem("nav")!=undefined && localStorage.getItem("nav")!=null && localStorage.getItem("nav")!="" ){
+        if(localStorage.getItem("status") =='true'){
+          str = [0xB4,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];  
+        }else{
+          str = [0xB5,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];
+        }
+        
+      }else{
+        var icodeArray = new Array(5);   //用户编码
+        icodeArray[0] ="0x"+this.userCode.substr(6,2);
+        icodeArray[1] ="0x"+this.userCode.substr(8,2);
+        icodeArray[2] ="0x01";
+        icodeArray[3] ="0x"+this.userCode.substr(10,2);
+        icodeArray[4] ="0x"+this.userCode.substr(12,2);  
+        if(localStorage.getItem("status") =='true'){
+          str = [0xB0,crc[1],crc[0],icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],data[3],data[2],data[1],data[0]];  
+        }else{
+          str = [0xB1,crc[1],crc[0],icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],data[3],data[2],data[1],data[0]];
+        }
+        
+      }
+
+      // alert(str);
+      // console.log(str);
       
-      
-      
-      var str = [0xB5,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];
       var fileName='userlock.wav';
      
         
@@ -154,18 +175,15 @@ export class UnlockPage {
       
       this.file.createFile( this.fileUrl,fileName,true);
       
-      //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
+      
       this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
         if (this.platform.is('ios')) {
           this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
         } else if (!this.platform.is('ios')) {
           this.recordData = this.media.create(this.fileUrl+fileName);  
         }
-        //控制声音大小 0-1
-      //this.recordData.setVolume(1);
+   
               this.recordData.play();
-
-              //完成回调功能
               this.recordData.onSuccess.subscribe(() => this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",3)); 
               
               

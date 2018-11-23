@@ -17,13 +17,13 @@
 
       <ion-item>
           <ion-label class="loginLabel">所在城市</ion-label>
-          <ion-multi-picker placeholder="请选择所在城市"   class="loginLabel" item-content  [(ngModel)]="area" [multiPickerColumns]="listData" [cancelText]="'取消'" [doneText]="'完成'" (ngModelChange)="findArea($event)" ></ion-multi-picker>
+          <ion-multi-picker placeholder="请选择所在城市"   class="loginLabel" item-content  [(ngModel)]="area" [multiPickerColumns]="listData" [cancelText]="'取消'" [doneText]="'确定'" (ngModelChange)="findArea($event)" ></ion-multi-picker>
       </ion-item>
 
       <ion-item>
         <ion-label class="loginLabel">小区</ion-label>
         
-        <ion-select  id="test1"   class="place"   [(ngModel)]="subData.communityId"  (ngModelChange)="findBuild($event)" placeholder="请选择小区">
+        <ion-select  id="test1"   class="place"  [cancelText]="'取消'" [okText]="'确定'"  [(ngModel)]="subData.communityId"  (ngModelChange)="findBuild($event)" placeholder="请选择小区">
             <ion-option *ngFor="let index of citylist" value={{index.id}}>{{index.communityName}}</ion-option>
          
         </ion-select>
@@ -31,19 +31,19 @@
 
       <ion-item>
         <ion-label class="loginLabel">楼栋</ion-label>
-        <ion-select [(ngModel)]="subData.buildingId" (ngModelChange)="findUnit($event)"  class="place"  placeholder="请选择楼栋">
+        <ion-select [(ngModel)]="subData.buildingId"  [cancelText]="'取消'" [okText]="'确定'" (ngModelChange)="findUnit($event)"  class="place"  placeholder="请选择楼栋">
             <ion-option *ngFor="let index of buildList" value={{index.id}}>{{index.buildingName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
           <ion-label class="loginLabel">单元</ion-label>
-          <ion-select [(ngModel)]="subData.unitId" (ngModelChange)="findRoom($event)" class="place"  placeholder="请选择单元">
+          <ion-select [(ngModel)]="subData.unitId"  [cancelText]="'取消'" [okText]="'确定'" (ngModelChange)="findRoom($event)" class="place"  placeholder="请选择单元">
               <ion-option *ngFor="let index of unitList" value={{index.id}}>{{index.unitName}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label class="loginLabel">房间</ion-label>
-          <ion-select [(ngModel)]="subData.roomName"  class="place"  placeholder="请选择房间">
+          <ion-select [(ngModel)]="subData.roomName"  [cancelText]="'取消'" [okText]="'确定'"  class="place"  placeholder="请选择房间">
               <ion-option *ngFor="let index of roomList" value={{index}}>{{index}}</ion-option>
           </ion-select>
         </ion-item>    

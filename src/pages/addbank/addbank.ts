@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,App,AlertController } from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
@@ -18,7 +18,7 @@ import { ReviceServeProvider } from '../../providers/revice-serve/revice-serve';
 })
 export class AddbankPage {
 
-  constructor(private reviceServe: ReviceServeProvider,private appCtrl: App,public navCtrl: NavController, public navParams: NavParams ,public httpSerProvider:HttpSerProvider,
+  constructor(private alertCtrl:AlertController, private reviceServe: ReviceServeProvider,private appCtrl: App,public navCtrl: NavController, public navParams: NavParams ,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider) {
   }
 
@@ -83,9 +83,15 @@ findArea(){
               this.popSerProvider.toast(data.message);
               
             }
-            document.getElementById("test1").click();
+            // document.getElementById("test1").click();
+            // this.findBuild();
             this.verifyCode1.countdown  = 1;
             this.verifyCode1.disable = true;
+
+            this.subData.communityId = "";  
+            this.subData.unitId = "";
+            this.subData.buildingId = "";
+            this.subData.roomName = "";
     });
     
 }
@@ -93,6 +99,11 @@ findArea(){
 
 findBuild(){
   //alert(this.subData.communityId);
+  this.subData.unitId = "";
+  this.subData.buildingId = "";
+  this.subData.roomName = "";
+
+
   this.httpSerProvider.get('/register/getBuilding',{communityId:this.subData.communityId}).then((data:any)=>{
     if(data.code==='0000'){
       this.buildList = data.data;
@@ -126,7 +137,9 @@ findBuild(){
 
 
 findUnit(){
-   
+    this.unitList=[];
+    this.roomList =[];
+    this.subData.roomName ="";
     for(var i=0;i<this.buildList.length;i++){
       if(this.subData.buildingId == this.buildList[i].id){
           this.unitList = this.buildList[i].units;
@@ -138,6 +151,7 @@ findUnit(){
 
 findRoom(){
     this.roomList =[];
+    this.subData.roomName ="";
     for(var i = 0 ;i<this.unitList.length;i++){
       
       if(this.subData.unitId == this.unitList[i].id){
@@ -195,8 +209,22 @@ settime1() {
         this.settime1();
         this.httpSerProvider.post('/register/addCommunity',this.subData).then((data:any)=>{
           if(data.code==='0000'){
-            this.popSerProvider.toast(data.message);
-            this.appCtrl.getActiveNav().pop();
+            let alert = this.alertCtrl.create({
+              title: "添加成功，等待管理员审核",
+              message: '',
+              buttons: [
+                
+                {
+                  text: "确认",
+                  handler: () => {
+                    this.appCtrl.getActiveNav().pop();
+                  },
+                },
+              ],
+            });
+            alert.present();
+           
+           // this.appCtrl.getActiveNav().pop();
            
           }else if(data.code==='9999'){
             this.popSerProvider.toast(data.message);
@@ -215,42 +243,35 @@ settime1() {
   }
   //验证
   validator() {
-    
 
-    // if (this.subData.oldPwd.trim() == null || this.subData.oldPwd.trim() == '') {
-    //   this.popSerProvider.toast("旧密码不能为空");
-    //   return false;
-    // }
   
-    // if (this.subData.oldPwd.trim().length > 12  || this.subData.oldPwd.trim().length < 3) {
-    //   this.popSerProvider.toast("旧密码长度有误");
-    //   return false;
-    // }
 
-    // if (this.subData.password.trim() == null || this.subData.password.trim() == '') {
-    //   this.popSerProvider.toast("新密码不能为空");
-    //   return false;
-    // }
-  
-    // if (this.subData.password.trim().length > 12  || this.subData.password.trim().length < 3) {
-    //   this.popSerProvider.toast("新密码长度有误");
-    //   return false;
-    // }
+    if (this.area == null || this.area == '') {
+      this.popSerProvider.toast("所在城市不能为空");
+      return false;
+    }
 
-    // if (this.truePwd.trim() == null || this.truePwd.trim() == '') {
-    //   this.popSerProvider.toast("确认密码不能为空");
-    //   return false;
-    // }
-  
-    // if (this.truePwd.trim().length > 12  || this.truePwd.trim().length < 3) {
-    //   this.popSerProvider.toast("确认密码长度有误");
-    //   return false;
-    // }
+    if (this.subData.communityId == null || this.subData.communityId == '') {
+        this.popSerProvider.toast("小区不能为空");
+        return false;
+    }
 
-    // if (this.subData.password.trim() != this.truePwd.trim()) {
-    //   this.popSerProvider.toast("新密码和确认密码不一致");
-    //   return false;
-    // }
+    if (this.subData.buildingId == null || this.subData.buildingId == '') {
+      this.popSerProvider.toast("楼栋不能为空");
+      return false;
+    }
+
+    if (this.subData.unitId == null || this.subData.unitId == '') {
+      this.popSerProvider.toast("单元不能为空");
+      return false;
+    }
+
+    if (this.subData.roomName == null || this.subData.roomName == '') {
+      this.popSerProvider.toast("房间不能为空");
+      return false;
+    }
+
+
 
     return true;
   }

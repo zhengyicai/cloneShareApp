@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,App ,Events} from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
@@ -17,7 +17,7 @@ import { AppConfig } from '../../app/app.config';
 })
 export class UpdateNamePage {
 
-  constructor(private appCtrl: App,public navCtrl: NavController, public navParams: NavParams ,public httpSerProvider:HttpSerProvider,
+  constructor(private events:Events, private appCtrl: App,public navCtrl: NavController, public navParams: NavParams ,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider) {
   }
 
@@ -67,7 +67,9 @@ settime1() {
         this.httpSerProvider.post('/login/updateName',this.subData).then((data:any)=>{
           if(data.code==='0000'){
             this.popSerProvider.toast(data.message);
-            this.appCtrl.getActiveNav().pop();
+            localStorage.removeItem("token");
+            localStorage.removeItem('nav');
+            this.events.publish('toLogin');
            
           }else if(data.code==='9999'){
             this.popSerProvider.toast(data.message);

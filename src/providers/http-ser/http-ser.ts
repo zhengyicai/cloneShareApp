@@ -30,6 +30,17 @@ export class HttpSerProvider {
         return this.app.getRootNav();
     }
 
+    getStatus(url:string, paramObj:any = {}) {
+      
+        
+      
+      
+        return this.http.get(APP_SERVE_URL+url).toPromise()
+            .then()
+            .catch();
+    }
+
+
     /**
      * get方式请求
      * @param {string} url     //url
@@ -148,12 +159,12 @@ export class HttpSerProvider {
     }
 
     private handleError(error:Response | any) {
-        // let status = error.status;
-        // let message = "请求发生异常";
+        let status = error.status;
+        let message = "请求发生异常";
         
-        // //this.popSerProvider.toast(message);
+        //this.popSerProvider.toast(message);
         // if (status === 0) {
-        //   message = "请求失败，请求响应出错";
+        //   message = "请求失败，请打开网络";
         // } else if (status === 404) {
         //   message = "请求失败，未找到请求地址";
         // } else if (status === 500) {
@@ -163,18 +174,14 @@ export class HttpSerProvider {
         //   message = "用户登录失效，请重新登录";
          
         //   sessionStorage.clear();
-        //   AppConfig.token = "";  
-        //   AppConfig.userId = "";
+         
       
         // }else{
         
         // }
-        // alert(error.status);
-        // this.show();
-        // localStorage.removeItem("token");
-        // this.events.publish('toLogin');
+        //return error.message;
         
-        // return Promise.reject(message);
+        
         
 
         let errMsg:string;
@@ -194,6 +201,31 @@ export class HttpSerProvider {
         //console.error(errMsg);
         return Promise.reject(errMsg);
     }
+
+
+
+
+    private handleErrorStatus(error:Response | any) {
+        let status = error.status;
+        let message = "请求发生异常";
+        
+        //this.popSerProvider.toast(message);
+        if (status === 0) {
+          message = "请求失败，请打开网络";
+        } else if (status === 404) {
+          message = "请求失败，未找到请求地址";
+        } else if (status === 500) {
+          message = "请求失败，服务器出错，请稍后再试";
+        } else if (status === 608) {
+
+          message = "用户登录失效，请重新登录";
+
+      
+        }else{
+        
+        }
+        return Promise.reject(message);
+    } 
 
    //显示跳转界面和提示语（在handleError使用this.natCtrl无效，暂时无解2018-06-10）
    show(errMsg){

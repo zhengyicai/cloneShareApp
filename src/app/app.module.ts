@@ -41,7 +41,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import {MultiPickerModule} from 'ion-multi-picker'
 import { ReviceServeProvider } from '../providers/revice-serve/revice-serve';
-
+import { Network  } from "@ionic-native/network";
 @NgModule({
     declarations: [
         MyApp,
@@ -101,7 +101,8 @@ import { ReviceServeProvider } from '../providers/revice-serve/revice-serve';
         File,
         PhotoLibrary,
         FileTransfer,
-    ReviceServeProvider,
+        ReviceServeProvider,
+        Network
     ]
 })
 export class AppModule {

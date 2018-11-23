@@ -8,7 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { IndexPage } from '../pages/index/index';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppConfig } from './app.config';
-
+import {Network} from "@ionic-native/network";
 
 
 
@@ -23,13 +23,13 @@ export class MyApp {
   //pages: Array<{title: string, component: any}>;
   pages: any;
   public backButtonPressed: boolean = false;
-  constructor(public menuCtrl: MenuController,public uniqueDeviceID:UniqueDeviceID,public events: Events,  private alertCtrl: AlertController, private appCtrl: App, private platform: Platform, public statusBar: StatusBar, splashScreen: SplashScreen, private toastCtrl: ToastController) {
+  constructor(private network: Network,public menuCtrl: MenuController,public uniqueDeviceID:UniqueDeviceID,public events: Events,  private alertCtrl: AlertController, private appCtrl: App, private platform: Platform, public statusBar: StatusBar, splashScreen: SplashScreen, private toastCtrl: ToastController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-
+      this.checkNetwork();  //写入函数，让app启动后进行网络监测
       
       //获取设备号
       this.uniqueDeviceID.get().then((uuid: any) => 
@@ -91,7 +91,36 @@ export class MyApp {
         }
     }
     return lis;
-}
+  }
+
+
+  //检测网络，若未连接网络，给出提示
+  checkNetwork() {
+    if(this.network.type === 'unknown') {
+      localStorage.setItem("status","false");
+    } else if(this.network.type === 'none') {
+      localStorage.setItem("status","false");
+    } else  if(this.network.type ==null) {  //针对pc写的，pc的status为null
+      localStorage.setItem("status","true");
+    }else{
+      localStorage.setItem("status","true");  
+      
+    }
+
+    //监控过程网络状态改变
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+      localStorage.setItem("status","true");  
+    });
+
+    //监控过程网络状态改变 
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      localStorage.setItem("status","false");
+    });
+    //alert(sessionStorage.getItem("status"));
+
+    
+
+  }
 
 
   openPage(page) {

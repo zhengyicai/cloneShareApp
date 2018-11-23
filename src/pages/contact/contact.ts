@@ -19,6 +19,7 @@ export class ContactPage {
   constructor( public popSerProvider:PopSerProvider,private events: Events,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
     
+    
   }
 
   static play1:any;
@@ -38,6 +39,9 @@ export class ContactPage {
 
   equCode:any= "";  //设备编码
   fileUrl:any;  //文件存放地址 
+
+  setEquCode:any =[]; //设置项目代码list
+
   ionViewDidLoad() {
       this.playDisable = true;
       this.loadData();
@@ -63,12 +67,15 @@ export class ContactPage {
 
   public loadData(){
 
-    var csCode = 0;  //厂商代码
-    var areaCode= "1193046";  //项目代码
+    var option = JSON.parse(localStorage.getItem("communityData")); 
+      
+
+    var csCode = option.csCode;  //厂商代码   10进制
+    var areaCode= option.areaCode;  //项目代码   10进制
+    
+    this.setEquCode=option.equList;
     this.areaCode=areaCode;
-    var equCode= "000002040303";  //设备编码
-    this.equCode = equCode;
-    var  icode= "00005B7B426F"  //系列序列号 8位字符串   000032A6D274
+    
 
     //厂商byte
     var cslist = this.intToBytes(csCode);
@@ -82,16 +89,8 @@ export class ContactPage {
     this.areaArray[1]=arealist[1];
     this.areaArray[2]=arealist[2];
 
-    //设备编号
-    
-   
-   
-    this.equArray[0] = parseInt(equCode.substr(6,2));
-    this.equArray[1] = parseInt(equCode.substr(8,2));
-    this.equArray[2] = parseInt(equCode.substr(10,2));
-    this.equArray[3] = 0;
-    this.equArray[4] = 0;
 
+   
   
 
     console.log("csArray"+ this.csArray);  
@@ -109,13 +108,7 @@ export class ContactPage {
 
 
     
-    //序列号
-    this.icodeArray[0] ="0x"+icode.substr(0,2);
-    this.icodeArray[1] ="0x"+icode.substr(2,2);
-    this.icodeArray[2] ="0x"+icode.substr(4,2);
-    this.icodeArray[3] ="0x"+icode.substr(6,2);
-    this.icodeArray[4] ="0x"+icode.substr(8,2);
-    this.icodeArray[5] ="0x"+icode.substr(10,2);
+    
   }
 
   public  intToBytes(value:any){ 
@@ -211,8 +204,13 @@ export class ContactPage {
 		
 		//var str = [0x56,0x00,0x00,0xFF,0xFF,0xFF];
     //var str = [0xB5,crc[1],crc[0],this.equArray[0],this.equArray[1],this.equArray[2],this.equArray[3],this.equArray[4],data[3],data[2],data[1],data[0]];
-    
-		var str = [0xB5,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];
+    var str = []; 
+    if(localStorage.getItem("status") =='true'){
+      str =  [0xB4,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];
+    }else{
+     str =  [0xB5,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]];
+    }
+		
 		var fileName='lock.wav';
        
 	   var str1  = this.appconfig.sound(str); 
@@ -239,18 +237,88 @@ export class ContactPage {
   }
 
 
-  //设置项目
-  public setArea(){
+  //设置项目代码
+  public setAreaAlert(){
+    let alert = this.alertCtrl.create();
+    alert.setTitle('设置项目代码');
 
-    this.playDisable = false;
+
+        for(var i = 0 ;i<this.setEquCode.length;i++){
+          if(i==0){
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equipmentId+')',
+              value: this.setEquCode[i].equId,
+              checked: true
+              });
+          }else{
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equipmentId+')',
+              value: this.setEquCode[i].equId
+              });
+          }
+          
+
+        }
+       
+
+        // alert.addInput({
+        // type: 'radio',
+        // label: 'test'+'('+"000002040302"+')',
+        // value: '000002040302'
+        // });
+
+        // alert.addInput({
+        // type: 'radio',
+        // label: 'test'+'('+"000002040305"+')',
+        // value: '000002040305'
+        // });
+
+     
+
+        alert.addButton('返回');
+        alert.addButton({
+        text: '确定',
+        handler: (data: any) => {
+            console.log('Radio data:', data);
+            this.equCode = data;
+            this.setArea(data);
+            
+        }
+        });
+
+        alert.present();
+  }
+
+
+
+
+
+  //设置项目
+  public setArea(data){
+
+    //this.playDisable = false;
    
     //设置项目代码
     var setCode =this.areaCode;
     var arealist =  this.intToBytes(parseInt(setCode));
-    var icode = this.icodeArray;
+
+    var icodeArray = new Array(6);  
+    //序列号
+     icodeArray[0] ="0x"+data.substr(0,2);
+     icodeArray[1] ="0x"+data.substr(2,2);
+     icodeArray[2] ="0x"+data.substr(4,2);
+     icodeArray[3] ="0x"+data.substr(6,2);
+     icodeArray[4] ="0x"+data.substr(8,2);
+     icodeArray[5] ="0x"+data.substr(10,2);
+
+    
+
+     
 
     //设备
-    var str = [0xA7,0x00,icode[0],icode[1],icode[2],icode[3],icode[4],icode[5],arealist[2],arealist[1],arealist[0]];
+    var str = [0xA7,0x00,icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],icodeArray[5],arealist[2],arealist[1],arealist[0]];
     var fileName='area.wav';
        
 	   var str1  = this.appconfig.sound(str); 
@@ -279,24 +347,25 @@ export class ContactPage {
     let alert = this.alertCtrl.create();
     alert.setTitle('设置设备编码');
 
-        alert.addInput({
-        type: 'radio',
-        label: 'test'+'('+"000002040303"+')',
-        value: '000002040303',
-        checked: true
-        });
+        for(var i = 0 ;i<this.setEquCode.length;i++){
+          if(i==0){
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equipmentId+')',
+              value: this.setEquCode[i].equipmentId,
+              checked: true
+              });
+          }else{
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equipmentId+')',
+              value: this.setEquCode[i].equipmentId
+              });
+          }
+          
 
-        alert.addInput({
-        type: 'radio',
-        label: 'test'+'('+"000002040302"+')',
-        value: '000002040302'
-        });
-
-        alert.addInput({
-        type: 'radio',
-        label: 'test'+'('+"000002040305"+')',
-        value: '000002040305'
-        });
+        }
+   
 
      
 
@@ -307,7 +376,7 @@ export class ContactPage {
             console.log('Radio data:', data);
             this.equCode = data;
             this.setEqu(data);
-            this.loadData();
+            // this.loadData();
         }
         });
 
@@ -472,24 +541,24 @@ export class ContactPage {
     let alert = this.alertCtrl.create();
     alert.setTitle('设置设备编码');
 
-        alert.addInput({
-        type: 'radio',
-        label: 'test'+'('+"000002040303"+')',
-        value: '000002040303',
-        checked: true
-        });
+        for(var i = 0 ;i<this.setEquCode.length;i++){
+          if(i==0){
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equipmentId+')',
+              value: this.setEquCode[i].equId+"&sb"+this.setEquCode[i].equipmentId+"&sb"+this.setEquCode[i].equCode,
+              checked: true
+              });
+          }else{
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equipmentId+')',
+              value: this.setEquCode[i].equId+"&sb"+this.setEquCode[i].equipmentId+"&sb"+this.setEquCode[i].equCode
+              });
+          }
+          
 
-        alert.addInput({
-        type: 'radio',
-        label: 'test'+'('+"000002040302"+')',
-        value: '000002040302'
-        });
-
-        alert.addInput({
-        type: 'radio',
-        label: 'test'+'('+"000002040305"+')',
-        value: '000002040305'
-        });
+        }
 
      
 
@@ -497,8 +566,10 @@ export class ContactPage {
         alert.addButton({
         text: '确定',
         handler: (data: any) => {
+
+              var str = data.split("&sb");
             
-              this.setArea();
+              this.setArea(str[0]);
               
           
               
@@ -508,9 +579,17 @@ export class ContactPage {
               }, 3000);
 
               var  one =  setInterval(() => {
-                this.setEqu(data);
+                this.setEqu(str[1]);
                 clearInterval(one);
               }, 6000);
+
+              var  three =  setInterval(() => {
+                this.setUserMask(str[2]);
+                clearInterval(three);
+              }, 9000);
+
+
+            //  this.(data);
            
            
 

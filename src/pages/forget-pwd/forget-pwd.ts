@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,App } from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { TabsPage } from '../tabs/tabs';
@@ -26,7 +26,7 @@ export class ForgetPwdPage {
     smsCode:"",
     mobile:""
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams ,public httpSerProvider:HttpSerProvider,
+  constructor(private appCtrl: App,public navCtrl: NavController, public navParams: NavParams ,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider,) {
   }
 
@@ -122,7 +122,7 @@ settime1() {
                 if(data.code==='0000'){
                   this.popSerProvider.toast(data.message);
                   this.popSerProvider.showImgLoading("注册成功",1);
-                  this.navCtrl.setRoot(IndexPage);
+                  this.appCtrl.getActiveNav().pop();
                 }else if(data.code==='9999'){
                   this.popSerProvider.toast(data.message);
                 }else{

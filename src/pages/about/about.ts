@@ -20,18 +20,30 @@ export class AboutPage {
 
   appVersion:any = "";
   gender:any = "f";
-  auto:any = false;
+  auto:any = true;
   isCheck =false;  //更新提醒
   param:any;
   highVersion:any = "";//最新版本
-
+  isTrue:any = true;
+  userName:any = "用户名";
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingPage');
-    this.loadData();
+    if(localStorage.getItem("status")=='true'){
+      this.loadData();
+    }else{
+      
+    }
+    //this.loadData();
+    if(localStorage.getItem("nav")!=undefined && localStorage.getItem("nav")!=null && localStorage.getItem("nav")!="" ){
+      this.isTrue = false;
+    }else{
+      this.isTrue = true;
+    }
   }
 
 
   public loadData(){
+    var option = JSON.parse(localStorage.getItem("communityData")); 
+    this.userName = option.userName ==null?'用户名':option.userName;
     this.httpSerProvider.get('/home/findSysParam',{
           
     }).then((data:any)=>{

@@ -22,8 +22,10 @@ import { TabsPage } from '../tabs/tabs';
 export class IndexPage {
   imgStr:string;//图片验证码
   imgKey:string;//验证码对应的key
-  userName:string = "18676487058"; //用户名
-  password:string = "111111"; //密码
+  userName:string = "13612341234"; //用户名
+  password:string = "123456"; //密码
+  //userName:string = "wuye1"; //用户名
+  //password:string = "123456"; //密码
   code:string = "";//验证码
   deviceId:string = "";
   appVersion:string = "";
@@ -123,8 +125,9 @@ export class IndexPage {
 settime() {
  
   if (this.verifyCode.countdown == 1) {
-  this.verifyCode.countdown = AppConfig.requestTime;
-  this.verifyCode.disable = true;
+    this.verifyCode.countdown = AppConfig.requestTime;
+    this.verifyCode.disable = true;
+   // this.popSerProvider.toast("登录有误,请检查您的网络或联系管理员");
   return;
   } else {
   this.verifyCode.countdown--;

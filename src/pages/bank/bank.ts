@@ -29,6 +29,11 @@ export class BankPage {
     this.loadData();
   }
 
+  ionViewDidEnter() {
+    console.log('ionViewDidLoad BankPage');
+    this.loadData();
+  }
+
   loadData(){
     this.httpSerProvider.get('/register/communityList').then((data:any)=>{
       if(data.code==='0000'){
@@ -44,7 +49,41 @@ export class BankPage {
     });
   }
 
-  presentConfirm(opt:any) {
+  alertCt(opt:any) {
+    let alert = this.alertCtrl.create({
+      title: '是否确认设置为默认小区？',
+      message: '',
+      buttons: [
+        {
+          text: '返回',
+          role: '返回',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '确认',
+          handler: () => {
+            this.httpSerProvider.post('/register/updateCommunityisTrue',opt).then((data:any)=>{
+              if(data.code==='0000'){
+                this.popSerProvider.toast(data.message);
+                this.loadData();   
+              }else if(data.code==='9999'){
+                this.popSerProvider.toast(data.message);
+              }else{
+                this.popSerProvider.toast(data.message);
+              }
+             
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  presentConfirm(opt:any,$event) {
+    $event.stopPropagation();
     let alert = this.alertCtrl.create({
       title: '是否确认删除？',
       message: '',
