@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
+import { IndexPage } from '../index';
 
 
 
@@ -22,13 +23,26 @@ export class TabsPage {
   tabs3Text:any = '我的';
   tabs3Icon:any = 'contacts';
 
+  indexShow:string = ""; //是否显示首页
+
 
   isTrue:any = false;
   constructor(private events: Events,public navCtrl: NavController, public navParams: NavParams) {
 
+    if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
+       this.indexShow = "true";
+    }else{
+      this.indexShow = "";
+      this.navCtrl.setRoot("IndexPage");
+    }
+
+
   }
   ionViewDidLoad() {
     this.isTrue = false;
+
+   
+
     if(localStorage.getItem("nav")!=undefined && localStorage.getItem("nav")!=null && localStorage.getItem("nav")!="" ){
      
       this.isTrue = true;

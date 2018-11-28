@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {App,IonicPage, NavController, NavParams} from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
@@ -22,6 +22,7 @@ import { TabsPage } from '../tabs/tabs';
 export class IndexPage {
   imgStr:string;//图片验证码
   imgKey:string;//验证码对应的key
+  indexShow:string = "true"; //是否显示首页
   userName:string = "13612341234"; //用户名
   password:string = "123456"; //密码
   //userName:string = "wuye1"; //用户名
@@ -29,27 +30,42 @@ export class IndexPage {
   code:string = "";//验证码
   deviceId:string = "";
   appVersion:string = "";
-  constructor(public navCtrl: NavController,
+  constructor(
+              public app:App,
+              public navCtrl: NavController,
               public navParams: NavParams,
               public httpSerProvider:HttpSerProvider,
               public popSerProvider:PopSerProvider,
               ) {
-
+                
+               
                 //this.deviceId = AppConfig.deviceId;
+                
                 this.appVersion = AppConfig.appVersion;
-                if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
-                  //alert("fuck");
-                  this.navCtrl.setRoot(TabsPage);
-                }else{
-                  //this.navCtrl.setRoot(IndexPage);
-                }
+
+                // if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
+                //   this.indexShow = "";
+                //   this.navCtrl.setRoot(TabsPage);
+                // }else{
+                //   this.indexShow = "true";
+            
+                // }
+
+
+                //  //this.deviceId = AppConfig.deviceId;
+                //  this.appVersion = AppConfig.appVersion;
+                //  if(localStorage.getItem("token")!=undefined && localStorage.getItem("token")!=null && localStorage.getItem("token")!="" ){
+                //    //alert("fuck");
+                //    this.navCtrl.setRoot(TabsPage);
+                //  }else{
+                //    //this.navCtrl.setRoot(IndexPage);
+                //  }
                 
   }
 
+
+
   ionViewDidLoad() {
-    
-    // this.loadData();
-     
 
   }
 
@@ -86,6 +102,8 @@ export class IndexPage {
 
               this.popSerProvider.showImgLoading("登录成功",1);
               this.navCtrl.setRoot(TabsPage);  
+              //this.app.getRootNav().setRoot(TabsPage);
+
           }else if(data.code==='1000'){
               localStorage.setItem('token',data.data);
               localStorage.setItem('nav',"true");

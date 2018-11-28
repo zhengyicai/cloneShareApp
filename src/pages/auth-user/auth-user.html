@@ -1,0 +1,33 @@
+<!--
+  Generated template for the AuthUserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>授权访客</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding style="background-color:white">
+    
+    <div class="div" (click)="adminUnlock()">
+        <img src="assets/img/icon/menjin_on.png" ><br/>
+        <div style="color:white;margin:10px 0px">{{loading}}</div>
+    </div>
+    <br/>
+    <div style="text-align:center">{{fileDownload}}</div>
+    <button class="loginButton" [disabled]="!verifyCode1.disable"  [ngStyle]="{'display': fileDownload=='' ? 'block' : 'none'}"  icon-only  (click)="adminUnlock()"  id="RegisterButton">
+        点击生成访客秘钥
+    </button> 
+    <button class="loginButton" icon-only  [ngStyle]="{'display': fileDownload!='' ? 'block' : 'none'}" (click)="copy()"  id="RegisterButton">
+        点击复制该链接
+    </button>   
+
+
+
+</ion-content>

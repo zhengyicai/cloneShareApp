@@ -1,0 +1,52 @@
+page-auth-user {
+    .div{
+        
+      
+        margin: auto;
+        margin-top: 40px;
+         width: 230px;
+         height: 230px;
+         border-radius: 115px 115px ; 
+         background-color:color($colors, primary);
+         opacity: 0.8;
+         padding:65px 50px 70px  75px;
+     }
+    //  #RegisterButton{
+    //      width: 100%;
+    //      font-size: 16px;
+    //      line-height: 20px;
+    //      height: 40px;
+         
+         
+         
+  
+    //   }
+      #loginBut{
+         padding-left: 30px;
+         padding-right: 35px;
+     }
+     .loginLabel{
+        font-size: 14px;
+    }
+    .place{
+        font-size: 14px;
+
+    }
+    #RegisterButton{
+        width: 100%;
+        font-size: 18px;
+        line-height: 20px;
+        height: 40px;
+        border:1px solid color($colors, primary);
+        border-radius: 10px 10px 10px 10px;
+        
+        
+        
+ 
+     }
+     #loginBut{
+        padding-left: 30px;
+        padding-right: 35px;
+    }
+   
+}

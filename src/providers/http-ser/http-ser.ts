@@ -231,8 +231,10 @@ export class HttpSerProvider {
    show(errMsg){
         //alert(errMsg);
         if(!this.showCount){
-            this.popSerProvider.toast(errMsg.message);
-            this.navCtrl.setRoot("IndexPage");    
+           // this.popSerProvider.toast(errMsg.message);
+            localStorage.setItem("token","");
+            localStorage.removeItem('nav');
+            //this.events.publish('toLogin');
             this.showCount = true;
         }
         

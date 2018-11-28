@@ -2,7 +2,7 @@
   <ion-tab [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="我的" tabIcon="contacts"></ion-tab>
 </ion-tabs> -->
-<ion-tabs>
+<ion-tabs *ngIf="indexShow!=''">
   <ion-tab  [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>
   <ion-tab  *ngIf="isTrue"  [root]="tab2Root" [tabTitle]="tabs2Text" [tabIcon]="tabs2Icon"></ion-tab>
   <ion-tab  [root]="tab3Root" [tabTitle]="tabs3Text" [tabIcon]="tabs3Icon"></ion-tab>

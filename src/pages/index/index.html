@@ -1,4 +1,5 @@
-<ion-content  id="LoginBG"  style="background-color: white;" hide-tabs>
+<ion-content  id="LoginBG"   style="background-color: white;" hide-tabs>
+    <div [ngStyle]="{'display': indexShow!='' ? 'block' : 'none'}"  >  
     <div id="loginDiv">
           <!-- <img src="assets/img/logo.png" id="logo"> -->
           
@@ -44,4 +45,6 @@
       </ion-buttons>
       <span style="position: fixed;right:3%; bottom: 4%; text-align: right">{{deviceId}}</span><br/>
       <span style="position: fixed;right:3%; bottom: 1%; text-align: right">V{{appVersion}}</span>
+
+    </div>  
 </ion-content>

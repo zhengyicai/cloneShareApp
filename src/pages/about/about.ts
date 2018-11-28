@@ -98,7 +98,7 @@ export class AboutPage {
     this.navCtrl.push("UpdatePwdPage");
   }
   Exit(){
-    localStorage.removeItem("token");
+    localStorage.setItem("token","");
     localStorage.removeItem('nav');
     this.events.publish('toLogin');
     

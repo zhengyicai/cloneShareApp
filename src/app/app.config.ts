@@ -10,6 +10,8 @@
 // 测试环境
 export const APP_SERVE_URL:string = 'http://123.207.121.118:8080/app';
 export const APP_PIC_URL:string = 'http://test.sutongbao.file.yb.com/';
+export const APP_FILE_URL:string = 'http://123.207.121.118/sound/';
+
 // 正式环境
 //export const APP_SERVE_URL:string = 'http://vpay.luck8864.com/api/web';
 //export const APP_PIC_URL:string = 'http://file.luck8864.com/';
@@ -29,7 +31,7 @@ export class AppConfig {
     static requestTime:number = 5;  //禁止重复请求
     //设备信息
     static deviceId:string = '';          //设备id
-    static appVersion:string = '1.0.5';        //版本号 2.0.2
+    static appVersion:string = '1.0.6';        //版本号 2.0.2
     static userName:string = '';          //账号名
     static token:string = '';             //token
     static AES_key:string ="";

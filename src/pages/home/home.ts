@@ -159,6 +159,11 @@ export class HomePage {
     this.navCtrl.push("UnlockPage");
   }
 
+
+  public  authUser(){
+    this.navCtrl.push("AuthUserPage");
+  }
+
   public alertPage(){
     let alert = this.alertCtrl.create({
       title: '',

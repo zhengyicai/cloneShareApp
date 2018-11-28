@@ -38,6 +38,7 @@ import { HomePage } from '../pages/home/home';
 import { Media, MediaObject } from '@ionic-native/media';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { Clipboard } from '@ionic-native/clipboard';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import {MultiPickerModule} from 'ion-multi-picker'
 import { ReviceServeProvider } from '../providers/revice-serve/revice-serve';
@@ -102,7 +103,8 @@ import { Network  } from "@ionic-native/network";
         PhotoLibrary,
         FileTransfer,
         ReviceServeProvider,
-        Network
+        Network,
+        Clipboard
     ]
 })
 export class AppModule {
