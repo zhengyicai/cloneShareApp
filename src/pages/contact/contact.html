@@ -124,13 +124,23 @@
       </ion-card>
 
       <ion-card style="border-radius:5px 5px 5px 5px ">     
-          <button ion-item detail-none [disabled]="!playDisable" class="settlist">
+          <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="addCard()">
               <ion-avatar item-start style="margin-right:0px;">  
                    <img src="assets/img/tianjia.png" class="img">
               </ion-avatar>
             <h3> 添加门禁卡号</h3>
             </button>
       </ion-card>
+
+
+      <ion-card style="border-radius:5px 5px 5px 5px ">     
+        <button ion-item detail-none [disabled]="!playDisable" class="settlist" (click)="setCardRemove()">
+            <ion-avatar item-start style="margin-right:0px;">  
+                 <img src="assets/img/set_toushujianyi.png" class="img">
+            </ion-avatar>
+          <h3>一键清空门禁卡号</h3>
+          </button>
+    </ion-card>
 
 
     

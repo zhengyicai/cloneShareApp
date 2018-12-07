@@ -27,6 +27,7 @@
     "@ionic-native/file": "3.12.1",
     "@ionic-native/file-transfer": "4.0.1",
     "@ionic-native/media": "4.0.1",
+    "@ionic-native/media-capture": "^4.18.0",
     "@ionic-native/network": "3.12.1",
     "@ionic-native/photo-library": "3.12.1",
     "@ionic-native/photo-viewer": "3.12.1",
@@ -78,7 +79,8 @@
       "cordova-plugin-media": {},
       "cordova-plugin-file": {},
       "cordova-plugin-network-information": {},
-      "cordova-clipboard": {}
+      "cordova-clipboard": {},
+      "cordova-plugin-media-capture": {}
     },
     "platforms": [
       "android"

@@ -36,6 +36,7 @@ import { HomePage } from '../pages/home/home';
 
 
 import { Media, MediaObject } from '@ionic-native/media';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Clipboard } from '@ionic-native/clipboard';
@@ -99,6 +100,7 @@ import { Network  } from "@ionic-native/network";
         PhotoViewer,
         UniqueDeviceID,
         Media,
+        MediaCapture,
         File,
         PhotoLibrary,
         FileTransfer,

@@ -34,6 +34,8 @@ export class HomePage {
     this.slides.slideTo(2, 500);
   }
 
+ 
+
 
   //页面离开时停止自动播放
 
@@ -89,6 +91,20 @@ export class HomePage {
             if(data.code==='0000'){
             this.communityName = data.data.communityName==null?'首页':data.data.communityName;   
             localStorage.setItem("communityData",JSON.stringify(data.data));
+
+
+            this.httpSerProvider.get('/home/findRoomCardData',{
+                  communityId:data.data.community
+                }).then((data:any)=>{
+                  if(data.code==='0000'){
+                 localStorage.setItem("cardData",JSON.stringify(data.data))
+                
+                }else if(data.code==='9999'){
+                  this.popSerProvider.showImgLoading(data.message,0);
+                }else{
+                
+                }
+            });
           
           }else if(data.code==='9999'){
             this.popSerProvider.showImgLoading(data.message,0);
@@ -154,6 +170,10 @@ export class HomePage {
 
   }
 
+
+  public  testSound1(){
+    this.navCtrl.push("TestSoundPage");
+  }
 
   public  unlock(){
     this.navCtrl.push("UnlockPage");
@@ -245,6 +265,12 @@ export class HomePage {
     alert.present();
   }
 
+
+
+  public testSound(){
+    this.navCtrl.push("SoundDecodePage");
+    
+  }
 
   public alertForceUpate(){
     let alert = this.alertCtrl.create({

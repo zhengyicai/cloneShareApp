@@ -5,6 +5,7 @@ import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
+import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions } from '@ionic-native/media-capture';
 /**
  * Generated class for the UnlockPage page.
  *
@@ -18,7 +19,7 @@ import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 })
 export class UnlockPage {
 
-  constructor( private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public mediaCapture: MediaCapture,private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
   }
 
@@ -176,7 +177,13 @@ export class UnlockPage {
       this.file.createFile( this.fileUrl,fileName,true);
       
       
+
+  
+
+
+
       this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+      // this.startRecording_MediaCapture();
         if (this.platform.is('ios')) {
           this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
         } else if (!this.platform.is('ios')) {
@@ -184,7 +191,23 @@ export class UnlockPage {
         }
    
               this.recordData.play();
-              this.recordData.onSuccess.subscribe(() => this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",3)); 
+             // this.file.writeExistingFile(this.fileUrl, 'soundDecode.wav',"").then(() => {
+              
+              
+              let file1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '') + 'soundDecode1.wav');
+                file1.startRecord();
+                window.setTimeout(() => file1.stopRecord(), 5000);
+               
+            //  });
+              
+              this.recordData.onSuccess.subscribe(() => 
+                  
+                  this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",3),
+                  this.file.removeFile(this.fileUrl,fileName)
+                 
+
+              
+              ); 
               
               
       }).catch(error => {
@@ -193,6 +216,36 @@ export class UnlockPage {
      
 
     }
+    
+
+     // cordova-plugin-media-capture 的使用
+     startRecording_MediaCapture() {
+      this.platform.ready().then(() => {
+       
+          // 设置录音参数：duration限制录音长度，单位秒，仅ios有效
+          let options: CaptureAudioOptions = { limit: 1, duration: 4};
+         
+          this.mediaCapture.captureAudio(options)
+              .then(
+              function (mediaFiles: MediaFile[]) {
+                  var i, len;
+                  for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+
+                      alert("Record success! \n\n"
+                          + "file name: " + mediaFiles[i].name + "\n\n"
+                          + "size: " + (mediaFiles[i].size / 1024).toFixed(2) + "KB" + "\n\n"
+                          + "fullPath: " + mediaFiles[i].fullPath + "\n\n"
+                          + "lastModifiedDate: " + (mediaFiles[i].lastModifiedDate) + "\n\n"
+                          + "type: " + mediaFiles[i].type + "\n\n");
+
+                      // 上传
+                      this.fileName = mediaFiles[i].name;
+                      //this.uploadFile(mediaFiles[i].fullPath);
+                  }
+              },
+          );
+      });
+  }
 
 
   

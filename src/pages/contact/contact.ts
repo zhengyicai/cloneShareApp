@@ -165,7 +165,7 @@ export class ContactPage {
         this.recordData.setVolume(1);
               this.recordData.play();
               //完成回调功能
-              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",1)); 
+              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",1),this.file.removeFile(this.fileUrl,fileName)); 
               //this.recordData.onStatusUpdate.subscribe(status => this.playDisable = true,this.playDisable = true
               // fires when file status changes  
               //that.playDisable = true,    
@@ -228,7 +228,7 @@ export class ContactPage {
 			//控制声音大小 0-1
 		//this.recordData.setVolume(1);
             this.recordData.play();
-            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2),this.file.removeFile(this.fileUrl,fileName)); 
 		}).catch(error => {
       this.playDisable = true;
 
@@ -335,7 +335,7 @@ export class ContactPage {
     //this.recordData.setVolume(1);
            
             this.recordData.play();
-            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2),this.file.removeFile(this.fileUrl,fileName)); 
             
 		}).catch(error => {
       this.playDisable = true;
@@ -383,6 +383,82 @@ export class ContactPage {
         alert.present();
   }
 
+
+  //设置一键删除
+  public setCardRemove(){
+    let alert = this.alertCtrl.create();
+    alert.setTitle('一键删除门禁卡号');
+
+        for(var i = 0 ;i<this.setEquCode.length;i++){
+          if(i==0){
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equId+')',
+              value: this.setEquCode[i].equId,
+              checked: true
+              });
+          }else{
+            alert.addInput({
+              type: 'radio',
+              label: this.setEquCode[i].equipmentName+'('+this.setEquCode[i].equId+')',
+              value: this.setEquCode[i].equId
+              });
+          }
+          
+
+        }
+   
+
+     
+
+        alert.addButton('返回');
+        alert.addButton({
+        text: '确定',
+        handler: (data: any) => {
+            this.removeCard(data);
+        }
+        });
+
+        alert.present();
+  }
+  //一键设置删除
+  public removeCard(data){
+    this.playDisable = false;
+   
+    var icodeArray = new Array(6);  
+    //序列号
+     icodeArray[0] ="0x"+data.substr(0,2);
+     icodeArray[1] ="0x"+data.substr(2,2);
+     icodeArray[2] ="0x"+data.substr(4,2);
+     icodeArray[3] ="0x"+data.substr(6,2);
+     icodeArray[4] ="0x"+data.substr(8,2);
+     icodeArray[5] ="0x"+data.substr(10,2);
+    
+    //设备
+    var str = [0xA7,0x04,icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],icodeArray[5],0x00,0x00,0x00];
+    var fileName='removeCard.wav';
+       
+	   var str1  = this.appconfig.sound(str); 
+	   this.file.createFile( this.fileUrl,fileName,true);
+	   
+	   //设置回调函数， 不然play()的速度快于write的速度，会获取到上一次的数据
+	   this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+			if (this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+      } else if (!this.platform.is('ios')) {
+        this.recordData = this.media.create(this.fileUrl+fileName);  
+      }
+			//控制声音大小 0-1
+		//this.recordData.setVolume(1);
+            this.recordData.play();
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2),this.file.removeFile(this.fileUrl,fileName)); 
+		}).catch(error => {
+      this.playDisable = true;
+		})  
+    
+  }
+
+
   //设置设备
   public setEqu(data){
     this.playDisable = false;
@@ -414,7 +490,7 @@ export class ContactPage {
 			//控制声音大小 0-1
 		//this.recordData.setVolume(1);
             this.recordData.play();
-            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2),this.file.removeFile(this.fileUrl,fileName)); 
 		}).catch(error => {
       this.playDisable = true;
 		})
@@ -497,7 +573,7 @@ export class ContactPage {
         //控制声音大小 0-1
         this.recordData.setVolume(1);
               this.recordData.play();
-              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2),this.file.removeFile(this.fileUrl,fileName)); 
       }).catch(error => {
         this.playDisable = true;
       })
@@ -531,7 +607,7 @@ export class ContactPage {
 			//控制声音大小 0-1
 		//this.recordData.setVolume(1);
             this.recordData.play();
-            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2)); 
+            this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",2),this.file.removeFile(this.fileUrl,fileName)); 
 		}).catch(error => {
       this.playDisable = true;
 		})
@@ -598,4 +674,9 @@ export class ContactPage {
 
         alert.present();  
   }  
+
+
+   public addCard(){
+    this.navCtrl.push("AddCardPage");
+   } 
 }

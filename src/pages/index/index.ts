@@ -23,10 +23,10 @@ export class IndexPage {
   imgStr:string;//图片验证码
   imgKey:string;//验证码对应的key
   indexShow:string = "true"; //是否显示首页
-  userName:string = "13612341234"; //用户名
-  password:string = "123456"; //密码
-  //userName:string = "wuye1"; //用户名
+  //userName:string = "13612341234"; //用户名
   //password:string = "123456"; //密码
+  userName:string = "wuye2"; //用户名
+  password:string = "1q2w3e"; //密码
   code:string = "";//验证码
   deviceId:string = "";
   appVersion:string = "";
