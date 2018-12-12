@@ -268,7 +268,7 @@ export class HomePage {
 
 
   public testSound(){
-    this.navCtrl.push("SoundDecodePage");
+  //  this.navCtrl.push("SoundDecodePage");
     
   }
 

@@ -194,9 +194,9 @@ export class UnlockPage {
              // this.file.writeExistingFile(this.fileUrl, 'soundDecode.wav',"").then(() => {
               
               
-              let file1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '') + 'soundDecode1.wav');
-                file1.startRecord();
-                window.setTimeout(() => file1.stopRecord(), 5000);
+              // let file1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '') + 'soundDecode1.wav');
+              //   file1.startRecord();
+              //   window.setTimeout(() => file1.stopRecord(), 5000);
                
             //  });
               

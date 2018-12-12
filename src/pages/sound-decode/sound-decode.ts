@@ -184,7 +184,7 @@ export class SoundDecodePage {
 			this.test= new Int16Array(response);
 			this.buf1 = new Int16Array(response);
 		//	alert(this.buf1.length);
-			alert(this.decodeVoice(this.fileUrl+'soundDecode1.wav'));	
+		//	alert(this.decodeVoice(this.fileUrl+'soundDecode1.wav'));	
 		}).catch(error => {
 		
 		})
