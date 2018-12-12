@@ -87,6 +87,10 @@ export class IndexPage {
 
   }
 
+
+  gotoPrivary(){
+    this.navCtrl.push("PrivacyPage");
+  }
   gotoLogin(){
     //this.navCtrl.setRoot(TabsPage);
     if(this.validator()){
