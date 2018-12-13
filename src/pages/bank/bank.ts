@@ -18,6 +18,8 @@ import { AppConfig } from '../../app/app.config';
 })
 export class BankPage {
 
+
+  
   constructor(public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider,public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
   }
