@@ -71,22 +71,22 @@
             <span item-right style="margin-right:30px"><span [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}">{{appVersion}}</span><span [ngStyle]="{'display': isCheck===true ? 'block' : 'none'}" style="color:red">*新版本更新</span></span>
           </button>
   
-          <button ion-item class="itemHeight" style="margin-top: 1px">
+          <!-- <button ion-item class="itemHeight" style="margin-top: 1px">
               <span>
                 <img style="height:28px;width:28px;" src="assets/img/set_guanyu.png" />
                 <span>关于</span>
               </span>
               <span item-right style="margin-right:30px"></span>
-            </button>
+            </button> -->
 
 
-            <ion-item class="itemHeight" style="margin-top: 1px;">
+            <!-- <ion-item class="itemHeight" style="margin-top: 1px;">
               <ion-label><span>
                 <img style="height:28px;width:28px;" src="assets/img/set_yinghangka.png" />
                 <span>自动登录</span>
               </span></ion-label>
               <ion-toggle [(ngModel)]="auto"></ion-toggle>
-            </ion-item>
+            </ion-item> -->
             <button  *ngIf="isTrue" ion-item class="itemHeight"   (click)="addCom()" style="margin-top: 3px">
                 <span>
                   <img style="height:28px;width:28px;" src="assets/img/set_zhifumima.png" />

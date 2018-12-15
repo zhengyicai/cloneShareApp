@@ -14,9 +14,9 @@
         </ion-slide>         
      </ion-slides>
 
-     <ion-grid no-padding class="functionList" >
-        <ion-row class="listPart1">
-            <ion-col class="recharge" text-center (click)="testSound()">
+     <ion-grid no-padding class="functionList"  [ngStyle]="{'display': showButton===true ? 'block' : 'none'}">
+        <ion-row class="listPart1" >
+            <ion-col class="recharge" text-center (click)="testSound()" >
                 <span>
                   <img src="assets/img/icon/community_cinema.png">
                   <!-- <mark >1</mark> -->
@@ -85,6 +85,50 @@
             </ion-col>
         </ion-row>
       </ion-grid>  
+
+
+      <ion-grid no-padding class="functionList" [ngStyle]="{'display': showButton===false ? 'block' : 'none'}">
+        <ion-row class="listPart1" >
+          <ion-col class="recharge" text-center (click)="unlock()">
+                <span>
+                  <img src="assets/img/icon/com_b_a.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                <span>手机开门</span>
+          </ion-col>  
+
+          <ion-col class="recharge" text-center (click)="authUser()">
+                <span>
+                  <img src="assets/img/icon/community_register.png">
+                  <!-- <mark >1</mark> -->
+                </span>
+                
+                <span>授权访客</span>
+            </ion-col>
+                
+            <ion-col class="recharge" text-center  >
+                <!-- <span>
+                  <img src="assets/img/icon/community_cinema.png">
+                 
+                </span>
+                
+                
+                <span>找管家</span> -->
+            </ion-col>
+           
+           
+            <ion-col class="recharge" text-center (click)="alertPage()" >
+                <!-- <span>
+                  <img src="assets/img/icon/community_fix.png">
+                 
+                </span>
+            
+                <span>物业保修</span> -->
+            </ion-col>
+        </ion-row>
+      
+      </ion-grid>  
       
       
       <ion-card style="border-radius:5px 5px 5px 5px ">
@@ -94,15 +138,15 @@
                 <img src="assets/img/icon/community_notice.png" style="width:25px;height:25px; border-radius: 0px">
               </ion-avatar>
               <h3>最新项目上线啦~</h3>
-              <p>2018-11-15 14:00</p>
+              <p>2018-12-15 14:00</p>
             </ion-item>
           
           
             <ion-card-content>
-              <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
+              <p>热烈庆祝项目圆满上线~</p>
             </ion-card-content>
           
-            <ion-row>
+            <!-- <ion-row>
               <ion-col>
                 <button ion-button icon-start clear small>
                   <ion-icon name="thumbs-up"></ion-icon>
@@ -118,7 +162,7 @@
               <ion-col center text-center>
                
               </ion-col>
-            </ion-row>
+            </ion-row> -->
         
       </ion-card>
       

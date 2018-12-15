@@ -4,6 +4,7 @@ import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
 import { Slides } from 'ionic-angular';//注入轮播
+import { ThrowStmt } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -52,7 +53,7 @@ export class HomePage {
   param:any;
   appVersion:any;
   communityName:any = "首页";
-  
+  showButton:any = false;  
 
   ionViewDidEnter(){
     this.slides.startAutoplay();
@@ -120,9 +121,18 @@ export class HomePage {
         }).then((data:any)=>{
           if(data.code==='0000'){
             this.param = data.data;   
-         
-
+                     
            if(this.param!='' && this.param!=null ){
+
+                if(this.param.buttonShow =='1'){
+                  this.showButton  = true;
+                }else{
+                  this.showButton = false;
+                }
+
+                if(!this.platform.is('ios')){
+                  this.showButton  = true; 
+                }
 
                 //服务器是否正在更新
                 if(this.param.serviceUpdate =='1'){

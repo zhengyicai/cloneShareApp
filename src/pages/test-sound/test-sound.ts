@@ -37,7 +37,6 @@ export class TestSoundPage {
           sourceNode.connect(scriptNode);
           scriptNode.connect(audioContext.destination);
 
-          console.log(scriptNode);
           scriptNode.onaudioprocess = function(audioProcessingEvent) {
             // The input buffer is the song we loaded earlier
             var inputBuffer = audioProcessingEvent.inputBuffer;
