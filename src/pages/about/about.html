@@ -63,7 +63,7 @@
             </span>
             <span item-right style="margin-right:30px"></span>
           </button> -->
-          <button ion-item class="itemHeight"  (click)="alertUpate()" >
+          <button ion-item class="itemHeight"  (click)="alertUpate()"  [ngStyle]="{'display': showButton===true ? 'block' : 'none'}" >
             <span>
               <img style="height:28px;width:28px;" src="assets/img/set_dingdan.png" />
               <span>版本更新</span>

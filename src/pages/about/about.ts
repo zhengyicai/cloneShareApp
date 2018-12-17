@@ -26,6 +26,7 @@ export class AboutPage {
   highVersion:any = "";//最新版本
   isTrue:any = true;
   userName:any = "用户名";
+  showButton:any = false;  
   ionViewDidLoad() {
     if(localStorage.getItem("status")=='true'){
       this.loadData();
@@ -52,6 +53,16 @@ export class AboutPage {
      
 
        if(this.param!='' && this.param!=null ){
+        if(this.param.buttonShow =='1'){
+            this.showButton  = true;
+          }else{
+            this.showButton = false;
+          }
+
+          if(!this.platform.is('ios')){
+            this.showButton  = true; 
+          }
+
 
             //服务器是否正在更新
             if(this.param.serviceUpdate =='1'){
