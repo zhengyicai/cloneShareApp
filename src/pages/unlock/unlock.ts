@@ -54,7 +54,7 @@ export class UnlockPage {
       this.fileUrl = this.file.externalDataDirectory;  
     }      
 
-    this.adminUnlock();
+    //this.adminUnlock();
 
     
 
@@ -246,6 +246,47 @@ export class UnlockPage {
           );
       });
   }
+
+  startReocrd(){  //开始录音
+
+    //文件URL，文件存放在拓展内存卡中文件夹下，命名为Record.mp3
+    this.filePath = this.fileUrl.replace(/^file:\/\//, '')+ "Record.wav";
+
+    //创建media对象，参数文件名字，上面的filePath也指定了文件存放位置和文件名字
+    this.recordData = this.media.create(this.filePath);
+
+    //开始录音
+    this.recordData.startRecord();
+  }
+
+  pauseRecord(){   
+
+      //暂停录音
+      this.recordData.pauseRecord();
+
+  }
+
+  play(){   
+
+      //播放录音
+      this.recordData.play();
+
+  }
+
+  resumeRecord(){   
+
+      //继续播放录音
+      this.recordData.resumeRecord();
+
+  }
+
+  stopRecord(){   
+
+      //停止结束录音
+      this.recordData.stopRecord();
+
+  }
+
 
 
   
