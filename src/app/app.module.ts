@@ -71,6 +71,7 @@ import { Network  } from "@ionic-native/network";
             pageTransition: 'ios-transition',
             tabsHideOnSubPages: true,
             tabsPlacement: 'bottom',
+            statusbarPadding: false
                     
         
         })
