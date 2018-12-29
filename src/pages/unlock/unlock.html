@@ -15,7 +15,7 @@
 
 <ion-content padding style="background-color:white">
     
-      <div class="div" [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  >
+      <div class="div" [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  (click)="adminUnlock()"  >
               <img src="assets/img/icon/menjin_off.png" ><br/>
               <div style="color:white;margin:10px 5px">正在开门···</div>
       </div>
@@ -38,7 +38,7 @@
       <button class="loginButton" (click)="play()" style="border-radius: 5px 5px 5px 5px;font-size: 14px;border:1px solid #47ac5e">
         播放录音
       </button>
-
+       {{test}} 
 
    
     

@@ -179,12 +179,12 @@ export class SoundDecodePage {
 	******************************************************************/
 
 	decodeVoiceTest(){
-		this.file.readAsArrayBuffer(this.fileUrl, 'Record.wav').then(response => {
+		this.file.readAsArrayBuffer(this.fileUrl, 'Record1.wav').then(response => {
 			//alert(response.byteLength);
 			this.test= new Int16Array(response);
 			this.buf1 = new Int16Array(response);
 		//	alert(this.buf1.length);
-			alert(this.decodeVoice(this.fileUrl+'Record.wav'));	
+			alert(this.decodeVoice(this.fileUrl+'Record1.wav'));	
 		}).catch(error => {
 		
 		})

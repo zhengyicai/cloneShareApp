@@ -165,7 +165,9 @@ export class ContactPage {
         this.recordData.setVolume(1);
               this.recordData.play();
               //完成回调功能
-              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",1),this.file.removeFile(this.fileUrl,fileName)); 
+              this.recordData.onSuccess.subscribe(() =>this.playDisable = true,this.playDisable = true,this.popSerProvider.showSoundLoading("播放中...",1),
+              //this.file.removeFile(this.fileUrl,fileName)
+              ); 
               //this.recordData.onStatusUpdate.subscribe(status => this.playDisable = true,this.playDisable = true
               // fires when file status changes  
               //that.playDisable = true,    
