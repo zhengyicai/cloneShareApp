@@ -26,6 +26,8 @@ export class UnlockPage {
   }
 
 
+
+  
   isCheck:boolean =false;   //控制打开 true:success false:unsuccess
   public appconfig:any;
   public filePath : any; //录音文件的名字
