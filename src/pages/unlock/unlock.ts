@@ -26,8 +26,6 @@ export class UnlockPage {
   }
 
 
-
-  
   isCheck:boolean =false;   //控制打开 true:success false:unsuccess
   public appconfig:any;
   public filePath : any; //录音文件的名字
@@ -331,19 +329,33 @@ export class UnlockPage {
         // this.file.writeFile(this.fileUrl,fileName,str1,{}).then(response => {
       
           if (this.platform.is('ios')) {
-            this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
-            this.recordData.play();
-            window.setTimeout(() => this.stopRecord(), 3000);
-         
-             this.recordData.onSuccess.subscribe(() => 
-               this.startReocrd(),
-               this.isCheck = true,this.isCheck = true,
-               this.popSerProvider.showSoundLoading("播放中...",3),
-               this.file.removeFile(this.fileUrl,fileName),
-               window.setTimeout(() =>this.recordData.release(), 2000), 
-  
-             
-             ); 
+
+            this.file.createFile( this.fileUrl,fileName,true);
+      
+
+      //let options:WriteOptions = {};
+    
+    
+           this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
+    
+                  this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+                  this.recordData.play();
+                  window.setTimeout(() => this.stopRecord(), 3000);
+              
+                  this.recordData.onSuccess.subscribe(() => 
+                    this.startReocrd(),
+                    this.isCheck = true,this.isCheck = true,
+                    this.popSerProvider.showSoundLoading("播放中...",3),
+                    this.file.removeFile(this.fileUrl,fileName),
+                    window.setTimeout(() =>this.recordData.release(), 2000), 
+        
+                  
+                  ); 
+
+
+              }).catch(error => {
+                  this.isCheck = false;
+                })
           } else if (!this.platform.is('ios')) {
             //alert("asdf1");
             this.recordData2 = this.media.create(this.fileUrl+"userlock.wav");  

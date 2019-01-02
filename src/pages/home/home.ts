@@ -194,6 +194,14 @@ export class HomePage {
     this.navCtrl.push("AuthUserPage");
   }
 
+  public lockRecord(){
+    this.navCtrl.push("LockRecordPage");
+  }
+
+  public  contantPro(){
+    this.navCtrl.push("ContantPropertyPage");
+  }
+
   public alertPage(){
     let alert = this.alertCtrl.create({
       title: '',
