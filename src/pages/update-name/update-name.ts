@@ -67,9 +67,7 @@ settime1() {
         this.httpSerProvider.post('/login/updateName',this.subData).then((data:any)=>{
           if(data.code==='0000'){
             this.popSerProvider.toast(data.message);
-            localStorage.removeItem("token");
-            localStorage.removeItem('nav');
-            this.events.publish('toLogin');
+            this.appCtrl.getActiveNav().pop();
            
           }else if(data.code==='9999'){
             this.popSerProvider.toast(data.message);

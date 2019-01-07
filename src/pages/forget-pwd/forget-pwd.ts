@@ -121,7 +121,7 @@ settime1() {
         this.httpSerProvider.post('/login/findPwd',this.subData).then((data:any)=>{
                 if(data.code==='0000'){
                   this.popSerProvider.toast(data.message);
-                  this.popSerProvider.showImgLoading("注册成功",1);
+                  this.popSerProvider.showImgLoading("修改成功",1);
                   this.appCtrl.getActiveNav().pop();
                 }else if(data.code==='9999'){
                   this.popSerProvider.toast(data.message);

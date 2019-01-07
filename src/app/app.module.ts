@@ -36,7 +36,7 @@ import { HomePage } from '../pages/home/home';
 
 
 import { Media, MediaObject } from '@ionic-native/media';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Clipboard } from '@ionic-native/clipboard';
@@ -44,6 +44,8 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
 import {MultiPickerModule} from 'ion-multi-picker'
 import { ReviceServeProvider } from '../providers/revice-serve/revice-serve';
 import { Network  } from "@ionic-native/network";
+
+import { SQLite } from '@ionic-native/sqlite';
 @NgModule({
     declarations: [
         MyApp,
@@ -101,13 +103,14 @@ import { Network  } from "@ionic-native/network";
         PhotoViewer,
         UniqueDeviceID,
         Media,
-        MediaCapture,
+        
         File,
         PhotoLibrary,
         FileTransfer,
         ReviceServeProvider,
         Network,
-        Clipboard
+        Clipboard,
+        SQLite
     ]
 })
 export class AppModule {

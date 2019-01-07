@@ -55,6 +55,15 @@
 
               <span item-right style="margin-right:30px">点击修改</span>
             </button>
+
+            <button  *ngIf="!isTrue" ion-item class="itemHeight"  (click)="updateUserPwd()" style="margin-top: 3px">
+                <span>
+                  <img style="height:28px;width:28px;" src="assets/img/set_denglumima.png" />
+                  <span>登录密码</span>
+                </span>
+  
+                <span item-right style="margin-right:30px">点击修改</span>
+              </button>  
       
         <!-- <button ion-item (click)="gotoSuggest()" class="itemHeight" style="margin-top: 3px">
             <span>
@@ -71,13 +80,13 @@
             <span item-right style="margin-right:30px"><span [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}">{{appVersion}}</span><span [ngStyle]="{'display': isCheck===true ? 'block' : 'none'}" style="color:red">*新版本更新</span></span>
           </button>
   
-          <!-- <button ion-item class="itemHeight" style="margin-top: 1px">
+          <button ion-item class="itemHeight"  (click)="aboutPro()"  style="margin-top: 1px">
               <span>
                 <img style="height:28px;width:28px;" src="assets/img/set_guanyu.png" />
                 <span>关于</span>
               </span>
               <span item-right style="margin-right:30px"></span>
-            </button> -->
+            </button>
 
 
             <!-- <ion-item class="itemHeight" style="margin-top: 1px;">

@@ -6,7 +6,10 @@ import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
 import { SoundDecodePage } from '../sound-decode/sound-decode';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
-import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions } from '@ionic-native/media-capture';
+//import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions } from '@ionic-native/media-capture';
+import {HttpSerProvider} from '../../providers/http-ser/http-ser';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+
 /**
  * Generated class for the UnlockPage page.
  *
@@ -21,11 +24,12 @@ declare var audioinput: any;
 })
 export class UnlockPage {
 
-  constructor(public mediaCapture: MediaCapture,private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private sqlite: SQLite,public httpSerProvider:HttpSerProvider,private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
     this.appconfig = new AppConfig();
+    //this.unlockRecord();
   }
 
-
+  database: SQLiteObject;
   isCheck:boolean =false;   //控制打开 true:success false:unsuccess
   public appconfig:any;
   public filePath : any; //录音文件的名字
@@ -44,6 +48,9 @@ export class UnlockPage {
   equCode:any= "";  //设备编码
   fileUrl:any;  //文件存放地址 
   test:any;
+  ngOnInit() {
+    this.initDB();
+  }
   ionViewDidLoad() {
       this.isCheck = false;
       this.loadData();
@@ -59,10 +66,62 @@ export class UnlockPage {
     }      
 
     this.adminUnlock();
+   
 
     
 
 
+  }
+
+
+  public initDB(){
+    this.sqlite.create({
+     name: 'data.db',
+     location: 'default'
+    })
+    .then((db: SQLiteObject) => {
+      db.executeSql('create table if not exists record1(id INTEGER PRIMARY KEY AUTOINCREMENT, communityId text,userName text,userId text NOT NULL,roomNo text,createTime text NOT NULL,status text NOT NULL)',[])
+       .then(() => console.log("[cloudshare]careate success SQL"))
+       .catch(e => console.log("[cloudshare]careate error SQL"));
+   
+      this.database = db;
+    });   
+  }
+
+
+   //插入数据
+  public insert(params,date1,status){
+    //console.log(params);
+    //获取当前时间
+
+    var date: string = new Date().toLocaleDateString();
+    var time: string = new Date().toTimeString().substring(0,8);
+    //var datetime: string = date.replace(/\//g, '-') + " " + time;
+    
+    //var datetime:string =  new Date().getTime()+"";
+    //console.log(datetime);
+
+
+    this.database.executeSql("INSERT INTO record1 (communityId,userName,userId,roomNo,createTime,status) VALUES (?,?,?,?,?,?);",[params.communityId,params.userName,params.userId,params.roomNo ==""?"null":params.roomNo,date1,status])
+    .then(() =>  console.log("[cloudshare]insert SQL success "))
+    .catch(e =>  console.log("[cloudshare]insert SQL error "));
+  }
+
+
+
+  public query() {
+   
+    
+    this.database.executeSql('select * from record1',[])
+          .then(res => {
+              for(var i = 0;i<res.rows.length;i++){
+                alert("adsf"+res.rows.item(i).createTime);    
+              }
+            
+          })
+          .catch(e => console.log(e));
+
+    
   }
 
   public loadData(){
@@ -194,13 +253,13 @@ export class UnlockPage {
         if (this.platform.is('ios')) {
           this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
           this.recordData.play();
-          window.setTimeout(() => this.stopRecord(), 3000);
+          window.setTimeout(() => this.stopRecord(), 2000);
        
            this.recordData.onSuccess.subscribe(() => 
              this.startReocrd(),
              this.isCheck = true,this.isCheck = true,
              
-             this.popSerProvider.showSoundLoading("播放中...",3),
+             this.popSerProvider.showSoundLoading("播放中...",2),
              this.file.removeFile(this.fileUrl,fileName),
              window.setTimeout(() =>this.recordData.release(), 2000),
               
@@ -248,13 +307,7 @@ export class UnlockPage {
 
         }
    
-             
-             // this.startReocrd();
-              //this.startReocrd();
-
-
-
-             
+            
               
               
       }).catch(error => {
@@ -315,7 +368,7 @@ export class UnlockPage {
         var fileName='userlock.wav';
        
           
-        var str1  = this.appconfig.sound(str); 
+       
         
         //this.file.createFile( this.fileUrl,fileName,true);
         
@@ -329,7 +382,7 @@ export class UnlockPage {
         // this.file.writeFile(this.fileUrl,fileName,str1,{}).then(response => {
       
           if (this.platform.is('ios')) {
-
+            var str1  = this.appconfig.sound(str); 
             this.file.createFile( this.fileUrl,fileName,true);
       
 
@@ -340,12 +393,12 @@ export class UnlockPage {
     
                   this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
                   this.recordData.play();
-                  window.setTimeout(() => this.stopRecord(), 3000);
+                  window.setTimeout(() => this.stopRecord(), 2000);
               
                   this.recordData.onSuccess.subscribe(() => 
                     this.startReocrd(),
                     this.isCheck = true,this.isCheck = true,
-                    this.popSerProvider.showSoundLoading("播放中...",3),
+                    this.popSerProvider.showSoundLoading("播放中...",2),
                     this.file.removeFile(this.fileUrl,fileName),
                     window.setTimeout(() =>this.recordData.release(), 2000), 
         
@@ -383,10 +436,10 @@ export class UnlockPage {
   
              this.recordData2.onSuccess.subscribe(() => 
                     this.isCheck = true,this.isCheck = true,
-                    this.popSerProvider.showSoundLoading("播放中...",3),
+                    this.popSerProvider.showSoundLoading("播放中...",2),
                    
                     
-                    window.setTimeout(() =>this.recordData.release(), 2000), 
+                    window.setTimeout(() =>this.recordData2.release(), 2000), 
                 ); 
   
   
@@ -403,31 +456,9 @@ export class UnlockPage {
 
      // cordova-plugin-media-capture 的使用
      startRecording_MediaCapture() {
-      this.platform.ready().then(() => {
-       
-          // 设置录音参数：duration限制录音长度，单位秒，仅ios有效
-          let options: CaptureAudioOptions = { limit: 1, duration: 4};
+     
          
-          this.mediaCapture.captureAudio(options)
-              .then(
-              function (mediaFiles: MediaFile[]) {
-                  var i, len;
-                  for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-
-                      alert("Record success! \n\n"
-                          + "file name: " + mediaFiles[i].name + "\n\n"
-                          + "size: " + (mediaFiles[i].size / 1024).toFixed(2) + "KB" + "\n\n"
-                          + "fullPath: " + mediaFiles[i].fullPath + "\n\n"
-                          + "lastModifiedDate: " + (mediaFiles[i].lastModifiedDate) + "\n\n"
-                          + "type: " + mediaFiles[i].type + "\n\n");
-
-                      // 上传
-                      this.fileName = mediaFiles[i].name;
-                      //this.uploadFile(mediaFiles[i].fullPath);
-                  }
-              },
-          );
-      });
+     
   }
 
   startReocrd(){  //开始录音
@@ -634,7 +665,7 @@ export class UnlockPage {
         //
         if(this.countNum ==0){
           //this.file.removeFile(this.fileUrl,'Record.wav');  
-          window.setTimeout(() =>  this.adminUnlock2(), 2000);
+          window.setTimeout(() =>  this.adminUnlock2(), 1000);
          
         }
         
@@ -652,7 +683,54 @@ export class UnlockPage {
 	}
 	testasd(response){
 		alert(response);
-	}
+  }
+  
+  unlockRecord(){
+     var data1 =   JSON.parse(localStorage.getItem("communityData")) ;
+     var person = {};
+     if(data1!=null){
+       var date1 = new Date().getTime();
+        person = {
+          communityId:data1.community,
+          userName:data1.userName,
+          userId:data1.residentId,
+          roomNo:data1.roomId == null?"":data1.roomId,
+          createTime:date1
+        }  
+
+        
+
+        //联网
+        if(localStorage.getItem("status")=='true'){
+          this.httpSerProvider.post('/home/addLock',person).then((data:any)=>{
+            if(data.code==='0000'){
+              this.insert(person,date1,"10");
+             
+            }else if(data.code==='9999'){
+              this.popSerProvider.toast(data.message);
+              this.insert(person,date1,"20");
+            }else{
+              this.popSerProvider.toast(data.message);
+              this.insert(person,date1,"20");
+            }
+         
+          });
+        }else{
+            this.insert(person,date1,"20");
+        }  
+
+
+
+       
+        
+
+     }
+
+
+
+  }
+
+
 
 	decodeVoice(sFile,buf)
 	{
@@ -719,6 +797,13 @@ export class UnlockPage {
 							if(datafreq[1]==datafreq[0])
 							{
                 console.log("decodeVoice  end[cloudshare ]value"+datafreq[1]);
+
+                if(datafreq[1] ==5){
+                  this.unlockRecord();
+                }else{
+                  
+                }
+                
 								return(datafreq[1]);
 							}
 							else

@@ -1,3 +1,18 @@
 page-lock-record {
-
+    .condition{background:white;padding:5px 0px;margin-bottom:5px;}
+  .condition .col{padding:3px 0px;font-size:12px;line-height:30px;text-align:left;}
+  .condition .col[col-2]{text-align:right;}
+  .condition .col input{height:30px;background:white;margin-left:5px;border:1px solid #c0c0c0;width:calc(100% - (10px / 2) - 10px);line-height:30px;padding:0px 5px;border-radius:3px;}
+  .search{background-color: color($colors, sutongbao);padding:8px 25px;border-radius:3px;margin-top:10px;color:white;font-weight:bold;font-size:1.5rem;}
+  .result{background:white;padding:0px;}
+  .item-ios.item-block .item-inner{padding:0px;border-bottom:none;}
+  .text-input-ios{margin:0px;}
+  .label-ios + ion-input .text-input, .label-ios + ion-textarea .text-input, .label-ios + .input + .cloned-input{margin:0px;border: 1px solid #c0c0c0;padding: 5px;border-radius: 3px;}
+  .item-ios{padding:0px;font-size:1.4rem;}
+  .label-ios{margin:0px 8px 0px 0px;}
+  .item-block{min-height:3.0rem;}
+  .select{border-radius: 5px;border:1px solid #b2b2b2;height: 30px;background-color: white;width:calc(100% - (10px / 2) - 10px);font-size: 12px;max-width: calc(100% - (10px / 2) - 10px);padding:5px;margin-left:5px;}
+  .result .row{border-bottom:1px solid color($colors,light);padding: 5px 0px;}
+  .result .col{display: flex;justify-content: space-around;align-items:center;font-size: 12px;}
+  .selButton1{height:30px;background:white;margin-left:5px;border:1px solid #c0c0c0;width:calc(100% - (10px / 2) - 10px);line-height:30px;border-radius:3px;}
 }

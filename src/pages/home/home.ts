@@ -5,13 +5,19 @@ import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 import { AppConfig } from '../../app/app.config';
 import { Slides } from 'ionic-angular';//注入轮播
 import { ThrowStmt } from '@angular/compiler/src/output/output_ast';
+import { JsonPipe } from '@angular/common';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
   @ViewChild('slides') slides: Slides;
-  constructor(private platform:Platform,  private alertCtrl:AlertController,public navCtrl: NavController, public navParams: NavParams,public httpSerProvider:HttpSerProvider,
+
+  database: SQLiteObject;
+
+
+  constructor(private sqlite: SQLite,private platform:Platform,  private alertCtrl:AlertController,public navCtrl: NavController, public navParams: NavParams,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider) {
 
       // this.httpSerProvider.getStatus('/home/testStatus',{    
@@ -58,6 +64,7 @@ export class HomePage {
   ionViewDidEnter(){
     this.slides.startAutoplay();
     if(localStorage.getItem("status")=='true'){
+      this.initDB2();  //同步离线开锁记录
       this.httpSerProvider.get('/home/findCommunityData',{
                 
         }).then((data:any)=>{
@@ -77,6 +84,57 @@ export class HomePage {
   }
 
 
+
+  public initDB2(){
+    this.sqlite.create({
+     name: 'data.db',
+     location: 'default'
+    })
+    .then((db: SQLiteObject) => {
+      db.executeSql('select * from record1 where status="20"',[])
+      .then(res => {
+
+        //alert(res.rows.length);
+        var arr = new Array(res.rows.length);
+        
+        for(var i = 0;i<res.rows.length;i++){
+          arr[i] = res.rows.item(i);
+        }
+
+         //联网
+         if(localStorage.getItem("status")=='true'){
+          
+          if(res.rows.length>0){
+            this.httpSerProvider.post('/home/uploadLockRecord',arr).then((data:any)=>{
+              if(data.code==='0000'){
+                
+                for(var i = 0 ;i<arr.length;i++){
+                  db.executeSql("UPDATE record1 set status='10' WHERE id="+arr[i].id+";",[]);
+                }
+               
+              }else if(data.code==='9999'){
+                this.popSerProvider.toast(data.message);
+              
+              }else{
+                this.popSerProvider.toast(data.message);
+              
+              }
+           
+            });
+          }
+          
+        }else{
+            
+        }  
+
+        
+      
+        
+      })
+      .catch(e => console.log(e));
+      this.database = db;
+    });   
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComunityListPage');
    
@@ -92,7 +150,7 @@ export class HomePage {
             if(data.code==='0000'){
             this.communityName = data.data.communityName==null?'首页':data.data.communityName;   
             localStorage.setItem("communityData",JSON.stringify(data.data));
-
+            localStorage.setItem("userId",JSON.stringify(data.data.residentId));
 
             this.httpSerProvider.get('/home/findRoomCardData',{
                   communityId:data.data.community

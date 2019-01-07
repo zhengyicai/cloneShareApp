@@ -2,7 +2,7 @@
  * 请求地址头
  */
 // 本地环境
-//export const APP_SERVE_URL:string = 'http://192.168.1.140:8080/app';
+export const APP_SERVE_URL:string = 'http://192.168.1.140:8080/app';
 //export const APP_PIC_URL:string = 'http://dev.sutongbao.file.yb.com/';
 // 生产环境
 //export const APP_SERVE_URL:string = 'http://192.168.2.202:8910/web';
@@ -15,7 +15,7 @@
 // 正式环境
 
 
-export const APP_SERVE_URL:string = 'http://47.106.182.70:8080/app';
+//export const APP_SERVE_URL:string = 'http://47.106.182.70:8080/app';
 export const APP_PIC_URL:string = 'http://test.sutongbao.file.yb.com/';
 export const APP_FILE_URL:string = 'http://47.106.182.70/sound/';
 
@@ -37,7 +37,7 @@ export class AppConfig {
     static requestTime:number = 5;  //禁止重复请求
     //设备信息
     static deviceId:string = '';          //设备id
-    static appVersion:string = '1.0.6';        //版本号 2.0.2
+    static appVersion:string = '1.0.7';        //版本号 2.0.2
     static userName:string = '';          //账号名
     static token:string = '';             //token
     static AES_key:string ="";

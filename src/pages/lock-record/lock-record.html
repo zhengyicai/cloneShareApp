@@ -13,6 +13,18 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
+    <ion-grid class="result" text-center>
+      <ion-row *ngFor="let i of items" >
+        
+        <ion-col col-3>{{i.userName}}</ion-col>
+        <ion-col col-6>{{popSerProvider.formatDate(i.createTime,'yyyy-MM-dd HH:mm:ss')}}</ion-col>
+        <ion-col col-3>开锁成功</ion-col>
+      </ion-row>
+    </ion-grid>
+    <div style="text-align: center;width: 100%;color: #999999;height: 30px;line-height: 30px;position: absolute;" *ngIf="loadingText">没有数据了...</div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content  loadingText="数据加载中"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>

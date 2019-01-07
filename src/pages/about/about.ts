@@ -105,8 +105,17 @@ export class AboutPage {
     this.navCtrl.push("UpdateNamePage");
   }
 
+
+  aboutPro(){
+    this.navCtrl.push("AboutProPage");
+  }
+
   updatePwd(){
     this.navCtrl.push("UpdatePwdPage");
+  }
+
+  updateUserPwd(){
+    this.navCtrl.push("UpdateUserPwdPage");
   }
   Exit(){
     localStorage.setItem("token","");
