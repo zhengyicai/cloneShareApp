@@ -18,6 +18,7 @@ declare var $: any;//Jquery对象
 export class PopSerProvider {
     private load: any;
     private loadingShow: Loading;
+    private loadingShow2:Loading;
     constructor(
                
                 public loadingCtrl: LoadingController,
@@ -303,6 +304,22 @@ export class PopSerProvider {
         });
         this.loadingShow.present();
     }
+
+
+    showSoundLoadingShow(content: string = '播放中'): void {
+        this.loadingShow2 = this.loadingCtrl.create({
+        spinner: 'hide',
+        content:'<div><center style="background-color:green"><img src="assets/img/left_sound3.png"><br/><ion-label>' + content + '</ion-label></center></div>', 
+        });
+        this.loadingShow2.present();
+    }
+    showSoundLoadingHide(content: string = '播放中'): void {
+       this.loadingShow2.dismiss();
+    }
+    
+
+
+
 
 
     /**

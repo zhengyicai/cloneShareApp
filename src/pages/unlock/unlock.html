@@ -15,13 +15,16 @@
 
 <ion-content padding style="background-color:white">
     
-      <div class="div" [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  >
+      <!-- <div class="div" [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  >
               <img src="assets/img/icon/menjin_off.png" ><br/>
-              <div style="color:white;margin:10px 5px">正在开门···</div>
-      </div>
-      <div class="div" [ngStyle]="{'display': isCheck===true ? 'block' : 'none'}" (click)="adminUnlock()">
-          <img src="assets/img/icon/menjin_on.png" ><br/>
-          <div style="color:white;margin:10px 5px">开门成功!</div>
+              <div style="color:white;margin:10px 5px">正在开门</div>
+      </div> -->
+      <div class="div"  (click)="adminUnlock()">
+          <img [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  src="assets/img/icon/menjin_off.png" >
+          <img [ngStyle]="{'display': isCheck===true ? 'block' : 'none'}"  src="assets/img/icon/menjin_on.png" >
+          
+          <br/>
+          <div style="text-align:center; color:white;margin:5px 5px">{{textLoading}}</div>
       </div>
       <br/>
       <div style="text-align:center;color:#c8c8c8;line-height: 30px;">
