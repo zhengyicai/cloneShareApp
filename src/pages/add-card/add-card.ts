@@ -5,7 +5,7 @@ import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
-import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions } from '@ionic-native/media-capture';
+
 /**
  * Generated class for the AddCardPage page.
  *
@@ -19,7 +19,7 @@ import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions } from '@ion
 })
 export class AddCardPage {
 
-  constructor(public mediaCapture: MediaCapture,private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
      // var option =  localStorage.getItem("cardData");
      this.appconfig = new AppConfig();
   }
