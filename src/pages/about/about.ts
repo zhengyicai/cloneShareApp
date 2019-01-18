@@ -250,7 +250,14 @@ export class AboutPage {
   }
 
   public addCom(){
-    this.navCtrl.push("BankPage");
+
+    if(localStorage.getItem("status")=='true'){
+      this.navCtrl.push("BankPage");
+      //this.loadData();
+    }else{
+      this.pop.toast("添加小区请先开启网络");
+    }
+    
   }
 
 }

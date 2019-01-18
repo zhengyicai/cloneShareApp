@@ -189,7 +189,27 @@ export class HttpSerProvider {
             const body = error.json() || '';
             const err = body.error || JSON.stringify(body);
             errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-            ShowPage.show(body);
+           // ShowPage.show(body);
+            if(error.status == 608){
+                //if(!ShowPage.showCount){
+                    ShowPage.popSerProvider.toast("登录失效，请重新登录");
+                    localStorage.setItem("token","");
+                    localStorage.removeItem('nav');
+                    ShowPage.events.publish('toLogin');
+                //}
+                //ShowPage.showCount = true;
+                
+            }else if (error.status === 0) {
+                ShowPage.popSerProvider.toast("请求失败，请打开网络");
+                
+              } else if (error.status === 404) {
+                ShowPage.popSerProvider.toast("请求失败，未找到请求地址");
+              } else if (error.status === 500) {
+                ShowPage.popSerProvider.toast("请求失败，服务器出错，请稍后再试");
+                
+              } 
+
+
             
         } else {
             errMsg = error.message ? error.message : error.toString();
@@ -219,7 +239,7 @@ export class HttpSerProvider {
         } else if (status === 608) {
 
           message = "用户登录失效，请重新登录";
-
+          
       
         }else{
         
@@ -231,10 +251,10 @@ export class HttpSerProvider {
    show(errMsg){
         //alert(errMsg);
         if(!this.showCount){
-           // this.popSerProvider.toast(errMsg.message);
+           this.popSerProvider.toast(errMsg.message);
             localStorage.setItem("token","");
             localStorage.removeItem('nav');
-            //this.events.publish('toLogin');
+            this.events.publish('toLogin');
             this.showCount = true;
         }
         

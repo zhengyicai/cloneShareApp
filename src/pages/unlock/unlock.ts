@@ -297,7 +297,7 @@ export class UnlockPage {
             };
           
            audioinput.start(captureCfg); 
-           window.setTimeout(() => this.stopRecord(), 1600);
+           window.setTimeout(() => this.stopRecord(), 1800);
 
            //this.playData.onSuccess.subscribe(() => 
                  // this.isCheck = true,this.isCheck = true,
@@ -381,7 +381,7 @@ export class UnlockPage {
              this.playData.onSuccess.subscribe(() => 
                     //this.isCheck = true,this.isCheck = true,
                    // this.popSerProvider.showSoundLoading("播放中...",2),
-                    window.setTimeout(() =>this.playData.release(), 1600),
+                    window.setTimeout(() =>this.playData.release(), 1800),
                 ); 
           }  
         //this.isCheck = true;    
