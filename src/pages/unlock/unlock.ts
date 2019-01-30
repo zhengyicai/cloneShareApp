@@ -65,7 +65,7 @@ export class UnlockPage {
     } else if (!this.platform.is('ios')) {
       this.fileUrl = this.file.externalDataDirectory;  
     }      
-
+    this.recordData1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+ "Record.wav");
     this.adminUnlock();
    
 
@@ -258,9 +258,22 @@ export class UnlockPage {
       this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
       // this.startRecording_MediaCapture();
         if (this.platform.is('ios')) {
-        
-          this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
-          this.playData.play();
+          
+
+          this.startReocrd();
+
+          //调用h5  audio 播放声音    
+          var x = document.createElement("AUDIO");
+          x.setAttribute("src", this.fileUrl+fileName);
+          x.setAttribute("controls", "controls");
+          x.setAttribute("volume", "1.0");
+          x.setAttribute("autoplay", "true");
+          document.getElementById("demo").appendChild(x);
+
+          window.setTimeout(() => this.stopRecord(), 2300);
+
+          // this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+          // this.playData.play();
          
 
 
@@ -400,7 +413,7 @@ export class UnlockPage {
   startReocrd(){  //开始录音
     
     //创建media对象，参数文件名字，上面的filePath也指定了文件存放位置和文件名字
-    this.recordData1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+ "Record.wav");
+    
 
     //开始录音
     this.recordData1.startRecord();
