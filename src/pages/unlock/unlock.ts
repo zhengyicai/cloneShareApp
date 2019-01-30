@@ -277,11 +277,11 @@ export class UnlockPage {
          
 
 
-           this.playData.onStatusUpdate.subscribe(status=>
+           //this.playData.onStatusUpdate.subscribe(status=>
               //console.log("status="+status)
-              this.testSuccess(status)
+             // this.testSuccess(status)
               
-          )
+          //)
 
 
           //  this.playData.onSuccess.subscribe(() => 
