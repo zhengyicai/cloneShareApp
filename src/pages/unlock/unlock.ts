@@ -297,7 +297,7 @@ export class UnlockPage {
             };
           
            audioinput.start(captureCfg); 
-           window.setTimeout(() => this.stopRecord(), 1800);
+           window.setTimeout(() => this.stopRecord(), 2300);
 
            //this.playData.onSuccess.subscribe(() => 
                  // this.isCheck = true,this.isCheck = true,
@@ -375,7 +375,7 @@ export class UnlockPage {
               };
           
             audioinput.start(captureCfg1);
-            window.setTimeout(() => this.stopRecord(), 1800);
+            window.setTimeout(() => this.stopRecord(), 2300);
                
   
              this.playData.onSuccess.subscribe(() => 
