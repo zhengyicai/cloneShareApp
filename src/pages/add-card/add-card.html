@@ -26,8 +26,18 @@
           <ion-option *ngFor="let index of unitList" value={{index.id}}>{{index.value}}</ion-option>
       </ion-select>
     </ion-item>
-    <button class="loginButton"  [disabled]="!isTrue" icon-only (click)="gotoAddCard()"  id="RegisterButton">
+    <div>已发数:{{showCardNumber}} &nbsp;&nbsp;&nbsp;&nbsp;总数:{{roomList.length}}</div>
+    <!-- <button class="loginButton"  [disabled]="!isTrue" icon-only (click)="gotoAddCard()"  id="RegisterButton">
         确认添加
-      </button>
+    </button> -->
+    <button  *ngIf="isCheck" class="loginButton"  [disabled]="!isTrue"   icon-only (click)="gotoAddCard()"  id="RegisterButton">
+        确认添加
+    </button>
+    <button class="loginButton" style="margin-top:20px"  *ngIf="!isCheck" icon-only (click)="setCardId()"  id="RegisterButton">
+        继续添加
+    </button>
+    <button class="loginButton" style="margin-top:-20px"   *ngIf="!isCheck" icon-only (click)="gotoAddCard()"  id="RegisterButton">
+        重头添加
+    </button>  
 
 </ion-content>

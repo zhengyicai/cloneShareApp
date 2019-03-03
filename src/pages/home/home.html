@@ -87,6 +87,46 @@
             
             
         </ion-row>
+        <ion-row class="listPart1" >
+
+              <ion-col *ngIf="isTrue" class="recharge" text-center (click)="addCard()">
+                  <span>
+                    <img src="assets/img/icon/community_register.png">
+                    <mark style="position:absolute;z-index:3;" *ngIf="showUnlockCount1>0"><div style="border:4px solid #ff2122;border-radius: 4px 4px 4px 4px"></div></mark>
+                  </span>
+                  <span >添加卡号</span>
+              </ion-col>  
+              <ion-col *ngIf="!isTrue" class="recharge" text-center (click)="addUserCard()">
+                <span>
+                  <img src="assets/img/icon/community_register.png">
+                  <mark style="position:absolute;z-index:3;" *ngIf="showUnlockCount1>0"><div style="border:4px solid #ff2122;border-radius: 4px 4px 4px 4px"></div></mark>
+                </span>
+                <span >物业添卡</span>
+              </ion-col>  
+
+
+              <ion-col class="recharge" text-center (click)="contantPro()">
+                <!-- <span>
+                  <img src="assets/img/icon/community_build.png">
+                  
+                </span>
+                <span>联系物业</span> -->
+              </ion-col>
+              <ion-col class="recharge" text-center (click)="contantPro()">
+                <!-- <span>
+                  <img src="assets/img/icon/community_build.png">
+                  
+                </span>
+                <span>联系物业</span> -->
+              </ion-col>  
+              <ion-col class="recharge" text-center (click)="contantPro()">
+                <!-- <span>
+                  <img src="assets/img/icon/community_build.png">
+                  
+                </span>
+                <span>联系物业</span> -->
+              </ion-col>  
+        </ion-row>
       </ion-grid>  
 
 

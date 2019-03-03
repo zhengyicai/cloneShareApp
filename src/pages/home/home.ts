@@ -60,8 +60,14 @@ export class HomePage {
   appVersion:any;
   communityName:any = "首页";
   showButton:any = false;  
-
+  showUnlockCount1: any = 0;  //用户显示未绑定的设备
+  showUnlockCount2: any = 0;  //物业显示未绑定的设备
+  isTrue:any = true;
   ionViewDidEnter(){
+
+
+
+
     this.slides.startAutoplay();
     if(localStorage.getItem("status")=='true'){
       this.initDB2();  //同步离线开锁记录
@@ -71,6 +77,7 @@ export class HomePage {
           if(data.code==='0000'){
           this.communityName = data.data.communityName==null?'首页':data.data.communityName;   
           localStorage.setItem("communityData",JSON.stringify(data.data));
+          this.showUnlockCount1 = data.data.equRoomState;
         
         }else if(data.code==='9999'){
           this.popSerProvider.showImgLoading(data.message,0);
@@ -139,6 +146,13 @@ export class HomePage {
     console.log('ionViewDidLoad ComunityListPage');
    
     this.appVersion = AppConfig.appVersion;
+
+    if(localStorage.getItem("nav")!=undefined && localStorage.getItem("nav")!=null && localStorage.getItem("nav")!="" ){
+      this.isTrue = false;
+    }else{
+      this.isTrue = true;
+    }
+
   }
 
   public loadData(){
@@ -152,6 +166,8 @@ export class HomePage {
             localStorage.setItem("communityData",JSON.stringify(data.data));
             localStorage.setItem("userId",JSON.stringify(data.data.residentId));
 
+            this.showUnlockCount1 = data.data.equRoomState;
+            
             this.httpSerProvider.get('/home/findRoomCardData',{
                   communityId:data.data.community
                 }).then((data:any)=>{
@@ -241,6 +257,14 @@ export class HomePage {
 
   public  testSound1(){
     this.navCtrl.push("TestSoundPage");
+  }
+
+  public addCard(){
+    this.navCtrl.push("DeviceListPage");
+  }
+
+  public addUserCard(){
+    this.navCtrl.push("UserDeviceListPage");
   }
 
   public  unlock(){

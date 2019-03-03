@@ -5,9 +5,11 @@ import { FileTransfer,FileTransferObject} from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { AppConfig } from '../../app/app.config';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
+import {HttpSerProvider} from '../../providers/http-ser/http-ser';
+import { JsonPipe } from '@angular/common';
 
 /**
- * Generated class for the AddCardPage page.
+ * Generated class for the UserRoomCardListPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,17 +17,16 @@ import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
 declare var audioinput: any;
 @IonicPage()
 @Component({
-  selector: 'page-add-card',
-  templateUrl: 'add-card.html',
+  selector: 'page-user-room-card-list',
+  templateUrl: 'user-room-card-list.html',
 })
-export class AddCardPage {
+export class UserRoomCardListPage {
 
-  constructor(private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
-     // var option =  localStorage.getItem("cardData");
-     this.appconfig = new AppConfig();
+  constructor(public httpSerProvider:HttpSerProvider,private appCtrl: App,public popSerProvider:PopSerProvider,private platform:Platform, private alertCtrl:AlertController, private transfer: FileTransfer, private media: Media , private file: File ,public navCtrl: NavController, public navParams: NavParams) {
+    this.appconfig = new AppConfig();
   }
 
-  
+
   isCheck:boolean =true;   //控制打开 true:success false:unsuccess
   public appconfig:any;
   public filePath : any; //录音文件的名字
@@ -45,123 +46,55 @@ export class AddCardPage {
   equCode:any= "";  //设备编码
   fileUrl:any;  //文件存放地址 
 
+  person:any;
+  roomList:any;
 
-  
+  userCodeLock:any = "";
+  cardCodeId:any = "";
+  cardEquipmentId:any = "";
 
+  delState:any = false; //是否删除
+   comunityCode:any = "";                      //物业用户编码
 
-  subData:any = {
-    communityId:"",
-    unitId:"",
-    buildingId:"",
-    roomName:"",
-    remark:"",
-    isTrue:"20"
-  }
-
-  addBankDefaultState:any =false; //是否默认
-
-  citylist:any = [];  //小区
-  buildList:any = []; //楼栋
-  unitList:any = []; //单元
-  roomList:any = [];
-
-
-  listData = [];
-  listDatatest:any = new Array(3);
-  truePwd:any ="";
-  area:any ="";
-  isTrue:any = true;
-
-  cardNumber:any = 0;
-  showCardNumber:any = 0;
   ionViewDidLoad() {
-        var option =  JSON.parse(localStorage.getItem("cardData"));
-        
-        this.buildList = option;
+    console.log('ionViewDidLoad RoomCardListPage');
+    this.person ={
+      defaultRoomId:this.navParams.get("roomId"),
+      equipmentId:this.navParams.get("equipmentId")
+    }
 
-        if (this.platform.is('ios')) {
-          this.fileUrl = this.file.tempDirectory;
-        //alert(this.fileUrl);
-        } else if (!this.platform.is('ios')) {
-          this.fileUrl = this.file.externalDataDirectory;  
-        }      
-     
-        this.recordData1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+ "RecordCard.wav");
-        this.loadData();
+
+    if (this.platform.is('ios')) {
+      this.fileUrl = this.file.tempDirectory;
+    //alert(this.fileUrl);
+    } else if (!this.platform.is('ios')) {
+      this.fileUrl = this.file.externalDataDirectory;  
+    }      
+ 
+    this.recordData1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+ "RecordCard.wav");
+
+    this.roomList = [];
+    this.loadData();
   }
 
-  findUnit(){
-        this.unitList = [];
-        for(var i = 0 ;i<this.buildList.length;i++){
-            if(this.subData.buildingId == this.buildList[i].id){
-                  this.unitList = this.buildList[i].children; 
-            }
-      }
-  }
-  gotoAddCard(){
-
-      if(this.validator()){
-        this.isTrue = false;
-        this.roomList = [];
-        this.cardNumber=0;
-        this.showCardNumber = 1;
-        for(var i = 0;i<this.unitList.length;i++){
-          if(this.subData.unitId == this.unitList[i].id){
-                this.roomList = this.unitList[i].children;
-          }
-        }
-        this.setCardId();
-      }
-      
-  }
-  public setCardId(){
-
-        this.popSerProvider.toast(this.roomList[this.cardNumber].label+","+this.roomList[this.cardNumber].value);
-        
-        this.adminUnlock(this.roomList[this.cardNumber].label,this.roomList[this.cardNumber].value);
-        if(this.cardNumber<this.roomList.length-1){
-           
-            setTimeout(() => {
-              this.recordData.release();
-              this.continuesSet();
-            }, 5000);
-        }else{
-          this.cardNumber=0;
-          this.showCardNumber = this.roomList.length;
-          this.isTrue  = true;
-        }
-
-  }
-
-
-  public continuesSet(){
-      if(this.isCheck == true){
-        this.cardNumber++;
-        this.showCardNumber++;
-        this.setCardId();
-      }else{
-
-      }
-      
-  }
-
-
-
-
-
-  public test(){
-    console.log("aaa");
-  }
-
-  public loadData(){
+  loadData(){
+    this.httpSerProvider.get('/equipment/getUserCardList',{equipmentId:this.person.equipmentId}).then((data:any)=>{
+          if(data.code==='0000'){
+            //this.citylist = data.data;
+            this.roomList = data.data;
+          }else if(data.code==='9999'){
+            this.popSerProvider.toast(data.message);
+          }else{
+            this.popSerProvider.toast(data.message); 
+          }  
+    });
     var option = JSON.parse(localStorage.getItem("communityData"));   
     var csCode = option.csCode;  //厂商代码   10进制
     var areaCode= option.areaCode;  //项目代码   10进制
     this.areaCode=areaCode;
     this.userCode = option.roomId; //
+    this.comunityCode = areaCode+"01010001";  //00000001会报错
    
-
-
     //厂商byte
     var cslist = this.intToBytes(csCode);
     this.csArray[0] = cslist[0];
@@ -184,11 +117,95 @@ export class AddCardPage {
     this.crc16[2] =  this.areaArray[2];
     this.crc16[3] =  this.areaArray[1];
     this.crc16[4] =  this.areaArray[0];
-
-
-    
   }
 
+
+  //重复删除
+  delAllCard(){
+    let alert = this.alertCtrl.create({
+      title: '是否确认发卡？',
+      message: '',
+      buttons: [
+        {
+          text: '返回',
+          role: '返回',
+          handler: () => {
+            console.log('Cancel clicked');
+            
+          }
+        },
+        {
+          text: '确认',
+          handler: () => {
+            //this.popSerProvider.toast("allDel");
+            for(var i = 0 ;i<this.roomList.length;i++){
+              this.delState = true;
+              this.cardCodeId =this.roomList[i].id;
+              this.cardEquipmentId = this.person.equipmentId;  
+              this.allStatus(i);
+              
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+    
+    
+
+  }
+
+
+  //重复发卡
+  replaceAllCard(){
+    let alert = this.alertCtrl.create({
+      title: '是否确认发卡？',
+      message: '',
+      buttons: [
+        {
+          text: '返回',
+          role: '返回',
+          handler: () => {
+            console.log('Cancel clicked');
+            
+          }
+        },
+        {
+          text: '确认',
+          handler: () => {
+          
+            for(var i = 0 ;i<this.roomList.length;i++){
+              this.delState = false;
+              this.cardCodeId =this.roomList[i].id;
+              this.cardEquipmentId = this.person.equipmentId;  
+              this.allStatus(i);
+             
+            
+            }
+            //this.popSerProvider.toast("allreplace"+ JSON.stringify(this.roomList));
+            
+          }
+        }
+      ]
+    });
+    alert.present();
+   
+   
+
+   
+
+  }
+
+  public setCardId(){    
+    this.adminUnlock("00001001010101","555555","");
+  }
+
+  public allStatus(one:any){
+    
+    window.setTimeout(() =>this.adminUnlock(this.comunityCode,this.roomList[one].cardNo,this.roomList[one].id),1000+one*4000);
+   // this.popSerProvider.toast(JSON.stringify(one));
+   
+  }
   public  intToBytes(value:any){ 
 	
 		var src = new Array(4);
@@ -200,10 +217,17 @@ export class AddCardPage {
 
   }
 
+ 
   //卡号设置
-  public  adminUnlock(userCodeStr,cardCodeStr){
+  public adminUnlock(userCodeStr,cardCodeStr,id){
+    this.cardCodeId = id;
+
+    //this.popSerProvider.toast(userCodeStr+","+cardCodeStr);
     //机子返回的是16进制	
+      
+      //获取当前传值的数据
     
+      
       //厂商+项目代码 转字节
       var crc =this.appconfig.CRC16(this.crc16);
 
@@ -230,7 +254,12 @@ export class AddCardPage {
       var cardNo =  this.intToBytes(parseInt(cardCodeStr));
 
       //alert(userCodeStr+","+cardCodeStr);
-      str = [0xE7,crc[1],crc[0],icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],data[3],data[2],data[1],data[0],cardNo[2],cardNo[1],cardNo[0]];  
+      if(this.delState == true){
+        str = [0xE7,crc[1],crc[0],icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],0,0,0,0,cardNo[2],cardNo[1],cardNo[0]];  
+      }else{
+        str = [0xE7,crc[1],crc[0],icodeArray[0],icodeArray[1],icodeArray[2],icodeArray[3],icodeArray[4],data[3],data[2],data[1],data[0],cardNo[2],cardNo[1],cardNo[0]];  
+      }
+      
      
       // str = [0xB5,crc[1],crc[0],0xff,0xff,0xff,0xff,0xff,data[3],data[2],data[1],data[0]]; 
      
@@ -294,12 +323,6 @@ export class AddCardPage {
      
 
     }
-
-    playSound(){
-        var play = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+"RecordCard.wav");
-        play.play();
-    }
-
     stopRecord(){   
 
       //停止结束录音
@@ -310,6 +333,8 @@ export class AddCardPage {
         }else{
           //this.playData.release();
           audioinput.stop();
+          this.recordData.release();
+          
           //this.popSerProvider.toast("stop record");
         }
         
@@ -450,19 +475,58 @@ export class AddCardPage {
          console.log("decodeVoice  end[cloudshare ]"+count);
          //this.popSerProvider.toast("count"+count);
          
-         //alert(count);
+         
+         //this.recordData.release();
          if(count=='100'){
             
               //第二次开锁无论成功或失败，都会执行该方法
               this.isCheck = false;
               //this.textLoading = "开锁失败";
               //this.popSerProvider.showSoundLoadingHide();
-            
+              //this.popSerProvider.toast("count="+count);
+              if(this.delState == true){
+                this.popSerProvider.showImgLoading("删卡失败",2);  
+              }else{
+                this.popSerProvider.showImgLoading("发卡失败",2);
+              }
             
           }else if(count=='5'){
             
                 //第二次开锁无论成功或失败，都会执行该方法
                   this.isCheck = true;
+                 
+
+                 
+
+                  var person1 = {
+                    cardId:this.cardCodeId,
+                    equipmentId:this.cardEquipmentId,
+                    linkState:"10"
+                  }
+                  if(this.delState == true){  //执行删除功能
+                      person1.linkState ="20";
+                  }
+                  // this.popSerProvider.toast(JSON.stringify(person1));
+                  this.httpSerProvider.post('/equipment/updateUserCardState',person1).then((data:any)=>{
+                        if(data.code==='0000'){
+                          if(this.delState == true){
+                            this.popSerProvider.showImgLoading("删卡成功",1);  
+                          }else{
+                            this.popSerProvider.showImgLoading("发卡成功",1);
+                          }
+                          
+                          this.loadData();
+                          //this.citylist = data.data;
+                          //this.roomList = data.data;
+                        }else if(data.code==='9999'){
+                          this.popSerProvider.toast(data.message);
+                        }else{
+                          this.popSerProvider.toast(data.message); 
+                        }  
+                  });
+
+
+
                 //  this.textLoading = "开锁成功";
                   //this.popSerProvider.showSoundLoadingHide();
             
@@ -565,31 +629,65 @@ export class AddCardPage {
                 index += this.CODE_WIDTH1;
         }		
         
-      }
+      }  
 
+  del(opt){
+    let alert = this.alertCtrl.create({
+      title: '是否确认删卡？',
+      message: '',
+      buttons: [
+        {
+          text: '返回',
+          role: '返回',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '确认',
+          handler: () => {
+            this.delState = true;
+            this.cardCodeId =opt.id;
+            this.cardEquipmentId = this.person.equipmentId;  
+            this.adminUnlock(this.comunityCode,opt.cardNo,this.cardCodeId);
+            
+          }
+        }
+      ]
+    });
+    alert.present();  
 
-    //验证
-  validator() {
-
-  
-
-    if (this.subData.buildingId == null || this.subData.buildingId == '') {
-      this.popSerProvider.toast("楼栋不能为空");
-      return false;
-    }
-
-    if (this.subData.unitId == null || this.subData.unitId == '') {
-        this.popSerProvider.toast("单元不能为空");
-        return false;
-    }
-
-
-
-
-    return true;
   }
+  add(opt:any){
+    
+    let alert = this.alertCtrl.create({
+      title: '是否确认发卡？',
+      message: '',
+      buttons: [
+        {
+          text: '返回',
+          role: '返回',
+          handler: () => {
+            console.log('Cancel clicked');
+            
+          }
+        },
+        {
+          text: '确认',
+          handler: () => {
+            //this.popSerProvider.toast(opt.roomNo+","+opt.cardNo);  
+            this.delState = false;
+            this.cardCodeId =opt.id;
+            this.cardEquipmentId = this.person.equipmentId;  
+           // this.popSerProvider.toast(this.comunityCode+","+opt.cardNo+","+this.cardCodeId);
+            this.adminUnlock(this.comunityCode,opt.cardNo,this.cardCodeId);
+            
+            
+          }
+        }
+      ]
+    });
+    alert.present();
 
-
-
-
+  }
 }
