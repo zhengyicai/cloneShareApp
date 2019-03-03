@@ -274,12 +274,16 @@ export class RoomCardListPage {
       this.file.writeExistingFile(this.fileUrl,fileName,str1).then(response => {
      
         if (this.platform.is('ios')) {
-              this.recordData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
-              this.recordData.play();
-              this.recordData.onSuccess.subscribe(() => 
-                  this.isCheck = true,this.isCheck = true,this.popSerProvider.showSoundLoading("播放中...",3),
-                  this.file.removeFile(this.fileUrl,fileName)
-              ); 
+          this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+          this.playData.play();
+          this.popSerProvider.showSoundLoading("播放中...",2);
+
+
+           this.playData.onStatusUpdate.subscribe(status=>
+              //console.log("status="+status)
+              this.testSuccess(status)
+              
+          )
         } else if (!this.platform.is('ios')) {
           
           this.recordData = this.media.create(this.fileUrl+fileName);  
@@ -321,20 +325,54 @@ export class RoomCardListPage {
      
 
     }
+    public testSuccess(status:any){
+
+      if(status ==4){
+        //this.popSerProvider.showSoundLoading("播放中...",2),
+        
+        console.log("testSuccess Start");
+
+        this.startReocrd();
+        console.log("testSuccess Stop");
+        this.stopRecord();
+
+        //window.setTimeout(() => this.stopRecord(), 2000);
+      }
+      
+      
+
+    }
+
+    startReocrd(){  //开始录音
+    
+      //创建media对象，参数文件名字，上面的filePath也指定了文件存放位置和文件名字
+      
+  
+      //开始录音
+      this.recordData1.startRecord();
+    }
+
+    playRecord(){ 
+        var model = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+ "RecordCard.wav");
+        model.play();
+    }
     stopRecord(){   
 
       //停止结束录音
         if (this.platform.is('ios')) {
           //this.playData.release();
+          this.playData.release();
           console.log("record Stop  start[cloudshare]"),
-          this.recordData1.stopRecord();
+          window.setTimeout(() =>this.recordData1.stopRecord(),500);
+          window.setTimeout(() => this.decodeVoiceTest(), 700); 
         }else{
-          //this.playData.release();
+          this.recordData.release();
           audioinput.stop();
           //this.popSerProvider.toast("stop record");
+          window.setTimeout(() => this.decodeVoiceTest(), 300); 
         }
         
-        window.setTimeout(() => this.decodeVoiceTest(), 300); 
+        //window.setTimeout(() => this.decodeVoiceTest(), 300); 
       //    window.setTimeout(() => this.decodeVoiceTest(), 1000); 
       }
       MAX_FREQ1:any = 4;
@@ -462,7 +500,7 @@ export class RoomCardListPage {
       }
       
       decodeVoiceTest(){
-        
+
          this.file.readAsArrayBuffer(this.fileUrl, 'RecordCard.wav').then(response => {
          //this.file.removeFile(this.fileUrl,'RecordCard.wav');  
          
@@ -470,7 +508,7 @@ export class RoomCardListPage {
          var count = this.decodeVoice(this.fileUrl+'RecordCard.wav', new Int16Array(response));
          console.log("decodeVoice  end[cloudshare ]"+count);
          //this.popSerProvider.toast("count"+count);
-         this.recordData.release();
+         //this.recordData.release();
          //alert(count);
          if(count=='100'){
             
