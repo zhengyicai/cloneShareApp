@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,App } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {HttpSerProvider} from '../../providers/http-ser/http-ser';
 import {PopSerProvider} from '../../providers/pop-ser/pop-ser';
@@ -18,7 +18,7 @@ import { AppConfig } from '../../app/app.config';
 export class DeviceListPage {
 
   constructor(public httpSerProvider:HttpSerProvider,
-    public popSerProvider:PopSerProvider,public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
+    public popSerProvider:PopSerProvider,private appCtrl: App,public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
   }
 
 
@@ -27,11 +27,45 @@ export class DeviceListPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DeviceListPage');
+
+     //验证是否绑定小区
+     this.option  = JSON.parse(localStorage.getItem("communityData"));
+      var person = {
+        roomId:this.option.roomId,
+        defaultRoomId:this.option.defaultRoomId,
+      }
+      if(person.defaultRoomId=="" || person.defaultRoomId==null){
+        let alert = this.alertCtrl.create({
+          title: "请先绑定默认小区并等待管理员审核通过",
+          message: '',
+          buttons: [
+            
+            {
+              text: "确认",
+              handler: () => {
+                this.appCtrl.getActiveNav().pop();
+              },
+            },
+          ],
+        });
+        alert.present();
+        return;
+      }
     this.loadData();
   }
 
 
   ionViewDidEnter(){
+    //验证是否绑定小区
+    this.option  = JSON.parse(localStorage.getItem("communityData"));
+    var person = {
+      roomId:this.option.roomId,
+      defaultRoomId:this.option.defaultRoomId,
+    }
+    if(person.defaultRoomId=="" || person.defaultRoomId==null){
+     
+      return;
+    }
 		this.loadData();
 	}
 
@@ -41,11 +75,13 @@ export class DeviceListPage {
   loadData(){
     
     this.option  = JSON.parse(localStorage.getItem("communityData"));
-
     var person = {
       roomId:this.option.roomId,
       defaultRoomId:this.option.defaultRoomId,
     }
+
+
+    
     this.httpSerProvider.get('/equipment/getlist',person).then((data:any)=>{
           if(data.code==='0000'){
             //this.citylist = data.data;

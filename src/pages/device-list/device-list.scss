@@ -61,44 +61,5 @@ page-device-list {
         }    
 
 
-        .functionList {
-       
-          background: #fff;
-          
-          .listPart1 {
-            margin-top: 15px;
-         
-            .recharge {
-              span:nth-child(1) {
-                  margin-top: 15px;   
-               // margin: 0 auto;
-                mark {
-                 
-                  text-align: center;
-                  color: #fff;
-                 
-                 
-                }
-              }
-              span:nth-child(2) {
-                display: block;
-                
-                margin-top: 15px;
-              }
-            }
-            .transferAccounts,
-            .receivables,
-            .recharge {
-              padding: 15px 0 !important;
-              border: 0px;
-              img {
-                width: 30px;
-                height: 30px;
-              }
-            }
-          }
-          
-            
-          
-        }   
+        
 }

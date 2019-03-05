@@ -188,7 +188,10 @@ export class AuthUserPage {
       var crc =this.appconfig.CRC16(this.crc16);
 
       //获取时间	
-      var time = Math.round(new Date().getTime()/1000)-946656000;
+      var time = Math.round(new Date().getTime()/1000)-946656000+85800;
+      //var time = 1551674400-946656000;
+
+
 
           
           //低位在前 下标从0开始,  高位在前 下标从尾部开始,
@@ -228,7 +231,7 @@ export class AuthUserPage {
       
       //var fileName='authUser.wav';
      
-        
+      console.log("[cloudshare] code"+str); 
       //var str1  = this.appconfig.soundFile(str); 
      
       this.httpSerProvider.post('/home/upload',str).then((data:any)=>{

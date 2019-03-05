@@ -37,13 +37,17 @@ export class LockRecordPage {
   };  //过滤条件
   constructor(private sqlite: SQLite,public httpSerProvider:HttpSerProvider,
     public popSerProvider:PopSerProvider,public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
+      
   }
 
   ionViewDidLoad() {
     this.find.pageNumber = 1;
     this.loadData();
-    //this.initDB();
+    
   }
+  
+
+
 
 
   public initDB(){

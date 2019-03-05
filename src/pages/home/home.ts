@@ -77,6 +77,7 @@ export class HomePage {
           if(data.code==='0000'){
           this.communityName = data.data.communityName==null?'首页':data.data.communityName;   
           localStorage.setItem("communityData",JSON.stringify(data.data));
+          localStorage.setItem("userId",JSON.stringify(data.data.residentId));
           this.showUnlockCount1 = data.data.equRoomState;
         
         }else if(data.code==='9999'){
@@ -260,11 +261,20 @@ export class HomePage {
   }
 
   public addCard(){
-    this.navCtrl.push("DeviceListPage");
+    if(localStorage.getItem("status")=='true'){
+       this.navCtrl.push("DeviceListPage");
+    }else{
+      this.popSerProvider.toast("添加卡号请先开启网络");  
+    }
+    
   }
 
   public addUserCard(){
-    this.navCtrl.push("UserDeviceListPage");
+      if(localStorage.getItem("status")=='true'){
+        this.navCtrl.push("UserDeviceListPage");
+      }else{
+        this.popSerProvider.toast("物业添卡请先开启网络");  
+      }
   }
 
   public  unlock(){
