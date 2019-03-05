@@ -687,6 +687,8 @@ export class UserRoomCardListPage {
     });
     alert.present();  
 
+
+    
   }
   add(opt:any){
     
