@@ -83,7 +83,7 @@ export class LockRecordPage {
 
   loadData(){
 
-    if(localStorage.getItem("userId")==null || localStorage.getItem("userId")=="" ){
+    if(localStorage.getItem("userId")=="null" || localStorage.getItem("userId")=="" ){
 
     }else{
       this.initDB();  
@@ -122,6 +122,9 @@ export class LockRecordPage {
     //alert("asdf");
     this.find.pageNumber++;
     setTimeout(() => {
+      if(localStorage.getItem("userId") =="null" || localStorage.getItem("userId") == ""){
+        return ;
+      }
       this.httpSerProvider.get('/home/findLockRecord',this.find).then((data: any) => {
         if (data.code === "0000") {
           let tdata  = PopSerProvider.copyObject(data.data);
