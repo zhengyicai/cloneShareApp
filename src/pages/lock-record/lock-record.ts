@@ -120,6 +120,8 @@ export class LockRecordPage {
 
   doInfinite(infiniteScroll) {
     //alert("asdf");
+
+    
     this.find.pageNumber++;
     setTimeout(() => {
       if(localStorage.getItem("userId") =="null" || localStorage.getItem("userId") == ""){
