@@ -82,7 +82,13 @@ export class LockRecordPage {
 
 
   loadData(){
-    this.initDB();
+
+    if(localStorage.getItem("userId")==null || localStorage.getItem("userId")=="" ){
+
+    }else{
+      this.initDB();  
+    }
+    //this.initDB();
     //this.initDB2();
     // this.httpSerProvider.get('/home/findLockRecord',this.find).then((data: any) => {
     //   if (data.code === "0000") {
