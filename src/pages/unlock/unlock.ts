@@ -48,7 +48,8 @@ export class UnlockPage {
   equCode:any= "";  //设备编码
   fileUrl:any;  //文件存放地址 
   test:any;
-  textLoading:any = "开门成功"; //提示语
+  textLoading:any = "点击开锁"; //提示语
+  isCheck2:boolean = true;
   ngOnInit() {
     this.initDB();
   }
@@ -66,7 +67,16 @@ export class UnlockPage {
       this.fileUrl = this.file.externalDataDirectory;  
     }      
     this.recordData1 = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+ "Record.wav");
-    this.adminUnlock();
+
+
+    if(this.areaCode =="" || this.areaCode ==null){
+      this.popSerProvider.showSoundLoadingHide();
+      this.isCheck2 = true;
+    }else{
+      this.isCheck2 = false;
+      this.adminUnlock();
+    }
+    
    
 
     
@@ -196,6 +206,9 @@ export class UnlockPage {
     
 
     this.isCheck = false;
+    if(this.isCheck2){
+      return;
+    }
     this.popSerProvider.showSoundLoadingShow("开锁中...");
     this.textLoading="开锁中";
     this.buf11 ="";
@@ -260,17 +273,16 @@ export class UnlockPage {
         if (this.platform.is('ios')) {
           
 
-          this.startReocrd();
+          this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+          this.playData.play();
+         
 
-          //调用h5  audio 播放声音    
-          var x = document.createElement("AUDIO");
-          x.setAttribute("src", this.fileUrl+fileName);
-          x.setAttribute("controls", "controls");
-          x.setAttribute("volume", "1.0");
-          x.setAttribute("autoplay", "true");
-          document.getElementById("demo").appendChild(x);
 
-          window.setTimeout(() => this.stopRecord(), 2300);
+           this.playData.onStatusUpdate.subscribe(status=>
+              //console.log("status="+status)
+              this.testSuccess(status)
+              
+          )
 
           // this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
           // this.playData.play();
@@ -289,7 +301,7 @@ export class UnlockPage {
           //    this.startReocrd(),
           //    this.popSerProvider.showSoundLoading("播放中...",2),
           //  ); 
-          //  window.setTimeout(() => this.stopRecord(), 2000);
+          //  window.setTimeout(() => this.stopRecord(), 2000); 
            
         } else if (!this.platform.is('ios')) {
           this.playData = this.media.create(this.fileUrl+fileName);  
@@ -354,18 +366,16 @@ export class UnlockPage {
       //机子返回的是16进制	
         if(this.platform.is('ios')){
             this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+"userlock.wav");
-            this.playData.play();
-            window.setTimeout(() => this.stopRecord(), 2000);
-        
-            this.playData.onSuccess.subscribe(() => 
-              this.startReocrd(),
-              //this.isCheck = true,this.isCheck = true,
-             // this.popSerProvider.showSoundLoading("播放中...",2),
-              
-              //window.setTimeout(() =>this.playData.release(), 1600), 
+          //  this.playData = this.media.create(this.fileUrl.replace(/^file:\/\//, '')+fileName);
+          this.playData.play();
+         
 
-            
-            ); 
+
+           this.playData.onStatusUpdate.subscribe(status=>
+              //console.log("status="+status)
+              this.testSuccess(status)
+              
+          )
         }else if (!this.platform.is('ios')) {
             //alert("asdf1");
             this.playData = this.media.create(this.fileUrl+"userlock.wav");  

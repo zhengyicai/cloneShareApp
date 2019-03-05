@@ -19,7 +19,7 @@
               <img src="assets/img/icon/menjin_off.png" ><br/>
               <div style="color:white;margin:10px 5px">正在开门</div>
       </div> -->
-      <div class="div"  (click)="adminUnlock()">
+      <div class="div"   (click)="adminUnlock()">
           <img [ngStyle]="{'display': isCheck===false ? 'block' : 'none'}"  src="assets/img/icon/menjin_off.png" >
           <img [ngStyle]="{'display': isCheck===true ? 'block' : 'none'}"  src="assets/img/icon/menjin_on.png" >
           
@@ -42,6 +42,7 @@
         播放录音
       </button>
        {{test}}  -->
+       <h2 id="demo" style="display:none"></h2>
 
    
     
